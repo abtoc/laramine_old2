@@ -23,5 +23,9 @@
 
     "Click button below and reset password.":"下のボタンをクリックしてパスワードを再設定してください。",
     "Reset password":"パスワードリセット",
-    "If you did not request a password reset, no further action is required.":"心当たりがない場合は、本メッセージは破棄してください。"
+    "If you did not request a password reset, no further action is required.":"心当たりがない場合は、本メッセージは破棄してください。",
+
+    "Login ID": "ログインID",
+
+    "Half-width alphanumeric characters and some symbols ( _ - @ . ) can be used.":"半角英数字と一部の記号( _ - @ . )が使用可能です。"
 }
