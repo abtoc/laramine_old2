@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +23,8 @@ class AuthLoginTest extends TestCase
      */
     public function testAdminでログインを行う()
     {
+        $now = Carbon::now();
+
         // 認証されていないことを確認する
         $this->assertFalse(Auth::check());
 
@@ -44,6 +48,10 @@ class AuthLoginTest extends TestCase
 
         // ログアウト後にホームに返っていることを確認
         $response->assertRedirect('');
+
+        // 最終ログイン日時更新確認
+        $user = User::find(1);
+        $this->assertTrue($now->gte($user->last_login_at));
     }
 
     public function testパスワード違い()

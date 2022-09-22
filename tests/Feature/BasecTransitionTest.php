@@ -28,6 +28,9 @@ class BasecTransitionTest extends TestCase
 
         $response = $this->get('/home');
         $response->assertRedirect('login'); // ログインしていないため200で返らない
+
+        $resposne = $this->get('/my/reset');
+        $response->assertRedirect('login');
     }
 
     public function test認証画面遷移テスト()
@@ -57,6 +60,9 @@ class BasecTransitionTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this->actingAs($user)->get('/password/reset');
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user)->get('/my/reset');
         $response->assertStatus(200);
     }
 }

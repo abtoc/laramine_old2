@@ -174,6 +174,7 @@ return [
         'password' => 'Password',
         'name' => 'Name',
         'email' => 'Email Address',
+        'new_password' => 'New Password',
     ],
 
 ];

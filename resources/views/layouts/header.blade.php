@@ -36,17 +36,22 @@
                             {{ Auth::user()->name }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
+                        <ul class="dropdown-menu drowdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a href="{{ route('my.reset.edit')}}" class="dropdown-item">{{ __('Change Password') }} </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                     {{ __('Logout') }}
+                                 </a>
+ 
+                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                     @csrf
+                                 </form>
+                             </li>
+                        </ul>
                     </li>
                 @endguest
             </ul>

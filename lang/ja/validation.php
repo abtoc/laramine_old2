@@ -158,6 +158,7 @@ return [
         'password' => 'パスワード',
         'name' => '名前',
         'email' => 'メールアドレス',
+        'new_password' => '新パスワード',
     ],
 
 ];
