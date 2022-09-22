@@ -43,7 +43,7 @@
 
                         <ul class="dropdown-menu drowdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>
-                                <a href="{{ route('my.reset.edit')}}" class="dropdown-item">{{ __('Change Password') }} </a>
+                                <a href="{{ route('my.password.edit')}}" class="dropdown-item">{{ __('Change Password') }} </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"

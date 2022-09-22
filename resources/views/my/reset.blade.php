@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('my.reset.update') }}">
+                    <form method="POST" action="{{ route('my.password.update') }}">
                         @csrf
 
                         <div class="row mb-3">

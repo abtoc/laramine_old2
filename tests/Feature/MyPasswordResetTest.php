@@ -30,7 +30,7 @@ class MyPasswordResetTest extends TestCase
 
         $now = Carbon::now();
 
-        $response = $this->actingAs($user)->post('/my/reset', [
+        $response = $this->actingAs($user)->post('/my/password', [
             'password' => $password,
             'new_password' => $new_password,
             'new_password_confirmation' => $new_password,
@@ -53,7 +53,7 @@ class MyPasswordResetTest extends TestCase
             'password' => Hash::make($password),
         ]);
 
-        $response = $this->actingAs($user)->post('/my/reset', [
+        $response = $this->actingAs($user)->post('/my/password', [
             'password' => '',
             'new_password' => '',
             'new_password_confirmation' => '',
@@ -74,7 +74,7 @@ class MyPasswordResetTest extends TestCase
             'password' => Hash::make($password),
         ]);
 
-        $response = $this->actingAs($user)->post('/my/reset', [
+        $response = $this->actingAs($user)->post('/my/password', [
             'password' => $password,
             'new_password' => $new_password,
             'new_password_confirmation' => '',
@@ -94,7 +94,7 @@ class MyPasswordResetTest extends TestCase
             'password' => Hash::make($password),
         ]);
 
-        $response = $this->actingAs($user)->post('/my/reset', [
+        $response = $this->actingAs($user)->post('/my/password', [
             'password' => $password,
             'new_password' => $password,
             'new_password_confirmation' => $password,
