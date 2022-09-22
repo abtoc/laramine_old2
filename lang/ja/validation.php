@@ -153,6 +153,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'login' => 'ログインID',
+        'password' => 'パスワード',
+        'name' => '名前',
+        'email' => 'メールアドレス',
+    ],
 
 ];
