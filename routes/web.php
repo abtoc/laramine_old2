@@ -21,8 +21,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::view('/admin', 'admin');
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
@@ -30,4 +28,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('reset', [ResetPasswordController::class, 'edit'])->name('reset.edit');
         Route::post('reset', [ResetPasswordController::class, 'update'])->name('reset.update');
     });
+});
+
+Route::group(['middleware' => ['auth', 'can:admin']], function(){
+    Route::view('/admin', 'admin')->name('admin');
 });

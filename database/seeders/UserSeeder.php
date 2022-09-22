@@ -27,6 +27,8 @@ class UserSeeder extends Seeder
                 'login'                => 'admin',
                 'email'                => 'admin@example.com',
                 'password'             => Hash::make('admin'),
+                'status'               => UserStatus::ACTIVE,
+                'admin'                => true,
                 'must_change_password' => true,
             ]
         );

@@ -34,5 +34,6 @@
     "Please confirm your password before continuing.":"パスワードを確認してから、次に進んでください。",
 
     "User":"ユーザー",
-    "Group":"グループ"
+    "Group":"グループ",
+    "Admin":"管理"
 }
