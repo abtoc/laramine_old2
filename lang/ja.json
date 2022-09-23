@@ -33,6 +33,9 @@
 
     "Please confirm your password before continuing.":"パスワードを確認してから、次に進んでください。",
 
+    "Please change your password.":"パスワードを変更して下さい。",
+    "Pending system administrator approval.":"管理者の承認待ちです。",
+
     "User":"ユーザー",
     "Group":"グループ",
     "Admin":"管理"

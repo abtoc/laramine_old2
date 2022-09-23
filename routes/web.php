@@ -21,8 +21,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 Route::group(['middleware' => 'auth'], function(){
     Route::prefix('my')->name('my.')->group(function(){
         Route::get('password', [ResetPasswordController::class, 'edit'])->name('password.edit');
@@ -30,6 +28,10 @@ Route::group(['middleware' => 'auth'], function(){
     });
 });
 
-Route::group(['middleware' => ['auth', 'can:admin']], function(){
+Route::group(['middleware' => ['auth', 'user']], function(){
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
+
+Route::group(['middleware' => ['auth', 'user', 'can:admin']], function(){
     Route::view('/admin', 'admin')->name('admin');
 });

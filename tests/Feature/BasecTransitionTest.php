@@ -59,6 +59,8 @@ class BasecTransitionTest extends TestCase
 
         // Adminユーザ取得
         $user = User::find(1);
+        $user->must_change_password = false;
+        $user->save();
         
         $response = $this->actingAs($user)->get('/home');
         $response->assertStatus(200);
