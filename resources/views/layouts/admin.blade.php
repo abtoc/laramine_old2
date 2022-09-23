@@ -6,12 +6,12 @@
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item" aria-current="page">
                 <a href="#" class="nav-link link-dark">
-                    {{ __('User') }}
+                    <i class="bi bi-person"></i> {{ __('User') }}
                 </a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link link-dark" aria-current="page">
-                    {{ __('Group') }}
+                    <i class="bi bi-people"></i> {{ __('Group') }}
                 </a>
             </li>
         </ul>
