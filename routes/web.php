@@ -29,11 +29,11 @@ Route::group(['middleware' => 'auth'], function(){
     });
 });
 
-Route::group(['middleware' => ['auth', 'user']], function(){
+Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 });
 
-Route::group(['middleware' => ['auth', 'user', 'can:admin']], function(){
+Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
     Route::view('/admin', 'admin')->name('admin');
     Route::controller(UserController::class)->name('users.')->group(function(){
         Route::get('/users', 'index')->name('index');

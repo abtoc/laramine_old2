@@ -23,9 +23,6 @@ class AuthLoginTest extends TestCase
      */
     public function testAdminでログインを行う()
     {
-        $now = Carbon::now();
-        $now->millisecond(0);
-
         // 認証されていないことを確認する
         $this->assertFalse(Auth::check());
 
@@ -52,7 +49,7 @@ class AuthLoginTest extends TestCase
 
         // 最終ログイン日時更新確認
         $user = User::find(1);
-        $this->assertTrue($now->gte($user->last_login_at));
+        $this->assertNotNull($user->last_login_at);
     }
 
     public function testパスワード違い()
