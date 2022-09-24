@@ -24,6 +24,7 @@ class AuthLoginTest extends TestCase
     public function testAdminでログインを行う()
     {
         $now = Carbon::now();
+        $now->millisecond(0);
 
         // 認証されていないことを確認する
         $this->assertFalse(Auth::check());

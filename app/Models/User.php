@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use PhpParser\Node\Expr\BinaryOp\BooleanOr;
+use Kyslik\ColumnSortable\Sortable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -51,10 +51,31 @@ class User extends Authenticatable
         'type' => UserType::class,
         'email_verified_at' => 'datetime',
         'status' => UserStatus::class,
-        'last_login_at' => 'datetime',
-        'password_change_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $dates = [
+        'last_login_at',
+        'password_change_at',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * The attributes that should be sort
+     *
+     * @var array<string>
+     */
+    public $sortable = [
+        'login',
+        'name',
+        'admin',
+        'created_at',
+        'last_login_at'
     ];
 
     /**
@@ -96,7 +117,6 @@ class User extends Authenticatable
     {
         return $this->status === UserStatus::LOCKED;
     }
-
 
     /**
      * The "booting" method of the model

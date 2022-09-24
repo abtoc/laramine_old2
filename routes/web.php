@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\My\ResetPasswordController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,4 +35,8 @@ Route::group(['middleware' => ['auth', 'user']], function(){
 
 Route::group(['middleware' => ['auth', 'user', 'can:admin']], function(){
     Route::view('/admin', 'admin')->name('admin');
+    Route::controller(UserController::class)->name('users.')->group(function(){
+        Route::get('/users', 'index')->name('index');
+    });
 });
+

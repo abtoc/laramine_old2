@@ -186,6 +186,10 @@ return [
          * Package Service Providers...
          */
 
+        Prologue\Alerts\AlertsServiceProvider::class,
+        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+
+
         /*
          * Application Service Providers...
          */
@@ -195,7 +199,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Prologue\Alerts\AlertsServiceProvider::class,
     ],
 
     /*

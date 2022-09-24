@@ -28,6 +28,14 @@
     "Login ID": "ログインID",
     "New Password":"新パスワード",
     "Change Password":"パスワード変更",
+    "Create User":"ユーザー作成",
+    "Status":"ステータス",
+    "Apply":"適用",
+
+    "All User":"全て",
+    "Active":"有効",
+    "Registerd":"登録",
+    "Locked":"ロック",
 
     "Half-width alphanumeric characters and some symbols ( _ - @ . ) can be used.":"半角英数字と一部の記号( _ - @ . )が使用可能です。",
 
@@ -38,5 +46,7 @@
 
     "User":"ユーザー",
     "Group":"グループ",
-    "Admin":"管理"
+    "Admin":"管理",
+    "CreatedAt":"作成日",
+    "LastLoginAt":"最終接続日"
 }

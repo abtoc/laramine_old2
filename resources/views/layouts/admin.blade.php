@@ -1,21 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fuid d-flex flex-nowrap">
+<div class="container-fuid d-flex align-items-stretch flex-nowrap w-100">
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-white" style="width: 280px">
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item" aria-current="page">
-                <a href="#" class="nav-link link-dark">
-                    <i class="bi bi-person"></i> {{ __('User') }}
-                </a>
+            <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link link-dark bi bi-person"> {{ __('User') }}</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link link-dark" aria-current="page">
-                    <i class="bi bi-people"></i> {{ __('Group') }}
-                </a>
+                <a href="#" class="nav-link link-dark bi bi-people"> {{ __('Group') }}</a>
             </li>
         </ul>
     </div>
-    @yield('content-admin')
+    <div class="align-items-stretch flex-glow-1 w-100">
+        @yield('content-admin')
+    </div>
 </div>
 @endsection
