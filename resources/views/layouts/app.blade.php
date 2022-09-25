@@ -19,11 +19,12 @@
 </head>
 <body>
     <div id="app">
-        @include('layouts.header')
+        @include('components.header')
         <main>
             @yield('content')
         </main>
-        @include('layouts.footer')
+        @include('components.footer')
     </div>
+    @stack('scripts')
 </body>
 </html>
