@@ -29,6 +29,8 @@
     "New Password":"新パスワード",
     "Change Password":"パスワード変更",
     "Create User":"ユーザー作成",
+    "Edit User":"ユーザー編集",
+    "New User":"新しいユーザー",
     "Status":"ステータス",
     "Apply":"適用",
 
@@ -43,10 +45,12 @@
 
     "Please change your password.":"パスワードを変更して下さい。",
     "Pending system administrator approval.":"管理者の承認待ちです。",
+    "Forces password change at next login":"次回ログイン時にパスワード変更を強制",
 
     "User":"ユーザー",
     "Group":"グループ",
     "Admin":"管理",
+    "Administrator":"管理者",
     "CreatedAt":"作成日",
     "LastLoginAt":"最終接続日"
 }

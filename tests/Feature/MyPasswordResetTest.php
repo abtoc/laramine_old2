@@ -21,14 +21,15 @@ class MyPasswordResetTest extends TestCase
 
     public function testパスワード変更テスト()
     {
+        $now = Carbon::now();
+
         $password = 'password';
         $new_password = 'password01';
         $user = User::factory()->create([
             'password' => Hash::make($password),
             'must_change_password' => true,
+            'password_change_at' => $now,
         ]);
-
-        $now = Carbon::now();
 
         $response = $this->actingAs($user)->post('/my/password', [
             'password' => $password,

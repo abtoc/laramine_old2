@@ -31,6 +31,11 @@
                         </li>
                     @endif
                 @else
+                    @if(config('app.env') === 'local')
+                    <li class="nav-item">
+                        <a href="/telescope" class="nav-link">Telescope</a>
+                    </li>
+                @endif
                     @can('admin')
                         <li class="nav-item">
                             <a href="{{ route('admin') }}" class="nav-link">{{ __('Admin') }}</a>

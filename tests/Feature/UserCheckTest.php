@@ -25,7 +25,7 @@ class UserCheckTest extends TestCase
 
         // パスワード変更要求があるのでパスワード変更画面に遷移する。
         $response = $this->actingAs($user)->get('/home');
-        $response->assertRedirect('my/password');
+        $response->assertRedirect('/my/password');
         $response->assertSessionHas('alert_messages', function($value){
             if(array_key_exists('warning', $value)){
                 if(count($value['warning']) > 0){

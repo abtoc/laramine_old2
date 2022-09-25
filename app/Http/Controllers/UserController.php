@@ -5,10 +5,24 @@ namespace App\Http\Controllers;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\User;
+use App\Rules\IdentRule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
+
 
 class UserController extends Controller
 {
+    /**
+     * Creation of controller instance
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +54,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -51,7 +65,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:255', 'unique:users', new IdentRule()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', Password::default()],
+        ]);
+
+        $user = new User();
+        $user->fill($request->all());
+        $user->type = UserType::USER;
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+        
+        return to_route('users.index');
     }
 
     /**
@@ -60,9 +87,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -71,9 +98,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -83,9 +110,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id), new IdentRule()],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+        ]);
+
+        $user->fill($request->all());
+        $user->save();
+
+        return to_route('users.index');
     }
 
     /**
@@ -94,8 +130,42 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return to_route('users.index');
     }
-}
+
+    /** Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+   public function lock(User $user)
+   {
+        $this->authorize('lock', $user);
+
+        $user->status = UserStatus::LOCKED;
+        $user->save();
+
+       return to_route('users.index');
+   }
+
+   /** Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function unlock(User $user)
+    {
+        $this->authorize('unlock', $user);
+
+        $user->status = UserStatus::ACTIVE;
+        $user->save();
+ 
+        return to_route('users.index');
+    }
+ 
+ }
