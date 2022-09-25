@@ -23,32 +23,32 @@ class BasecTransitionTest extends TestCase
         $response = $this->get('/');
         $response->assertStatus(200);
 
-        $response = $this->get('/login');
+        $response = $this->get(route('login'));
         $response->assertStatus(200);
 
-        $response = $this->get('/home');
+        $response = $this->get(route('home'));
         $response->assertRedirect('login'); // ログインしていないため200で返らない
 
-        $resposne = $this->get('/my/reset');
+        $resposne = $this->get(route('my.password.edit'));
         $response->assertRedirect('login');
     }
 
     public function test認証画面遷移テスト()
     {
-        $response = $this->get('/login');
+        $response = $this->get(route('login'));
         $response->assertStatus(200);
 
-        $response = $this->get('/register');
+        $response = $this->get(route('register'));
         $response->assertStatus(200);
         
-        $response = $this->get('/password/reset');
+        $response = $this->get(route('password.request'));
         $response->assertStatus(200);
 
-        $response = $this->get('/password/confirm');
-        $response->assertRedirect('login'); // ログインしていないため200で返らない
+        $response = $this->get(route('password.confirm'));
+        $response->assertRedirect(route('login')); // ログインしていないため200で返らない
 
-        $response = $this->get('/my/password');
-        $response->assertRedirect('login'); // ログインしていないため200で返らない
+        $response = $this->get(route('my.password.edit'));
+        $response->assertRedirect(route('login')); // ログインしていないため200で返らない
 
     }
 
@@ -62,13 +62,13 @@ class BasecTransitionTest extends TestCase
         $user->must_change_password = false;
         $user->save();
         
-        $response = $this->actingAs($user)->get('/home');
+        $response = $this->actingAs($user)->get(route('home'));
         $response->assertStatus(200);
 
-        $response = $this->actingAs($user)->get('/password/reset');
+        $response = $this->actingAs($user)->get(route('password.request'));
         $response->assertStatus(200);
 
-        $response = $this->actingAs($user)->get('/my/password');
+        $response = $this->actingAs($user)->get(route('my.password.edit'));
         $response->assertStatus(200);
     }
 }

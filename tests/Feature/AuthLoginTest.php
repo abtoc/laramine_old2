@@ -27,7 +27,7 @@ class AuthLoginTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ログインを実行
-        $response = $this->post('login', [
+        $response = $this->post(route('login'), [
             'login' => 'admin',
             'password' => 'admin'
         ]);
@@ -36,10 +36,10 @@ class AuthLoginTest extends TestCase
         $this->assertTrue(Auth::check());
 
         // ログイン後にホームにログインサれていることを確認
-        $response->assertRedirect('home');
+        $response->assertRedirect(route('home'));
 
         // ログアウトを行う
-        $response = $this->post('logout');
+        $response = $this->post(route('logout'));
 
         // 認証サれていないことをチェック
         $this->assertFalse(Auth::check());
@@ -58,7 +58,7 @@ class AuthLoginTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ログインを実行
-        $response = $this->post('login', [
+        $response = $this->post(route('login'), [
             'login' => 'admin',
             'password' => 'xxxx'
         ]);
@@ -79,7 +79,7 @@ class AuthLoginTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ログインを実行
-        $response = $this->post('login', [
+        $response = $this->post(route('login'), [
             'login' => 'xxxx',
             'password' => 'admin'
         ]);
@@ -100,7 +100,7 @@ class AuthLoginTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ログインを実行
-        $response = $this->post('login', [
+        $response = $this->post(route('login'), [
             'login' => '',
             'password' => ''
         ]);

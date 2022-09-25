@@ -21,13 +21,13 @@ class GateAdminTest extends TestCase
         $user_admin = User::factory()->create(['admin' => true]);
         $user_other = User::factory()->create(['admin' => false]);
 
-        $response = $this->get('/admin');
-        $response->assertRedirect('login');
+        $response = $this->get(route('admin'));
+        $response->assertRedirect(route('login'));
 
-        $response = $this->actingAs($user_admin)->get('/admin');
+        $response = $this->actingAs($user_admin)->get(route('admin'));
         $response->assertStatus(200);
 
-        $response = $this->actingAs($user_other)->get('/admin');
+        $response = $this->actingAs($user_other)->get(route('admin'));
         $response->assertStatus(404);
     }
 }

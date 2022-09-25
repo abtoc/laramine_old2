@@ -24,8 +24,8 @@ class UserCheckTest extends TestCase
         $this->assertTrue($user->must_change_password);
 
         // パスワード変更要求があるのでパスワード変更画面に遷移する。
-        $response = $this->actingAs($user)->get('/home');
-        $response->assertRedirect('/my/password');
+        $response = $this->actingAs($user)->get(route('home'));
+        $response->assertRedirect(route('my.password.edit'));
         $response->assertSessionHas('alert_messages', function($value){
             if(array_key_exists('warning', $value)){
                 if(count($value['warning']) > 0){
@@ -41,7 +41,7 @@ class UserCheckTest extends TestCase
         $user->save();
         $this->assertFalse($user->must_change_password);
 
-        $response = $this->actingAs($user)->get('/home');
+        $response = $this->actingAs($user)->get(route('home'));
         $response->assertStatus(200);
     }
 
@@ -49,8 +49,8 @@ class UserCheckTest extends TestCase
     {
         $user = User::factory()->create(['status' => UserStatus::LOCKED]);
 
-        $response = $this->actingAs($user)->get('/home');
-        $response->assertRedirect('login');
+        $response = $this->actingAs($user)->get(route('home'));
+        $response->assertRedirect(route('login'));
         $response->assertSessionHas('alert_messages', function($value){
             if(array_key_exists('warning', $value)){
                 if(count($value['warning']) > 0){
@@ -65,8 +65,8 @@ class UserCheckTest extends TestCase
     {
         $user = User::factory()->create(['status' => UserStatus::REGISTERD]);
 
-        $response = $this->actingAs($user)->get('/home');
-        $response->assertRedirect('login');
+        $response = $this->actingAs($user)->get(route('home'));
+        $response->assertRedirect(route('login'));
         $response->assertSessionHas('alert_messages', function($value){
             if(array_key_exists('warning', $value)){
                 if(count($value['warning']) > 0){

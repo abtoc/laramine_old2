@@ -26,7 +26,7 @@ class AuthRegisterTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ユーザ登録を実行
-        $response = $this->post('register', [
+        $response = $this->post(route('register'), [
             'name' => 'テストユーザー',
             'login' => 'test01',
             'email' => 'test01@test.com',
@@ -59,7 +59,7 @@ class AuthRegisterTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ユーザ登録を実行
-        $response = $this->post('register', [
+        $response = $this->post(route('register'), [
             'name' => '',
             'login' => '',
             'email' => '',
@@ -88,7 +88,7 @@ class AuthRegisterTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ユーザ登録を実行
-        $response = $this->post('register', [
+        $response = $this->post(route('register'), [
             'name' => 'admin',
             'login' => 'admin admin',
             'email' => 'admin',
@@ -119,7 +119,7 @@ class AuthRegisterTest extends TestCase
         $this->assertFalse(Auth::check());
 
         // ユーザ登録を実行
-        $response = $this->post('register', [
+        $response = $this->post(route('register'), [
             'name' => $user->name,
             'login' => $user->login,
             'email' => $user->email,
