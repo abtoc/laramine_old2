@@ -14,13 +14,13 @@
                                 <div class="col-auto">
                                     <select name="status" id="status" class="form-select">
                                         @foreach(App\Enums\UserStatus::cases() as $status)
-                                            <option value="{{ $status->value }}" @if(request()->query('status', 1) == $status->value) selected @endif>{{ $status->string() }}</option>
+                                            <option value="{{ $status->value }}" @selected(request()->query('status', 1) == $status->value)>{{ $status->string() }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <label for="name" class="col-auto col-form-label text-md-end">{{ __('Name') }}:</label>
                                 <div class="col-auto">
-                                    <input type="text" id="name" name="name" class="form-control">
+                                    <input type="text" id="name" name="name" class="form-control" value="{{ request()->query('name', '') }}">
                                 </div>
                                 <div class="col-auto">
                                     <button class="btn btn-primary" type="submit">{{ __('Apply')}}</button>
@@ -39,15 +39,18 @@
                                     <th class="text-center">@sortablelink('created_at', __('CreatedAt'))</th>
                                     <th class="text-center">@sortablelink('last_login_at', __('LastLoginAt'))</th>
                                     <th class="text-end">
-                                        <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('users.create') }}"> {{ __('Create User')}}</a>
+                                        <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('users.create', request()->query()) }}"> {{ __('Create User')}}</a>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($users as $user)
+                                    @php
+                                        $query = array_merge(['user'=>$user], request()->query());
+                                    @endphp
                                     <tr>
                                         <td class="text-start">
-                                            <a href="{{ route('users.edit', ['user' => $user]) }}">
+                                            <a href="{{ route('users.edit', $query) }}">
                                                 {{ $user->login }}
                                             </a>
                                         </td>
@@ -63,30 +66,30 @@
                                         <td class="text-end">
                                             @if(Auth::id() !== $user->id)
                                                 @if($user->isActive())
-                                                    <a href="{{ route('users.lock', ['user' => $user]) }}" class="link-dark bi bi-lock text-decoration-none"
+                                                    <a href="{{ route('users.lock', $query) }}" class="link-dark bi bi-lock text-decoration-none"
                                                         onclick="event.preventDefault();
                                                         document.getElementById('users-lock-{{$user->id}}').submit();">
                                                         {{ __('Lock') }}
                                                         </a>
-                                                    <form method="POST" class="d-none" action="{{ route('users.lock', ['user' => $user]) }}" id="users-lock-{{$user->id}}">
+                                                    <form method="POST" class="d-none" action="{{ route('users.lock', $query) }}" id="users-lock-{{$user->id}}">
                                                         @csrf
                                                     </form>
                                                 @else
-                                                    <a href="{{ route('users.unlock', ['user' => $user]) }}" class="link-dark bi bi-unlock text-decoration-none"
+                                                    <a href="{{ route('users.unlock', $query) }}" class="link-dark bi bi-unlock text-decoration-none"
                                                         onclick="event.preventDefault();
                                                         document.getElementById('users-unlock-{{$user->id}}').submit();">
                                                     {{ __('Unlock') }}
                                                     </a>
-                                                    <form method="POST" class="d-none" action="{{ route('users.unlock', ['user' => $user]) }}" id="users-unlock-{{$user->id}}">
+                                                    <form method="POST" class="d-none" action="{{ route('users.unlock', $query) }}" id="users-unlock-{{$user->id}}">
                                                         @csrf
                                                     </form>
                                                 @endif
-                                                <a href="{{ route('users.destroy', ['user' => $user]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                <a href="{{ route('users.destroy', $query) }}" class="link-dark bi bi-trash text-decoration-none"
                                                     onclick="event.preventDefault();
                                                     document.getElementById('users-destroy-{{$user->id}}').submit();">
                                                     {{ __('Delete') }}
                                                     </a>
-                                                <form method="POST" class="d-none" action="{{ route('users.destroy', ['user' => $user ])}}" id="users-destroy-{{$user->id}}">
+                                                <form method="POST" class="d-none" action="{{ route('users.destroy', $query)}}" id="users-destroy-{{$user->id}}">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>

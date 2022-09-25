@@ -5,7 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('New User') }}</div>
+                <div class="card-header">
+                    <nav>
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{ route('users.index', request()->query()) }}">{{ __('User') }}</a></li>
+                            <li class="breadcrumb-item active">{{ __('New User') }}</li>
+                        </ol>
+                    </nav>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('users.store') }}">
