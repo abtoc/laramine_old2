@@ -86,6 +86,9 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
+        if($user->id === $model->id){
+            return Response::denyAsNotFound();
+        }
         if($model->type !== UserType::USER){
             return Response::denyAsNotFound();
         }
@@ -120,6 +123,9 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
+        if($user->id === $model->id){
+            return Response::denyAsNotFound();
+        }
         if($model->type !== UserType::USER){
             return Response::denyAsNotFound();
         }
@@ -137,6 +143,9 @@ class UserPolicy
      */
     public function lock(User $user, User $model)
     {
+        if($user->id === $model->id){
+            return Response::denyAsNotFound();
+        }
         if($model->type !== UserType::USER){
             return Response::denyAsNotFound();
         }
@@ -154,6 +163,9 @@ class UserPolicy
      */
     public function unlock(User $user, User $model)
     {
+        if($user->id === $model->id){
+            return Response::denyAsNotFound();
+        }
         if($model->type !== UserType::USER){
             return Response::denyAsNotFound();
         }
