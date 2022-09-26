@@ -74,7 +74,6 @@ class UserController extends Controller
 
         $user = new User();
         $user->fill($request->all());
-        $user->type = UserType::USER;
         $user->password = Hash::make($request->input('password'));
         $user->save();
         

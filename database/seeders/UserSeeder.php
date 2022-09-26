@@ -33,29 +33,5 @@ class UserSeeder extends Seeder
             ]
         );
 
-        // regist Anonymous Group
-        User::updateOrCreate(
-            ['type' => UserType::GROUP_ANONYMOUS],
-            [
-                'name' => __(UserType::GROUP_ANONYMOUS->string()),
-            ]            
-        );
-
-        // regist NonMember Group
-        User::updateOrCreate(
-            ['type' => UserType::GROUP_NON_MEMBER],
-            [
-                'name' => __(UserType::GROUP_NON_MEMBER->string()),
-            ]            
-        );
-
-        // regist NonMember Group
-        User::updateOrCreate(
-            ['type' => UserType::ANONYMOUS_USER],
-            [
-                'name'   => __(UserType::ANONYMOUS_USER->string()),
-                'status' => UserStatus::LOCKED,
-            ]            
-        );
     }
 }

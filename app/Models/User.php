@@ -87,14 +87,6 @@ class User extends Authenticatable
     }
 
     /**
-     * return bool
-     */
-    public function isGroup(): bool
-    {
-        return $this->type === UserType::GROUP;
-    }
-
-    /**
      * @return bool
      */
     public function isActive(): bool
@@ -128,14 +120,8 @@ class User extends Authenticatable
         parent::boot();
 
         self::creating(function($user){
-            if($user->type === UserType::USER){
-                $user->password_change_at = now();
-            } else {
-                $user->login = "";
-                $user->email = "";
-                $user->password = "";
-                $user->must_change_password = false;
-            }
+            $user->type = UserType::USER;
+            $user->password_change_at = now();
         });
 
         self::updating(function($user){

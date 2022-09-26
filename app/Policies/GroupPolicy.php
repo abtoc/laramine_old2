@@ -3,11 +3,12 @@
 namespace App\Policies;
 
 use App\Enums\UserType;
+use App\Models\Group;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class UserPolicy
+class GroupPolicy
 {
     use HandlesAuthorization;
 
@@ -28,18 +29,15 @@ class UserPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, Group $group)
     {
-        if($model->isUser()){
-            if($user->admin){
-                return Response::allow();
-            }
-            return $user->id === $model->id
-                 ? Response::allow()
-                 : Response::denyAsNotFound();
+        if($group->isGroup()){
+            return $user->admin 
+                ? Response::allow()
+                : Response::denyAsNotFound();
         }
         return Response::denyAsNotFound();
     }
@@ -61,15 +59,15 @@ class UserPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, Group $group)
     {
-        if($model->isUser()){
+        if($group->isGroup()){
             return $user->admin 
-            ? Response::allow()
-            : Response::denyAsNotFound();
+                ? Response::allow()
+                : Response::denyAsNotFound();
         }
         return Response::denyAsNotFound();
     }
@@ -78,32 +76,32 @@ class UserPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, Group $group)
     {
-        if($model->isUser()){
-            if($user->id === $model->id){
-                return Response::denyAsNotFound();
-            }
+        if($group->isGroup()){
             return $user->admin 
                 ? Response::allow()
                 : Response::denyAsNotFound();
-       }
-       return Response::denyAsNotFound();
+        }
+        return Response::denyAsNotFound();
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Group $group)
     {
-        if($model->isUser()){
+        if($group->isGroup()){
+            if($group->type !== UserType::GROUP){
+                return Response::denyAsNotFound();
+            }
             return $user->admin 
                 ? Response::allow()
                 : Response::denyAsNotFound();
@@ -115,35 +113,15 @@ class UserPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Group $group)
     {
-        if($model->isUser()){
-            if($user->id === $model->id){
-                return Response::denyAsNotFound();
-            }
-            return $user->admin 
-            ? Response::allow()
-            : Response::denyAsNotFound();
+        if($group->type !== UserType::GROUP){
+            return Response::denyAsNotFound();
         }
-        return Response::denyAsNotFound();
-    }
-
-    /**
-     * Determine if the user can lock.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function lock(User $user, User $model)
-    {
-        if($model->isUser()){
-            if($user->id === $model->id){
-                return Response::denyAsNotFound();
-            }
+        if($group->isGroup()){
             return $user->admin 
                 ? Response::allow()
                 : Response::denyAsNotFound();
@@ -152,23 +130,32 @@ class UserPolicy
     }
 
     /**
-     * Determine if the user can unlock.
-     *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Group  $group
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function unlock(User $user, User $model)
+    public function users(User $user, Group $group)
     {
-        if($model->isUser()){
-            if($user->id === $model->id){
-                return Response::denyAsNotFound();
-            }
+        if($group->isGroup()){
             return $user->admin 
                 ? Response::allow()
                 : Response::denyAsNotFound();
-       }
+        }
         return Response::denyAsNotFound();
     }
 
+    /**
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Group  $group
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function projects(User $user, Group $group)
+    {
+        if($group->isGroup()){
+            return $user->admin 
+                ? Response::allow()
+                : Response::denyAsNotFound();
+        }
+        return Response::denyAsNotFound();
+    }
 }

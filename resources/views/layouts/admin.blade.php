@@ -8,7 +8,7 @@
                 <a href="{{ route('users.index') }}" class="nav-link link-dark bi bi-person"> {{ __('User') }}</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link link-dark bi bi-people"> {{ __('Group') }}</a>
+                <a href="{{ route('groups.index') }}" class="nav-link link-dark bi bi-people"> {{ __('Group') }}</a>
             </li>
         </ul>
     </div>

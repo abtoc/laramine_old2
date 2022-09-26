@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\My\ResetPasswordController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -45,9 +46,20 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
         Route::get('/{user}', 'show')->name('show');
         Route::get('/{user}/edit', 'edit')->name('edit');
         Route::put('/{user}', 'update')->name('update');
-        Route::delete('/users/{user}', 'destroy')->name('destroy');
+        Route::delete('/{user}', 'destroy')->name('destroy');
         Route::post('/{user}/lock', 'lock')->name('lock');
         Route::post('/{user}/unlock', 'unlock')->name('unlock');
+    });
+    Route::controller(GroupController::class)->prefix('groups')->name('groups.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{group}', 'show')->name('show');
+        Route::get('/{group}/edit', 'edit')->name('edit');
+        Route::put('/{group}', 'update')->name('update');
+        Route::delete('/{group}', 'destroy')->name('destroy');
+        Route::get('/{group}/users', 'users')->name('users');
+        Route::get('/{group}/projects', 'projects')->name('projects');
     });
 });
 
