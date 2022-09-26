@@ -31,15 +31,18 @@ Route::group(['middleware' => 'auth'], function(){
 
 Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/users/{user}', [UserController::class,'show'])->name('users.show');
 });
 
 Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
     Route::view('/admin', 'admin')->name('admin');
+});
+
+Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::controller(UserController::class)->prefix('users')->name('users.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
+        Route::get('/{user}', 'show')->name('show');
         Route::get('/{user}/edit', 'edit')->name('edit');
         Route::put('/{user}', 'update')->name('update');
         Route::delete('/users/{user}', 'destroy')->name('destroy');
@@ -47,4 +50,5 @@ Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
         Route::post('/{user}/unlock', 'unlock')->name('unlock');
     });
 });
+
 
