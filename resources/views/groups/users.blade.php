@@ -26,6 +26,7 @@
                             <a href="{{ route('groups.projects', ['group' => $group]) }}" class="nav-link">{{ __('Project') }}</a>
                         </li>
                     </ul>
+                    @livewire('group-users', ['group'=>$group])
                 </div>
             </div>
         </div>
