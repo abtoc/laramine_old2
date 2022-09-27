@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class TestSeeder extends Seeder
@@ -90,6 +91,63 @@ class TestSeeder extends Seeder
         }
     }
 
+    private function createGroupsUsers()
+    {
+        $groups_users = [
+            ['name' => 'テストグループ01', 'login' => 'test01'],
+            ['name' => 'テストグループ01', 'login' => 'test02'],
+            ['name' => 'テストグループ01', 'login' => 'test03'],
+            ['name' => 'テストグループ01', 'login' => 'test04'],
+            ['name' => 'テストグループ01', 'login' => 'test05'],
+            ['name' => 'テストグループ01', 'login' => 'test06'],
+            ['name' => 'テストグループ01', 'login' => 'test07'],
+            ['name' => 'テストグループ01', 'login' => 'test08'],
+            ['name' => 'テストグループ01', 'login' => 'test09'],
+            ['name' => 'テストグループ01', 'login' => 'test10'],
+            ['name' => 'テストグループ02', 'login' => 'test01'],
+            ['name' => 'テストグループ02', 'login' => 'test02'],
+            ['name' => 'テストグループ02', 'login' => 'test03'],
+            ['name' => 'テストグループ02', 'login' => 'test04'],
+            ['name' => 'テストグループ02', 'login' => 'test05'],
+            ['name' => 'テストグループ02', 'login' => 'test06'],
+            ['name' => 'テストグループ02', 'login' => 'test07'],
+            ['name' => 'テストグループ02', 'login' => 'test08'],
+            ['name' => 'テストグループ02', 'login' => 'test09'],
+            ['name' => 'テストグループ02', 'login' => 'test10'],
+            ['name' => 'テストグループ02', 'login' => 'test11'],
+            ['name' => 'テストグループ02', 'login' => 'test12'],
+            ['name' => 'テストグループ02', 'login' => 'test13'],
+            ['name' => 'テストグループ02', 'login' => 'test14'],
+            ['name' => 'テストグループ02', 'login' => 'test15'],
+            ['name' => 'テストグループ02', 'login' => 'test16'],
+            ['name' => 'テストグループ02', 'login' => 'test17'],
+            ['name' => 'テストグループ02', 'login' => 'test18'],
+            ['name' => 'テストグループ02', 'login' => 'test19'],
+            ['name' => 'テストグループ02', 'login' => 'test20'],
+            ['name' => 'テストグループ03', 'login' => 'test21'],
+            ['name' => 'テストグループ03', 'login' => 'test22'],
+            ['name' => 'テストグループ03', 'login' => 'test23'],
+            ['name' => 'テストグループ03', 'login' => 'test24'],
+            ['name' => 'テストグループ03', 'login' => 'test25'],
+            ['name' => 'テストグループ03', 'login' => 'test26'],
+            ['name' => 'テストグループ03', 'login' => 'test27'],
+            ['name' => 'テストグループ03', 'login' => 'test28'],
+            ['name' => 'テストグループ03', 'login' => 'test29'],
+            ['name' => 'テストグループ03', 'login' => 'test30'],
+        ];
+
+        foreach($groups_users as $group_user){
+            $group = Group::whereName($group_user['name'])->first();
+            if(is_null($group)){ continue; }
+            $user = User::whereLogin($group_user['login'])->first();
+            if(is_null($user)){ continue; }
+            DB::table('groups_users')->updateOrInsert(
+                ['group_id' => $group->id, 'user_id' => $user->id],
+                []
+            );
+        }
+    }
+
     /**
      * Run the database seeds.
      *
@@ -99,5 +157,6 @@ class TestSeeder extends Seeder
     {
         $this->createUsers();
         $this->createGroups();
+        $this->createGroupsUsers();
     }
 }

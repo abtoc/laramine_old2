@@ -24,7 +24,8 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="text-center"> {{ __('Group') }}</th>
+                                    <th class="text-center">{{ __('Group') }}</th>
+                                    <th class="text-center">{{ __('User') }}</th>
                                     <th class="text-end">
                                         <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('groups.create', request()->query()) }}"> {{ __('New Group')}}</a>
                                     </th>
@@ -41,6 +42,7 @@
                                                 {{ $group->name }}
                                             </a>
                                         </td>
+                                        <td class="text-center">{{ $group->users->count() }}</td>
                                         <td class="text-end">
                                             @if($group->isDelete())
                                                 <a href="{{ route('groups.destroy', $query) }}" class="link-dark bi bi-trash text-decoration-none"

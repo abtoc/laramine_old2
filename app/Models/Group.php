@@ -60,6 +60,12 @@ class Group extends Model
     ];
 
     /**
+     * relations
+     */
+
+    public function users() { return $this->belongsToMany(User::class, 'groups_users', 'group_id', 'user_id'); }
+
+    /**
      * return bool
      * @return bool
      */

@@ -79,6 +79,12 @@ class User extends Authenticatable
     ];
 
     /**
+     * relations
+     */
+
+    public function groups() { return $this->belongsToMany(Group::class, 'groups_users', 'user_id', 'group_id'); }
+
+    /**
      * return bool
      */
     public function isUser(): bool
