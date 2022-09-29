@@ -69,8 +69,11 @@ class Group extends Model
      * return bool
      * @return bool
      */
-    public function isGroup(): bool
+    public function isGroup($only=false): bool
     {
+        if($only){
+            return $this->type === UserType::GROUP;
+        }
         return in_array($this->type, [UserType::GROUP, UserType::GROUP_ANONYMOUS, UserType::GROUP_NON_MEMBER, UserType::ANONYMOUS_USER]);
     }
 

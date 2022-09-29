@@ -12,15 +12,13 @@ class GroupUsers extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
+    protected $listeners = ['refreshComponent' => '$refresh'];
     
     public $group;
 
     public function render()
     {
-        $users = User::query()
-                    ->join('groups_users', 'id', '=', 'groups_users.user_id')
-                    ->where('groups_users.group_id', '=', $this->group->id)
-                    ->paginate(10);
+        $users = $this->group->users()->orderBy('name', 'asc')->paginate(10);
 
         return view('livewire.group-users', compact('users'));
     }
@@ -28,5 +26,6 @@ class GroupUsers extends Component
     public function destroy($id)
     {
         $this->group->users()->detach($id);
+        $this->emit('refreshComponent');
     }
 }

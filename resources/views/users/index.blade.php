@@ -48,7 +48,7 @@
                                     @php
                                         $query = array_merge(['user'=>$user], request()->query());
                                     @endphp
-                                    <tr>
+                                    <tr @class(['lock' => !$user->isActive()])>
                                         <td class="text-start">
                                             <a href="{{ route('users.edit', $query) }}">
                                                 {{ $user->login }}

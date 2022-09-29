@@ -29,3 +29,20 @@ main {
 header, footer {
     background-color: #e3f2fd;
 }
+
+tr.lock {
+    td {
+        @extend .text-muted;
+        a {
+            @extend .link-secondary;
+        }
+    }
+}
+
+tr.unlock {
+    td {
+        a {
+
+        }
+    }
+}

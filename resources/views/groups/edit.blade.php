@@ -19,9 +19,11 @@
                         <li class="nav-item">
                             <a href="{{ route('groups.edit', ['group' => $group])}}" class="nav-link active" aria-current="page"  href="#">{{ __('All') }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('groups.users', ['group' => $group])}}" class="nav-link">{{ __('User') }}</a>
-                        </li>
+                        @if($group->isGroup(true))
+                            <li class="nav-item">
+                                <a href="{{ route('groups.users', ['group' => $group])}}" class="nav-link">{{ __('User') }}</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <a href="{{ route('groups.projects', ['group' => $group]) }}" class="nav-link">{{ __('Project') }}</a>
                         </li>
@@ -34,7 +36,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $group->name) }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" @unless($group->isGroup()) disabled="disabled" @endunless name="name" value="{{ old('name', $group->name) }}" required autocomplete="name" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
