@@ -11,7 +11,7 @@
                 <div class="mb-3">
                     <input type="text" class="form-control" wire:model="search">
                 </div>
-                <div class="d-flex flex-column flex-wrap" style="height: 400px">
+                <div class="d-flex flex-column flex-wrap overflow-auto" style="height: 400px">
                     @foreach($users as $user)
                         <div class="form-check">
                             <input type="checkbox" id="checks-{{ $user->id }}" class="form-check-input" value="1" wire:model="checks.{{ $user->id }}">
