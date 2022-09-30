@@ -120,7 +120,7 @@ class UserController extends Controller
         $user->fill($request->all());
         $user->save();
 
-        return to_route('users.index');
+        return to_route('users.index', $request->query());
     }
 
     /**

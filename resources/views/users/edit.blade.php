@@ -28,7 +28,10 @@
 
                 <div class="card-body">
                     @include('components.alert')
-                    <form method="POST" action="{{ route('users.update', ['user' => $user]) }}">
+                    @php
+                        $query = array_merge(['user'=>$user], request()->query());
+                    @endphp
+                    <form method="POST" action="{{ route('users.update', $query) }}">
                         @csrf
                         @method('PUT')
 
