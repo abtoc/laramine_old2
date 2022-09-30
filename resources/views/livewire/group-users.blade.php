@@ -22,5 +22,5 @@
         </tbody>
     </table>
     {{ $users->links() }}
-    @livewire('group-users-add', ['group'=>$group])
+    @livewire('group-users-add', ['group' => $group])
 </div>

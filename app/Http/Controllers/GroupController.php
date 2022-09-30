@@ -32,7 +32,7 @@ class GroupController extends Controller
         if(!empty($request->query('name', ''))){
             $query = $query->where('name', 'like', '%'.$request->query('name').'%');
         }
-        $groups = $query->orderBy('name', 'asc')->paginate(10);
+        $groups = $query->orderBy('name', 'asc')->paginate(config('laramine.per_page'));
         return view('groups.index', compact('groups'));
     }
 

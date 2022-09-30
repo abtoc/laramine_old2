@@ -43,7 +43,7 @@ class UserController extends Controller
         if(!empty($request->query('name', ''))){
             $query = $query->where('name', 'like', '%'.$request->query('name').'%');
         }
-        $users = $query->sortable(['created_at' => 'asc'])->paginate(10);
+        $users = $query->sortable(['created_at' => 'asc'])->paginate(config('laramine.per_page'));
         return view('users.index', compact('users'));
     }
 

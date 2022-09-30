@@ -6,12 +6,14 @@ use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class GroupUsersAdd extends Component
 {
+    use WithPagination;
+
     public $group;
     public $search = "";
-    public $users = null;
     public $checks = array();
 
     protected $listeners = ['refreshComponent' => '$refresh'];
@@ -24,6 +26,7 @@ class GroupUsersAdd extends Component
             }
         }
         $this->checks = array();
+        $this->setPage(1, 'users-page');
         $this->emit('refreshComponent');
     }
 
@@ -40,8 +43,9 @@ class GroupUsersAdd extends Component
         if(!empty($this->search)){
             $query = $query->where("name", "like", "%".$this->search."%");
         }
-        $this->users = $query->get();
+        
+        $users = $query->simplePaginate(30, ['*'], 'users-page');
 
-        return view('livewire.group-users-add');
+        return view('livewire.group-users-add', compact('users'));
     }
 }

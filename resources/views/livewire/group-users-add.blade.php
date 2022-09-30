@@ -19,6 +19,7 @@
                         </div>
                     @endforeach
                 </div>
+                {{ $users->links('livewire.modal-paginate') }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Close') }}</button>
