@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="card-body">
+                    @include('components.alert')
                     <form method="POST" action="{{ route('users.update', ['user' => $user]) }}">
                         @csrf
                         @method('PUT')

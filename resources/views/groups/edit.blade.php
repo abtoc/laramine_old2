@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="card-body">
+                    @include('components.alert')
                     <ul class="nav nav-tabs mb-3">
                         <li class="nav-item">
                             <a href="{{ route('groups.edit', ['group' => $group])}}" class="nav-link active" aria-current="page"  href="#">{{ __('All') }}</a>

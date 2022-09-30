@@ -1,4 +1,5 @@
 <div>
+    @include('components.alert')
     <table class="table w-100">
         <thead>
             <th class="text-center">{{ __('User') }}</th>

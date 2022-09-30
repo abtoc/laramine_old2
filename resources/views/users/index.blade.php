@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('User') }}</div>
                 <div class="card-body">
+                    @include('components.alert')
                     <div class="row mb-3">
                         <form id="search" action="{{ route('users.index') }}" method="GET">
                             <div class="row g-1">

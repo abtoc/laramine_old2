@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="card-body">
+                    @include('components.alert')
                     <form method="POST" action="{{ route('groups.store') }}">
                         @csrf
 
