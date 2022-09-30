@@ -16,6 +16,9 @@
 
                 <div class="card-body">
                     @include('components.alert')
+                    @php
+                        $query = array_merge(['group'=>$group], request()->query());
+                    @endphp
                     <ul class="nav nav-tabs mb-3">
                         <li class="nav-item">
                             <a href="{{ route('groups.edit', ['group' => $group])}}" class="nav-link active" aria-current="page"  href="#">{{ __('All') }}</a>
@@ -29,7 +32,7 @@
                             <a href="{{ route('groups.projects', ['group' => $group]) }}" class="nav-link">{{ __('Project') }}</a>
                         </li>
                     </ul>
-                    <form method="POST" action="{{ route('groups.update', ['group' => $group]) }}">
+                    <form method="POST" action="{{ route('groups.update', $query) }}">
                         @csrf
                         @method('PUT')
 

@@ -103,7 +103,7 @@ class GroupController extends Controller
         $group->fill($request->all());
         $group->save();
 
-        return to_route('groups.index');
+        return to_route('groups.index', $request->query());
     }
 
     /**
