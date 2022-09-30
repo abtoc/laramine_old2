@@ -50,7 +50,8 @@
     "Please change your password.":"パスワードを変更して下さい。",
     "Pending system administrator approval.":"管理者の承認待ちです。",
     "Forces password change at next login":"次回ログイン時にパスワード変更を強制",
-
+    "No data to display.":"表示するデータがありません。",
+   
     "User":"ユーザー",
     "Group":"グループ",
     "Project":"プロジェクト",

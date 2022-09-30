@@ -33,7 +33,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($groups as $group)
+                                @forelse($groups as $group)
                                     @php
                                         $query = array_merge(['group'=>$group], request()->query());
                                     @endphp
@@ -58,7 +58,11 @@
                                             @endunless
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="3">{{ __('No data to display.') }}</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                         {{ $groups->appends(request()->query())->links() }}

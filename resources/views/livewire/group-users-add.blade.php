@@ -7,12 +7,12 @@
                 </div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="height: 400px">
+            <div class="modal-body" style="height: 460px">
                 @include('components.alert')
                 <div class="mb-3">
                     <input type="text" class="form-control" wire:model="search">
                 </div>
-                <div class="d-flex flex-column flex-wrap" style="height: 340px">
+                <div class="d-flex flex-column flex-wrap" style="height: 400px">
                     @foreach($users as $user)
                         <div class="form-check">
                             <input type="checkbox" id="checks-{{ $user->id }}" class="form-check-input" value="1" wire:model="checks.{{ $user->id }}">

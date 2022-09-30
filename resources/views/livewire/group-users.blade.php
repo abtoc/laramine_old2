@@ -10,7 +10,7 @@
             </th>
         </thead>
         <tbody>
-            @foreach($users as $user)
+            @forelse($users as $user)
                 <tr @class(['lock' => !$user->isActive()])>
                     <td class="text-start">
                         <a href="{{ route('users.show', ['user' => $user]) }}">{{ $user->name }}</a>
@@ -19,7 +19,13 @@
                         <a href="#" class="bi bi-trash" wire:click.prevent="destroy({{ $user->id }})">{{ __('Delete') }}</a>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="2">
+                        <div class="alert alert-warning">{{ __('No data to display.') }}</div>
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
     {{ $users->links() }}

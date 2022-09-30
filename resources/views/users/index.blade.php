@@ -45,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $user)
+                                @forelse($users as $user)
                                     @php
                                         $query = array_merge(['user'=>$user], request()->query());
                                     @endphp
@@ -97,7 +97,13 @@
                                             @endif
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="8">
+                                            <div class="alert alert-warning">{{ __('No data to display.') }}</div>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                         {{ $users->appends(request()->query())->links() }}
