@@ -95,6 +95,14 @@ class User extends Authenticatable
     /**
      * @return bool
      */
+    public function isAdmin(): bool
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @return bool
+     */
     public function isActive(): bool
     {
         return $this->status === UserStatus::ACTIVE;

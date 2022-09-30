@@ -6,12 +6,24 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <nav>
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ route('users.index', request()->query()) }}">{{ __('User') }}</a></li>
-                            <li class="breadcrumb-item active">{{ $user->login }}</li>
-                        </ol>
-                    </nav>
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            <nav>
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="{{ route('users.index', request()->query()) }}">{{ __('User') }}</a></li>
+                                    <li class="breadcrumb-item active">{{ $user->login }}</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div>
+                            <a href="{{ route('users.show', ['user' => $user]) }}" class="ms-2 text-reset text-decoration-none bi bi-person">
+                                {{ __('Profile') }}
+                            </a>
+                            <a href="{{ route('users.destroy', ['user' => $user]) }}" class="ms-2 text-reset text-decoration-none bi bi-trash">
+                                {{ __('Delete') }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card-body">

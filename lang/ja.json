@@ -58,6 +58,8 @@
     "Administrator":"管理者",
     "CreatedAt":"作成日",
     "LastLoginAt":"最終接続日",
+    "Information":"情報",
+    "Profile":"プロフィール",
 
     "All": "全般"
 }
