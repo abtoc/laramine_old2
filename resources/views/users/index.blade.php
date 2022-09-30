@@ -8,11 +8,11 @@
                 <div class="card-header">{{ __('User') }}</div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <form action="{{ route('users.index') }}" method="GET">
+                        <form id="search" action="{{ route('users.index') }}" method="GET">
                             <div class="row g-1">
                                 <label for="status" class="col-auto col-form-label text-md-end">{{ __('Status') }}:</label>
                                 <div class="col-auto">
-                                    <select name="status" id="status" class="form-select">
+                                    <select name="status" id="status" class="form-select" onclick="document.getElementById('search').submit();">
                                         @foreach(App\Enums\UserStatus::cases() as $status)
                                             <option value="{{ $status->value }}" @selected(request()->query('status', 1) == $status->value)>{{ $status->string() }}</option>
                                         @endforeach
