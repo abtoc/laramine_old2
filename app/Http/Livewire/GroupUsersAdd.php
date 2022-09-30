@@ -44,7 +44,7 @@ class GroupUsersAdd extends Component
             $query = $query->where("name", "like", "%".$this->search."%");
         }
         
-        $users = $query->simplePaginate(30, ['*'], 'users-page');
+        $users = $query->simplePaginate(39, ['*'], 'users-page');
 
         return view('livewire.group-users-add', compact('users'));
     }
