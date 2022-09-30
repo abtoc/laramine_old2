@@ -37,7 +37,7 @@
                         @method('PUT')
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" @unless($group->isGroup(true)) disabled @endunless name="name" value="{{ old('name', $group->name) }}" required autocomplete="name" autofocus>
