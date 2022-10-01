@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\UserStatus;
 use App\Enums\UserType;
 use App\Models\Group;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -168,6 +169,59 @@ class TestSeeder extends Seeder
         }
     }
 
+    private function createProjects()
+    {
+        $projects = [
+            [ 'name' => 'テストプロジェクト01',     'description' => '', 'parent' => null ],
+            [ 'name' => 'テストプロジェクト0101',   'description' => '', 'parent' => 'テストプロジェクト01'],
+            [ 'name' => 'テストプロジェクト010101', 'description' => '', 'parent' => 'テストプロジェクト0101'],
+            [ 'name' => 'テストプロジェクト010102', 'description' => '', 'parent' => 'テストプロジェクト0101'],
+            [ 'name' => 'テストプロジェクト0102',   'description' => '', 'parent' => 'テストプロジェクト01'],
+            [ 'name' => 'テストプロジェクト010201', 'description' => '', 'parent' => 'テストプロジェクト0102'],
+            [ 'name' => 'テストプロジェクト010202', 'description' => '', 'parent' => 'テストプロジェクト0102'],
+            [ 'name' => 'テストプロジェクト0103',   'description' => '', 'parent' => 'テストプロジェクト01'],
+            [ 'name' => 'テストプロジェクト02',     'description' => '', 'parent' => null ],
+            [ 'name' => 'テストプロジェクト0201',   'description' => '', 'parent' => 'テストプロジェクト02'],
+            [ 'name' => 'テストプロジェクト0202',   'description' => '', 'parent' => 'テストプロジェクト02'],
+            [ 'name' => 'テストプロジェクト0203',   'description' => '', 'parent' => 'テストプロジェクト02'],
+            [ 'name' => 'テストプロジェクト020301', 'description' => '', 'parent' => 'テストプロジェクト0203'],
+            [ 'name' => 'テストプロジェクト020302', 'description' => '', 'parent' => 'テストプロジェクト0203'],
+            [ 'name' => 'テストプロジェクト020303', 'description' => '', 'parent' => 'テストプロジェクト0203'],
+            [ 'name' => 'テストプロジェクト020304', 'description' => '', 'parent' => 'テストプロジェクト0203'],
+            [ 'name' => 'テストプロジェクト0204',   'description' => '', 'parent' => 'テストプロジェクト02'],
+            [ 'name' => 'テストプロジェクト020401', 'description' => '', 'parent' => 'テストプロジェクト0204'],
+            [ 'name' => 'テストプロジェクト020402', 'description' => '', 'parent' => 'テストプロジェクト0204'],
+            [ 'name' => 'テストプロジェクト020403', 'description' => '', 'parent' => 'テストプロジェクト0204'],
+            [ 'name' => 'テストプロジェクト020404', 'description' => '', 'parent' => 'テストプロジェクト0204'],
+            [ 'name' => 'テストプロジェクト03',     'description' => '', 'parent' => null ],
+            [ 'name' => 'テストプロジェクト0301',   'description' => '', 'parent' => 'テストプロジェクト03'],
+            [ 'name' => 'テストプロジェクト0302',   'description' => '', 'parent' => 'テストプロジェクト03'],
+            [ 'name' => 'テストプロジェクト0303',   'description' => '', 'parent' => 'テストプロジェクト03'],
+            [ 'name' => 'テストプロジェクト0304',   'description' => '', 'parent' => 'テストプロジェクト03'],
+            [ 'name' => 'テストプロジェクト0305',   'description' => '', 'parent' => 'テストプロジェクト03'],
+            [ 'name' => 'テストプロジェクト04',     'description' => '', 'parent' => null ],
+            [ 'name' => 'テストプロジェクト05',     'description' => '', 'parent' => null ],
+            [ 'name' => 'テストプロジェクト0501',   'description' => '', 'parent' => 'テストプロジェクト05'],
+            [ 'name' => 'テストプロジェクト0502',   'description' => '', 'parent' => 'テストプロジェクト05'],
+            [ 'name' => 'テストプロジェクト0503',   'description' => '', 'parent' => 'テストプロジェクト05'],
+            [ 'name' => 'テストプロジェクト06',     'description' => '', 'parent' => null ],
+        ];
+
+        foreach($projects as $project)
+        {
+            $project['parent_id'] = null;
+            $query = Project::whereName($project['parent']);
+            if($query->exists()){
+                $project['parent_id'] = $query->first()->id;
+            }
+            unset($project['parent']);
+            Project::updateOrCreate(
+                ['name' => $project['name']],
+                $project
+            );
+        }
+    }
+
     /**
      * Run the database seeds.
      *
@@ -178,5 +232,6 @@ class TestSeeder extends Seeder
         $this->createUsers();
         $this->createGroups();
         $this->createGroupsUsers();
+        $this->createProjects();
     }
 }

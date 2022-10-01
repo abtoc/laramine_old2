@@ -36,17 +36,17 @@
                         <a href="/telescope" class="nav-link">Telescope</a>
                     </li>
                 @endif
-                    @can('admin')
+                    @if(Gate::check('admin') or Gate::check('admin-users'))
                         <li class="nav-item">
                             <a href="{{ route('admin') }}" class="nav-link">{{ __('Admin') }}</a>
                         </li>
-                    @endcan
+                    @endif
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
 
-                        <ul class="dropdown-menu drowdown-menu-end" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li>
                                 <a href="{{ route('my.password.edit')}}" class="dropdown-item">{{ __('Change Password') }} </a>
                             </li>
