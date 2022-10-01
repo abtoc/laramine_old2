@@ -4,7 +4,7 @@
 <div class="content px-4 py-4">
     @include('components.alert')
     <div>
-        <h2>{{ $user->name }}</h2>
+        <h2 class="mb-3">{{ $user->name }}</h2>
         <div class="card mb-3">
             <div class="card-header">{{ __('Information') }}</div>
             <div class="card-body">
@@ -23,11 +23,11 @@
                 <div class="card-body">
                     <ul>
                         @foreach($user->groups as $group)
-                            @if($user->isAdmin())
+                            @can('admin')
                                 <li><a href="{{ route('groups.edit', ['group' => $group]) }}">{{ $group->name }}</a></li>
                             @else
                                 <li>{{ $group->name }}</li>
-                            @endif
+                            @endcan
                         @endforeach
                     </ul>
                 </div>

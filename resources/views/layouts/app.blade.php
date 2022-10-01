@@ -20,7 +20,6 @@
     @livewireStyles
 </head>
 <body>
-    @livewireScripts
     <div id="app">
         @include('components.header')
         <main>
@@ -28,6 +27,7 @@
         </main>
         @include('components.footer')
     </div>
+    @livewireScripts
     @stack('scripts')
 </body>
 </html>

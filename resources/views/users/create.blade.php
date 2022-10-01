@@ -95,6 +95,26 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
+                                <input type="checkbox" class="form-check-input @error('admin_users') is-invalud @enderror" id="admin-users" name="admin_users" value="1" @checked(old('admin_users'))>
+                                <label for="admin-users" class="form-check-label">{{ __('User Admin') }}</label>
+                                @error('admin_users')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
+                                <input type="checkbox" class="form-check-input @error('admin_projects') is-invalud @enderror" id="admin-projects" name="admin_projects" value="1" @checked(old('admin_projects'))>
+                                <label for="admin-projects" class="form-check-label">{{ __('Project Admin') }}</label>
+                                @error('admin_projects')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4">
                                 <input type="checkbox" class="form-check-input @error('must_change_password') is-invalud @enderror" id="must-change-password" name="must_change_password" value="1" @checked(old('must_change_password'))>
                                 <label for="must-change-password" class="form-check-label">{{ __('Forces password change at next login') }}</label>
                                 @error('must_change_password')

@@ -20,7 +20,7 @@ class GroupPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->admin 
+        return ($user->admin or $user->admin_users)
              ? Response::allow()
              : Response::denyAsNotFound();
     }
@@ -35,7 +35,7 @@ class GroupPolicy
     public function view(User $user, Group $group)
     {
         if($group->isGroup()){
-            return $user->admin 
+            return ($user->admin or $user->admin_users)
                 ? Response::allow()
                 : Response::denyAsNotFound();
         }
@@ -50,7 +50,7 @@ class GroupPolicy
      */
     public function create(User $user)
     {
-        return $user->admin 
+        return ($user->admin or $user->admin_users)
              ? Response::allow()
              : Response::denyAsNotFound();
     }
@@ -65,7 +65,7 @@ class GroupPolicy
     public function update(User $user, Group $group)
     {
         if($group->isGroup()){
-            return $user->admin 
+            return ($user->admin or $user->admin_users)
                 ? Response::allow()
                 : Response::denyAsNotFound();
         }
@@ -81,8 +81,8 @@ class GroupPolicy
      */
     public function delete(User $user, Group $group)
     {
-        if($group->isGroup()){
-            return $user->admin 
+        if($group->isGroup(true)){
+            return ($user->admin or $user->admin_users)
                 ? Response::allow()
                 : Response::denyAsNotFound();
         }
@@ -102,7 +102,7 @@ class GroupPolicy
             if($group->type !== UserType::GROUP){
                 return Response::denyAsNotFound();
             }
-            return $user->admin 
+            return ($user->admin or $user->admin_users)
                 ? Response::allow()
                 : Response::denyAsNotFound();
         }
@@ -122,7 +122,7 @@ class GroupPolicy
             return Response::denyAsNotFound();
         }
         if($group->isGroup()){
-            return $user->admin 
+            return ($user->admin or $user->admin_users)
                 ? Response::allow()
                 : Response::denyAsNotFound();
         }
@@ -136,8 +136,8 @@ class GroupPolicy
      */
     public function users(User $user, Group $group)
     {
-        if($group->isGroup()){
-            return $user->admin 
+        if($group->isGroup(true)){
+            return ($user->admin or $user->admin_users)
                 ? Response::allow()
                 : Response::denyAsNotFound();
         }
@@ -152,7 +152,7 @@ class GroupPolicy
     public function projects(User $user, Group $group)
     {
         if($group->isGroup()){
-            return $user->admin 
+            return ($user->admin or $user->admin_users)
                 ? Response::allow()
                 : Response::denyAsNotFound();
         }

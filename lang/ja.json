@@ -34,6 +34,8 @@
     "New Group":"新しいグループ",
     "Status":"ステータス",
     "Apply":"適用",
+    "User Admin":"ユーザー管理者",
+    "Project Admin":"プロジェクト管理者",
 
     "All User":"全て",
     "Active":"有効",
@@ -61,6 +63,10 @@
     "LastLoginAt":"最終接続日",
     "Information":"情報",
     "Profile":"プロフィール",
+
+    "Anonymous users":"匿名ユーザー",
+    "Non member users":"非メンバー",
+    "Anonymous":"匿名ユーザー",
 
     "All": "全般"
 }

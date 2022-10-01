@@ -37,6 +37,8 @@
                                     <th class="text-center">@sortablelink('name',  __('Name'))</th>
                                     <th class="text-center">{{ __('Email') }}</th>
                                     <th class="text-center">{{ __('Admin') }}</th>
+                                    <th class="text-center">{{ __('User Admin') }}</th>
+                                    <th class="text-center">{{ __('Project Admin') }}</th>
                                     <th class="text-center">@sortablelink('created_at', __('CreatedAt'))</th>
                                     <th class="text-center">@sortablelink('last_login_at', __('LastLoginAt'))</th>
                                     <th class="text-end">
@@ -62,6 +64,8 @@
                                             </a>
                                         </td>
                                         <td class="text-center">@if($user->admin)<i class="bi bi-check"></i> @endif</td>
+                                        <td class="text-center">@if($user->admin_users)<i class="bi bi-check"></i> @endif</td>
+                                        <td class="text-center">@if($user->admin_projects)<i class="bi bi-check"></i> @endif</td>
                                         <td class="text-center">{{ $user->created_at->toDateTimeString('minute') }}</td>
                                         <td class="text-center">@unless(is_null($user->last_login_at)){{ $user->last_login_at->toDateTimeString('minute') }}@endunless</td>
                                         <td class="text-end">
@@ -99,7 +103,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8">
+                                        <td colspan="10">
                                             <div class="alert alert-warning">{{ __('No data to display.') }}</div>
                                         </td>
                                     </tr>

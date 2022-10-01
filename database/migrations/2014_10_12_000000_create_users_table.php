@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedTinyInteger('status')->default(UserStatus::ACTIVE->value);
             $table->boolean('admin')->default(false);
+            $table->boolean('admin_users')->default(false);
+            $table->boolean('admin_projects')->default(false);
             $table->boolean('must_change_password')->default(false);
             $table->rememberToken();
             $table->dateTime('last_login_at')->nullable();

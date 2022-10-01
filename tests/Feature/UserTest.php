@@ -22,9 +22,13 @@ class UserTest extends TestCase
     public function test_ユーザ一覧()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
 
         $response = $this->actingAs($user_admin)->get(route('users.index'));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user_users)->get(route('users.index'));
         $response->assertStatus(200);
 
         $response = $this->actingAs($user_other)->get(route('users.index'));
@@ -34,10 +38,14 @@ class UserTest extends TestCase
     public function test_ユーザー登録()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
 
         $response = $this->actingAs($user_other)->get(route('users.create'));
         $response->assertStatus(404);
+
+        $response = $this->actingAs($user_users)->get(route('users.create'));
+        $response->assertStatus(200);
 
         $response = $this->actingAs($user_admin)->get(route('users.create'));
         $response->assertStatus(200);
@@ -115,11 +123,15 @@ class UserTest extends TestCase
     public function test_ユーザー編集()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
         $user       = User::factory()->create();
 
         $response = $this->actingAs($user_other)->get(route('users.edit', ['user' => $user]));
         $response->assertStatus(404);
+
+        $response = $this->actingAs($user_users)->get(route('users.edit', ['user' => $user]));
+        $response->assertStatus(200);
 
         $response = $this->actingAs($user_admin)->get(route('users.edit', ['user' => $user]));
         $response->assertStatus(200);
@@ -196,19 +208,27 @@ class UserTest extends TestCase
     public function test_ユーザー削除()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
-        $user       = User::factory()->create();
+        $user1      = User::factory()->create();
+        $user2      = User::factory()->create();
 
-        $response = $this->actingAs($user_other)->post(route('users.destroy', ['user'=>$user]),[
+        $response = $this->actingAs($user_other)->post(route('users.destroy', ['user'=>$user1]),[
             '_method' => 'DELETE',
         ]);
         $response->assertStatus(404);
 
-        $response = $this->actingAs($user_admin)->post(route('users.destroy', ['user'=>$user]),[
+        $response = $this->actingAs($user_users)->post(route('users.destroy', ['user'=>$user1]),[
             '_method' => 'DELETE',
         ]);
         $response->assertRedirect(route('users.index'));
-        $this->assertNull(User::find($user->id));
+        $this->assertNull(User::find($user1->id));
+
+        $response = $this->actingAs($user_admin)->post(route('users.destroy', ['user'=>$user2]),[
+            '_method' => 'DELETE',
+        ]);
+        $response->assertRedirect(route('users.index'));
+        $this->assertNull(User::find($user2->id));
 
         $response = $this->actingAs($user_admin)->post(route('users.destroy', ['user'=>$user_admin]),[
             '_method' => 'DELETE',
@@ -219,18 +239,26 @@ class UserTest extends TestCase
     public function test_ユーザーロック()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
-        $user       = User::factory()->create();
+        $user1      = User::factory()->create();
+        $user2      = User::factory()->create();
 
-        $response = $this->actingAs($user_other)->post(route('users.lock', ['user'=>$user]),[
+        $response = $this->actingAs($user_other)->post(route('users.lock', ['user'=>$user1]),[
         ]);
         $response->assertStatus(404);
 
-        $response = $this->actingAs($user_admin)->post(route('users.lock', ['user'=>$user]),[
+        $response = $this->actingAs($user_users)->post(route('users.lock', ['user'=>$user1]),[
         ]);
         $response->assertRedirect(route('users.index'));
-        $user = User::find($user->id);
-        $this->assertTrue($user->status === UserStatus::LOCKED);
+        $user1 = User::find($user1->id);
+        $this->assertTrue($user1->status === UserStatus::LOCKED);
+
+        $response = $this->actingAs($user_admin)->post(route('users.lock', ['user'=>$user2]),[
+        ]);
+        $response->assertRedirect(route('users.index'));
+        $user2 = User::find($user2->id);
+        $this->assertTrue($user2->status === UserStatus::LOCKED);
 
         $response = $this->actingAs($user_admin)->post(route('users.lock', ['user'=>$user_admin]),[
         ]);
@@ -240,18 +268,26 @@ class UserTest extends TestCase
     public function test_ユーザーアンロック()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
-        $user       = User::factory()->create(['status' => UserStatus::LOCKED]);
+        $user1      = User::factory()->create(['status' => UserStatus::LOCKED]);
+        $user2      = User::factory()->create(['status' => UserStatus::LOCKED]);
 
-        $response = $this->actingAs($user_other)->post(route('users.unlock', ['user'=>$user]),[
+        $response = $this->actingAs($user_other)->post(route('users.unlock', ['user'=>$user1]),[
         ]);
         $response->assertStatus(404);
 
-        $response = $this->actingAs($user_admin)->post(route('users.unlock', ['user'=>$user]),[
+        $response = $this->actingAs($user_users)->post(route('users.unlock', ['user'=>$user1]),[
         ]);
         $response->assertRedirect(route('users.index'));
-        $user = User::find($user->id);
-        $this->assertTrue($user->status === UserStatus::ACTIVE);
+        $user1 = User::find($user1->id);
+        $this->assertTrue($user1->status === UserStatus::ACTIVE);
+
+        $response = $this->actingAs($user_admin)->post(route('users.unlock', ['user'=>$user2]),[
+        ]);
+        $response->assertRedirect(route('users.index'));
+        $user2 = User::find($user2->id);
+        $this->assertTrue($user2->status === UserStatus::ACTIVE);
 
         $response = $this->actingAs($user_admin)->post(route('users.unlock', ['user'=>$user_admin]),[
         ]);

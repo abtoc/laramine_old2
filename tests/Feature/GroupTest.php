@@ -30,9 +30,13 @@ class GroupTest extends TestCase
     public function test_グループ一覧()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
 
         $response = $this->actingAs($user_admin)->get(route('groups.index'));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user_users)->get(route('groups.index'));
         $response->assertStatus(200);
 
         $response = $this->actingAs($user_other)->get(route('groups.index'));
@@ -42,10 +46,14 @@ class GroupTest extends TestCase
     public function test_グループ登録()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
 
         $response = $this->actingAs($user_other)->get(route('groups.create'));
         $response->assertStatus(404);
+
+        $response = $this->actingAs($user_users)->get(route('groups.create'));
+        $response->assertStatus(200);
 
         $response = $this->actingAs($user_admin)->get(route('groups.create'));
         $response->assertStatus(200);
@@ -70,10 +78,14 @@ class GroupTest extends TestCase
     public function test_グループ登録_ユーザ名ならOK()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
 
         $response = $this->actingAs($user_other)->get(route('groups.create'));
         $response->assertStatus(404);
+
+        $response = $this->actingAs($user_users)->get(route('groups.create'));
+        $response->assertStatus(200);
 
         $response = $this->actingAs($user_admin)->get(route('groups.create'));
         $response->assertStatus(200);
@@ -131,13 +143,17 @@ class GroupTest extends TestCase
     public function test_グループ編集()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
         $group      = Group::factory()->create();
 
-        $response = $this->actingAs($user_other)->get(route('groups.create'));
+        $response = $this->actingAs($user_other)->get(route('groups.edit', ['group' => $group]));
         $response->assertStatus(404);
 
-        $response = $this->actingAs($user_admin)->get(route('groups.create'));
+        $response = $this->actingAs($user_users)->get(route('groups.edit', ['group' => $group]));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user_admin)->get(route('groups.edit', ['group' => $group]));
         $response->assertStatus(200);
 
         $group_template = [
@@ -161,13 +177,17 @@ class GroupTest extends TestCase
     public function test_グループ編集_ユーザ名ならOK()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
         $group      = Group::factory()->create();
 
-        $response = $this->actingAs($user_other)->get(route('groups.create'));
+        $response = $this->actingAs($user_other)->get(route('groups.edit', ['group' => $group]));
         $response->assertStatus(404);
 
-        $response = $this->actingAs($user_admin)->get(route('groups.create'));
+        $response = $this->actingAs($user_users)->get(route('groups.edit', ['group' => $group]));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user_admin)->get(route('groups.edit', ['group' => $group]));
         $response->assertStatus(200);
 
         $group_template = [
@@ -228,18 +248,26 @@ class GroupTest extends TestCase
     public function test_group削除()
     {
         $user_admin = User::factory()->create(['admin' => true]);
+        $user_users = User::factory()->create(['admin' => false, 'admin_users' => true]);
         $user_other = User::factory()->create(['admin' => false]);
-        $group      = Group::factory()->create();
+        $group1     = Group::factory()->create();
+        $group2     = Group::factory()->create();
 
-        $response = $this->actingAs($user_other)->post(route('groups.destroy', ['group'=>$group]),[
+        $response = $this->actingAs($user_other)->post(route('groups.destroy', ['group'=>$group1]),[
             '_method' => 'DELETE',
         ]);
         $response->assertStatus(404);
 
-        $response = $this->actingAs($user_admin)->post(route('groups.destroy', ['group'=>$group]),[
+        $response = $this->actingAs($user_admin)->post(route('groups.destroy', ['group'=>$group1]),[
             '_method' => 'DELETE',
         ]);
         $response->assertRedirect(route('groups.index'));
-        $this->assertNull(Group::find($group->id));
+        $this->assertNull(Group::find($group1->id));
+
+        $response = $this->actingAs($user_admin)->post(route('groups.destroy', ['group'=>$group2]),[
+            '_method' => 'DELETE',
+        ]);
+        $response->assertRedirect(route('groups.index'));
+        $this->assertNull(Group::find($group2->id));
     }
 }

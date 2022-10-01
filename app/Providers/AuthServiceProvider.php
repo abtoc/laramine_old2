@@ -33,5 +33,10 @@ class AuthServiceProvider extends ServiceProvider
                 ? ResponseResult::allow()
                 : ResponseResult::denyAsNotFound();            
         });      
+        Gate::define('admin-users', function($user){
+            return  $user->admin_users
+                ? ResponseResult::allow()
+                : ResponseResult::denyAsNotFound();            
+        });      
     }
 }

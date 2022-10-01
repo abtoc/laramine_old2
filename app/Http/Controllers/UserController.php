@@ -118,6 +118,18 @@ class UserController extends Controller
         ]);
 
         $user->fill($request->all());
+        if(!$request->has('admin')){
+            $user->admin = false;
+        }
+        if(!$request->has('admin_users')){
+            $user->admin_users = false;
+        }
+        if(!$request->has('admin_projects')){
+            $user->admin_projects = false;
+        }
+        if(!$request->has('must_change_password')){
+            $user->must_change_password = false;
+        }
         $user->save();
 
         return to_route('users.index', $request->query());

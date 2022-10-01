@@ -29,6 +29,8 @@ class User extends Authenticatable
         'password',
         'status',
         'admin',
+        'admin_users',
+        'admin_projects',
         'must_change_password',
     ];
 
