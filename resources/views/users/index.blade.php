@@ -13,7 +13,7 @@
                             <div class="row g-1">
                                 <label for="status" class="col-auto col-form-label text-md-end">{{ __('Status') }}:</label>
                                 <div class="col-auto">
-                                    <select name="status" id="status" class="form-select" onclick="document.getElementById('search').submit();">
+                                    <select name="status" id="status" class="form-select" onchange="document.getElementById('search').submit();">
                                         @foreach(App\Enums\UserStatus::cases() as $status)
                                             <option value="{{ $status->value }}" @selected(request()->query('status', 1) == $status->value)>{{ $status->string() }}</option>
                                         @endforeach
@@ -30,7 +30,7 @@
                         </form>                        
                     </div>
                     <div class="row mb-3">
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead>
                                 <tr>
                                     <th class="text-center">@sortablelink('login', __('Login ID'))</th>

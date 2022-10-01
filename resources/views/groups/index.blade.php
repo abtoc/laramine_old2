@@ -22,7 +22,7 @@
                         </form>                        
                     </div>
                     <div class="row mb-3">
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead>
                                 <tr>
                                     <th class="text-center">{{ __('Group') }}</th>
