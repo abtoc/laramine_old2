@@ -63,7 +63,9 @@
     "LastLoginAt":"最終接続日",
     "Information":"情報",
     "Profile":"プロフィール",
-
+    "Public":"公開",
+    "User Infomation":"ユーザ情報",
+    "Home":"ホーム",
     "Anonymous users":"匿名ユーザー",
     "Non member users":"非メンバー",
     "Anonymous":"匿名ユーザー",

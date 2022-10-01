@@ -21,11 +21,16 @@
 </head>
 <body>
     <div id="app">
-        @include('components.header')
+        <header>
+            @include('components.menu')
+            @include('components.header')
+        </header>
         <main>
             @yield('content')
         </main>
-        @include('components.footer')
+        <footer class="footer mt-auto">
+            @include('components.footer')
+        </footer>
     </div>
     @livewireScripts
     @stack('scripts')

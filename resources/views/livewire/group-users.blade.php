@@ -1,6 +1,6 @@
 <div>
     @include('components.alert')
-    <table class="table table-sm w-100">
+    <table class="table table-sm table-hover w-100">
         <thead>
             <th class="text-center">{{ __('User') }}</th>
             <th class="text-end">

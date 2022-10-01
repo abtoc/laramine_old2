@@ -39,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::pattern('user', '[0-9]+');
         Route::pattern('group', '[0-9]+');
+        Route::pattern('project', '[0-9]+');
     }
 
     /**

@@ -30,7 +30,7 @@
                         </form>                        
                     </div>
                     <div class="row mb-3">
-                        <table class="table table-sm">
+                        <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th class="text-center">@sortablelink('login', __('Login ID'))</th>

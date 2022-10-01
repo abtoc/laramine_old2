@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         App\Models\User::class => App\Policies\UserPolicy::class,
         App\Models\Group::class => App\Policies\GroupPolicy::class,
+        App\Models\Project::class => App\Policies\ProjectPolicy::class,
     ];
 
     /**
@@ -35,6 +36,11 @@ class AuthServiceProvider extends ServiceProvider
         });      
         Gate::define('admin-users', function($user){
             return  $user->admin_users
+                ? ResponseResult::allow()
+                : ResponseResult::denyAsNotFound();            
+        });      
+        Gate::define('admin-projects', function($user){
+            return  $user->admin_projects
                 ? ResponseResult::allow()
                 : ResponseResult::denyAsNotFound();            
         });      

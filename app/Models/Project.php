@@ -46,7 +46,15 @@ class Project extends Model
         'updated_at',
     ];
 
-        /**
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->status === ProjectStatus::ACTIVE;
+    }
+
+    /**
      * The "booting" method of the model
      * 
      * @return void

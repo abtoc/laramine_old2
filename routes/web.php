@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\My\ResetPasswordController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -63,4 +64,14 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
     });
 });
 
+Route::group([], function(){
+    Route::controller(ProjectController::class)->prefix('projects')->name('projects.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/{project}', 'show')->name('show');
+    });
+});
 
+Route::group(['middlewate' => ['auth','usercheck']], function(){
+    Route::controller(ProjectController::class)->prefix('projects')->name('projects.')->group(function(){
+    });
+});
