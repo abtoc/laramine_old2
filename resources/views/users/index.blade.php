@@ -30,87 +30,89 @@
                         </form>                        
                     </div>
                     <div class="row mb-3">
-                        <table class="table table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">@sortablelink('login', __('Login ID'))</th>
-                                    <th class="text-center">@sortablelink('name',  __('Name'))</th>
-                                    <th class="text-center">{{ __('Email') }}</th>
-                                    <th class="text-center">{{ __('Admin') }}</th>
-                                    <th class="text-center">{{ __('User Admin') }}</th>
-                                    <th class="text-center">{{ __('Project Admin') }}</th>
-                                    <th class="text-center">@sortablelink('created_at', __('CreatedAt'))</th>
-                                    <th class="text-center">@sortablelink('last_login_at', __('LastLoginAt'))</th>
-                                    <th class="text-end">
-                                        <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('users.create', request()->query()) }}"> {{ __('Create User')}}</a>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($users as $user)
-                                    @php
-                                        $query = array_merge(['user'=>$user], request()->query());
-                                    @endphp
-                                    <tr @class(['lock' => !$user->isActive()])>
-                                        <td class="text-start">
-                                            <a href="{{ route('users.edit', $query) }}">
-                                                {{ $user->login }}
-                                            </a>
-                                        </td>
-                                        <td class="text-start">{{ $user->name }}</td>
-                                        <td class="text-start">
-                                            <a href="mailto:{{$user->email}}">
-                                                {{ $user->email }}
-                                            </a>
-                                        </td>
-                                        <td class="text-center">@if($user->admin)<i class="bi bi-check"></i> @endif</td>
-                                        <td class="text-center">@if($user->admin_users)<i class="bi bi-check"></i> @endif</td>
-                                        <td class="text-center">@if($user->admin_projects)<i class="bi bi-check"></i> @endif</td>
-                                        <td class="text-center">{{ $user->created_at->toDateTimeString('minute') }}</td>
-                                        <td class="text-center">@unless(is_null($user->last_login_at)){{ $user->last_login_at->toDateTimeString('minute') }}@endunless</td>
-                                        <td class="text-end">
-                                            @if(Auth::id() !== $user->id)
-                                                @if($user->isActive())
-                                                    <a href="{{ route('users.lock', $query) }}" class="link-dark bi bi-lock text-decoration-none"
-                                                        onclick="event.preventDefault();
-                                                        document.getElementById('users-lock-{{$user->id}}').submit();">
-                                                        {{ __('Lock') }}
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" nowrap>@sortablelink('login', __('Login ID'))</th>
+                                        <th class="text-center" nowrap>@sortablelink('name',  __('Name'))</th>
+                                        <th class="text-center" nowrap>{{ __('Email') }}</th>
+                                        <th class="text-center" nowrap>{{ __('Admin') }}</th>
+                                        <th class="text-center" nowrap>{{ __('User Admin') }}</th>
+                                        <th class="text-center" nowrap>{{ __('Project Admin') }}</th>
+                                        <th class="text-center" nowrap>@sortablelink('created_at', __('CreatedAt'))</th>
+                                        <th class="text-center" nowrap>@sortablelink('last_login_at', __('LastLoginAt'))</th>
+                                        <th class="text-end" nowrap>
+                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('users.create', request()->query()) }}"> {{ __('Create User')}}</a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($users as $user)
+                                        @php
+                                            $query = array_merge(['user'=>$user], request()->query());
+                                        @endphp
+                                        <tr @class(['lock' => !$user->isActive()])>
+                                            <td class="text-start" nowrap>
+                                                <a href="{{ route('users.edit', $query) }}">
+                                                    {{ $user->login }}
+                                                </a>
+                                            </td>
+                                            <td class="text-start" nowrap>{{ $user->name }}</td>
+                                            <td class="text-start" nowrap>
+                                                <a href="mailto:{{$user->email}}">
+                                                    {{ $user->email }}
+                                                </a>
+                                            </td>
+                                            <td class="text-center" nowrap>@if($user->admin)<i class="bi bi-check"></i> @endif</td>
+                                            <td class="text-center" nowrap>@if($user->admin_users)<i class="bi bi-check"></i> @endif</td>
+                                            <td class="text-center" nowrap>@if($user->admin_projects)<i class="bi bi-check"></i> @endif</td>
+                                            <td class="text-center" nowrap>{{ $user->created_at->toDateTimeString('minute') }}</td>
+                                            <td class="text-center" nowrap>@unless(is_null($user->last_login_at)){{ $user->last_login_at->toDateTimeString('minute') }}@endunless</td>
+                                            <td class="text-end" nowrap>
+                                                @if(Auth::id() !== $user->id)
+                                                    @if($user->isActive())
+                                                        <a href="{{ route('users.lock', $query) }}" class="link-dark bi bi-lock text-decoration-none"
+                                                            onclick="event.preventDefault();
+                                                            document.getElementById('users-lock-{{$user->id}}').submit();">
+                                                            {{ __('Lock') }}
+                                                            </a>
+                                                        <form method="POST" class="d-none" action="{{ route('users.lock', $query) }}" id="users-lock-{{$user->id}}">
+                                                            @csrf
+                                                        </form>
+                                                    @else
+                                                        <a href="{{ route('users.unlock', $query) }}" class="link-dark bi bi-unlock text-decoration-none"
+                                                            onclick="event.preventDefault();
+                                                            document.getElementById('users-unlock-{{$user->id}}').submit();">
+                                                        {{ __('Unlock') }}
                                                         </a>
-                                                    <form method="POST" class="d-none" action="{{ route('users.lock', $query) }}" id="users-lock-{{$user->id}}">
-                                                        @csrf
-                                                    </form>
-                                                @else
-                                                    <a href="{{ route('users.unlock', $query) }}" class="link-dark bi bi-unlock text-decoration-none"
+                                                        <form method="POST" class="d-none" action="{{ route('users.unlock', $query) }}" id="users-unlock-{{$user->id}}">
+                                                            @csrf
+                                                        </form>
+                                                    @endif
+                                                    <a href="{{ route('users.destroy', $query) }}" class="link-dark bi bi-trash text-decoration-none"
                                                         onclick="event.preventDefault();
-                                                        document.getElementById('users-unlock-{{$user->id}}').submit();">
-                                                    {{ __('Unlock') }}
-                                                    </a>
-                                                    <form method="POST" class="d-none" action="{{ route('users.unlock', $query) }}" id="users-unlock-{{$user->id}}">
+                                                        document.getElementById('users-destroy-{{$user->id}}').submit();">
+                                                        {{ __('Delete') }}
+                                                        </a>
+                                                    <form method="POST" class="d-none" action="{{ route('users.destroy', $query)}}" id="users-destroy-{{$user->id}}">
                                                         @csrf
+                                                        @method('DELETE')
                                                     </form>
                                                 @endif
-                                                <a href="{{ route('users.destroy', $query) }}" class="link-dark bi bi-trash text-decoration-none"
-                                                    onclick="event.preventDefault();
-                                                    document.getElementById('users-destroy-{{$user->id}}').submit();">
-                                                    {{ __('Delete') }}
-                                                    </a>
-                                                <form method="POST" class="d-none" action="{{ route('users.destroy', $query)}}" id="users-destroy-{{$user->id}}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="10">
-                                            <div class="alert alert-warning">{{ __('No data to display.') }}</div>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                        {{ $users->appends(request()->query())->links() }}
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="alert alert-warning">{{ __('No data to display.') }}</div>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            {{ $users->appends(request()->query())->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

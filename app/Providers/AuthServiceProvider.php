@@ -35,12 +35,17 @@ class AuthServiceProvider extends ServiceProvider
                 : ResponseResult::denyAsNotFound();            
         });      
         Gate::define('admin-users', function($user){
-            return  $user->admin_users
+            return  ($user->admin or $user->admin_users)
                 ? ResponseResult::allow()
                 : ResponseResult::denyAsNotFound();            
         });      
         Gate::define('admin-projects', function($user){
-            return  $user->admin_projects
+            return  ($user->admin or $user->admin_projects)
+                ? ResponseResult::allow()
+                : ResponseResult::denyAsNotFound();            
+        });      
+        Gate::define('admin-all', function($user){
+            return  ($user->admin or $user->admin_users or $user->admin_projects)
                 ? ResponseResult::allow()
                 : ResponseResult::denyAsNotFound();            
         });      

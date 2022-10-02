@@ -216,6 +216,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Alert' => Prologue\Alerts\Facades\Alert::class,
+        'Agent' => App\Facades\Agent::class,
     ])->toArray(),
 
 ];
