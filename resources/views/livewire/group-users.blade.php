@@ -16,7 +16,7 @@
                         <a href="{{ route('users.show', ['user' => $user]) }}">{{ $user->name }}</a>
                     </td>
                     <td class="text-end">
-                        <a href="#" class="bi bi-trash" wire:click.prevent="destroy({{ $user->id }})">{{ __('Delete') }}</a>
+                        <a href="#" class="link-dark text-decoration-none bi bi-trash" wire:click.prevent="destroy({{ $user->id }})">{{ __('Delete') }}</a>
                     </td>
                 </tr>
             @empty

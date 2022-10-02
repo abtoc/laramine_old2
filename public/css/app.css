@@ -10946,3 +10946,30 @@ main {
 .required {
   color: #dc3545;
 }
+
+#projects-index {
+  -webkit-column-count: auto;
+  -webkit-column-width: 400px;
+  -webkit-column-gap: 0.5rem;
+  margin-bottom: 1.2em;
+}
+#projects-index ul.projects {
+  list-style-type: none;
+}
+#projects-index ul.projects.root {
+  margin: 0;
+  padding: 0;
+}
+#projects-index ul.projects.root li.root {
+  margin-bottom: 1em;
+  padding: 15px 20px;
+  border: 1px solid #d7d7d7;
+  border-radius: 3px;
+  -webkit-box-sizing: border-box;
+  page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  width: 100%;
+}
+#projects-index ul.projects dev.description {
+  padding-top: 0.5em;
+}

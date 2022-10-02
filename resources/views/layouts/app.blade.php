@@ -27,6 +27,12 @@
                     <li class="nav-item">
                         <a href="/" class="nav-link p-0">{{ __('Home')}}</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('home') }}" class="nav-link p-0 px-1">{{ __('MyPage')}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('projects.index') }}" class="nav-link p-0 px-1">{{ __('Project')}}</a>
+                    </li>
                     @can('admin-all')
                         <li class="nav-item">
                             <a href="{{ route('admin') }}" class="nav-link p-0 px-1">{{ __('Admin') }}</a>
@@ -43,7 +49,7 @@
              </div>
         </div>
         <div class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-            <a href="/" class="navbar-brand col-md-3 col-lg-2 me-0 px-3 d-none d-md-block">{{ config('app.name', 'Laravel') }}</a>
+            <a href="/" class="navbar-brand col-md-3 col-lg-2 me-0 px-3 d-none d-md-block">@yield('title', config('app.name', 'Laravel'))</a>
             <div class="input-group w-100">
                 <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -68,6 +74,7 @@
                 </div>
             </div>
         </div>
+        @yield('navbar')
     </header>
     <div class="container-fluid">
         <div class="row">
@@ -77,11 +84,15 @@
                         <li class="nav-item mx-3 text-muted">{{ Auth::user()->name }}</li>
                     </ul>
                 @endauth
-                <h6 class="sidebar-heading justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">{{ __('General') }}</h6>
+                <h6 class="sidebar-heading justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">{{ __('All') }}</h6>
                 <ul class="navbar-nav d-flex">
                     <li class="nav-item mx-3 text-muted"><a href="/" class="nav-link text-secondary p-1">{{ __('Home') }}</a></li>
-                    <li class="nav-item mx-3 text-muted"><a href="{{ route('admin') }}" class="nav-link text-secondary p-1">{{ __('Admin') }}</a></li>
-                </ul>
+                    <li class="nav-item mx-3 text-muted"><a href="{{ route('home') }}" class="nav-link text-secondary p-1">{{ __('MyPage') }}</a></li>
+                    <li class="nav-item mx-3 text-muted"><a href="{{ route('projects.index') }}" class="nav-link text-secondary p-1">{{ __('Project') }}</a></li>
+                    @can('admin-all')
+                        <li class="nav-item mx-3 text-muted"><a href="{{ route('admin') }}" class="nav-link text-secondary p-1">{{ __('Admin') }}</a></li>
+                    @endcan
+                    </ul>
                 @yield('sidebar')
                 <h6 class="sidebar-heading justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">{{ __('Profile') }}</h6>
                 <ul class="navbar-nav d-flex">
