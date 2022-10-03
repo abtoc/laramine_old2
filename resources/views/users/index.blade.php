@@ -31,18 +31,18 @@
                     </div>
                     <div class="row mb-3">
                         <div class="table-responsive">
-                            <table class="table table-hover table-sm">
+                            <table class="table table-hover table-sm text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" nowrap>@sortablelink('login', __('Login ID'))</th>
-                                        <th class="text-center" nowrap>@sortablelink('name',  __('Name'))</th>
-                                        <th class="text-center" nowrap>{{ __('Email') }}</th>
-                                        <th class="text-center" nowrap>{{ __('Admin') }}</th>
-                                        <th class="text-center" nowrap>{{ __('User Admin') }}</th>
-                                        <th class="text-center" nowrap>{{ __('Project Admin') }}</th>
-                                        <th class="text-center" nowrap>@sortablelink('created_at', __('CreatedAt'))</th>
-                                        <th class="text-center" nowrap>@sortablelink('last_login_at', __('LastLoginAt'))</th>
-                                        <th class="text-end" nowrap>
+                                        <th class="text-center">@sortablelink('login', __('Login ID'))</th>
+                                        <th class="text-center">@sortablelink('name',  __('Name'))</th>
+                                        <th class="text-center">{{ __('Email') }}</th>
+                                        <th class="text-center">{{ __('Admin') }}</th>
+                                        <th class="text-center">{{ __('User Admin') }}</th>
+                                        <th class="text-center">{{ __('Project Admin') }}</th>
+                                        <th class="text-center">@sortablelink('created_at', __('CreatedAt'))</th>
+                                        <th class="text-center">@sortablelink('last_login_at', __('LastLoginAt'))</th>
+                                        <th class="text-end">
                                             <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('users.create', request()->query()) }}"> {{ __('Create User')}}</a>
                                         </th>
                                     </tr>
@@ -53,23 +53,23 @@
                                             $query = array_merge(['user'=>$user], request()->query());
                                         @endphp
                                         <tr @class(['lock' => !$user->isActive()])>
-                                            <td class="text-start" nowrap>
+                                            <td class="text-start">
                                                 <a href="{{ route('users.edit', $query) }}">
                                                     {{ $user->login }}
                                                 </a>
                                             </td>
-                                            <td class="text-start" nowrap>{{ $user->name }}</td>
-                                            <td class="text-start" nowrap>
+                                            <td class="text-start">{{ $user->name }}</td>
+                                            <td class="text-start">
                                                 <a href="mailto:{{$user->email}}">
                                                     {{ $user->email }}
                                                 </a>
                                             </td>
-                                            <td class="text-center" nowrap>@if($user->admin)<i class="bi bi-check"></i> @endif</td>
-                                            <td class="text-center" nowrap>@if($user->admin_users)<i class="bi bi-check"></i> @endif</td>
-                                            <td class="text-center" nowrap>@if($user->admin_projects)<i class="bi bi-check"></i> @endif</td>
-                                            <td class="text-center" nowrap>{{ $user->created_at->toDateTimeString('minute') }}</td>
-                                            <td class="text-center" nowrap>@unless(is_null($user->last_login_at)){{ $user->last_login_at->toDateTimeString('minute') }}@endunless</td>
-                                            <td class="text-end" nowrap>
+                                            <td class="text-center">@if($user->admin)<i class="bi bi-check"></i> @endif</td>
+                                            <td class="text-center">@if($user->admin_users)<i class="bi bi-check"></i> @endif</td>
+                                            <td class="text-center">@if($user->admin_projects)<i class="bi bi-check"></i> @endif</td>
+                                            <td class="text-center">{{ $user->created_at->toDateTimeString('minute') }}</td>
+                                            <td class="text-center">@unless(is_null($user->last_login_at)){{ $user->last_login_at->toDateTimeString('minute') }}@endunless</td>
+                                            <td class="text-end">
                                                 @if(Auth::id() !== $user->id)
                                                     @if($user->isActive())
                                                         <a href="{{ route('users.lock', $query) }}" class="link-dark bi bi-lock text-decoration-none"
@@ -111,8 +111,8 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $users->appends(request()->query())->links() }}
                         </div>
+                        {{ $users->appends(request()->query())->links() }}
                     </div>
                 </div>
             </div>

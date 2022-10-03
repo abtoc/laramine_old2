@@ -23,12 +23,12 @@
                     </div>
                     <div class="row mb-3">
                         <div class="table-responsive">
-                            <table class="table table-hover table-sm table-responsive">
+                            <table class="table table-hover table-sm text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" nowrap>{{ __('Group') }}</th>
-                                        <th class="text-center" nowrap>{{ __('User') }}</th>
-                                        <th class="text-end" nowrap>
+                                        <th class="text-center">{{ __('Group') }}</th>
+                                        <th class="text-center">{{ __('User') }}</th>
+                                        <th class="text-end">
                                             <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('groups.create', request()->query()) }}"> {{ __('New Group')}}</a>
                                         </th>
                                     </tr>
@@ -39,13 +39,13 @@
                                             $query = array_merge(['group'=>$group], request()->query());
                                         @endphp
                                         <tr>
-                                            <td class="text-start" nowrap>
+                                            <td class="text-start">
                                                 <a href="{{ route('groups.edit', $query) }}">
                                                     {{ $group->name }}
                                                 </a>
                                             </td>
-                                            <td class="text-center" nowrap>{{ $group->users->count() }}</td>
-                                            <td class="text-end" nowrap>
+                                            <td class="text-center">{{ $group->users->count() }}</td>
+                                            <td class="text-end">
                                                 @if($group->isDelete())
                                                     <a href="{{ route('groups.destroy', $query) }}" class="link-dark bi bi-trash text-decoration-none"
                                                         onclick="event.preventDefault();
@@ -66,8 +66,8 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $groups->appends(request()->query())->links() }}
                         </div>
+                        {{ $groups->appends(request()->query())->links() }}
                     </div>
                 </div>
             </div>

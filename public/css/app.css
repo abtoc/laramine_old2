@@ -10938,6 +10938,13 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
+table.table-nowrap th {
+  white-space: nowrap;
+}
+table.table-nowrap td {
+  white-space: nowrap;
+}
+
 main {
   min-height: 100%;
   overflow: auto;

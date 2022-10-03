@@ -78,6 +78,10 @@ Route::group([], function(){
 Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::controller(ProjectController::class)->prefix('projects')->name('projects.')->group(function(){
         Route::get('/admin', 'index_admin')->name('admin');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
         Route::get('/{project}/edit', 'edit')->name('edit');
+        Route::put('/{project}', 'update')->name('update');
+        Route::delete('{project}', 'destroy')->name('destroy');
     });
 });

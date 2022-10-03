@@ -1,10 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content px-4 py-4">
+<div class="container-fluid px-4 py-4">
     @include('components.alert')
     <div>
-        <h2 class="mb-3">{{ $user->name }}</h2>
+        @include('compornents.alert')
+        <div class="d-flex">
+            <div class="flex-grow-1">
+                <h2 class="mb-3">{{ $user->name }}</h2>
+            </div>
+            <div class="div">
+            </div>
+        </div>
         <div class="card mb-3">
             <div class="card-header">{{ __('Information') }}</div>
             <div class="card-body">

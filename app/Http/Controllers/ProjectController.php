@@ -30,7 +30,7 @@ class ProjectController extends Controller
     {
         $query = Project::query();
         if(!Auth::check()){
-            $query = $query->where('is_public', true);
+            $query = $query->whereIsPublic(true);
         }
         $projects = $query->withDepth()->get()->toTree();
         return view('projects.index', compact('projects'));
@@ -44,6 +44,8 @@ class ProjectController extends Controller
     public function create()
     {
         $this->authorize('create', Project::class);
+
+        return view('projects.create');
     }
 
     /**
@@ -55,6 +57,29 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Project::class);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'parent_id' => ['nullable', 'integer', 'exists:projects,id'],
+            'inherit_members' => ['prohibited_if:parent_id,null'],
+        ]);
+
+        $project = new Project();
+        $project->fill($request->all());
+        if($request->has('is_public')){
+            $project->is_public = true;
+        }
+        if($request->has('inherit_members')){
+            $project->inherit_members = true;
+        }
+
+        $project->save();
+
+        if($request->has('_previous')){
+            return redirect($request->_previous);
+        }
+
+        return to_route('projects.index');
     }
 
     /**
@@ -93,6 +118,17 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $this->authorize('update', $project);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'parent_id' => ['nullable', 'integer', 'exists:projects,id'],
+            'inherit_members' => ['prohibited_if:parent_id,null'],
+        ]);
+
+        $project->fill($request->all());
+        $project->save();
+
+        return to_route('projects.edit', ['project' => $project]);
     }
 
     /**
@@ -104,5 +140,9 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $this->authorize('delete', $project);
+
+        $project->delete();
+
+        return to_route('projects.admin');
     }
 }

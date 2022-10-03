@@ -10,9 +10,11 @@
 
 // Other CSS
 
+
 html, body {
     height: 100%;
 }
+
 
 body {
     font-size: .875rem;
@@ -94,6 +96,16 @@ body {
     :focus {
         border-color: transparent;
         box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    }
+}
+
+table.table-nowrap {
+    th {
+        white-space: nowrap;
+    }
+
+    td {
+        white-space: nowrap;
     }
 }
 
