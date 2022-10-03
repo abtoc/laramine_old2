@@ -65,6 +65,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'admin' => $request->has('admin') ? 1 : 0,
+            'admin_users' => $request->has('admin_users') ? 1 : 0,
+            'admin_projects' => $request->has('admin_projects') ? 1 : 0,
+            'must_change_password' => $request->has('must_change_password') ? 1 : 0,
+        ]);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'login' => ['required', 'string', 'max:255', 'unique:users', new IdentRule()],
@@ -111,25 +117,19 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $request->validate([
+        $request->merge([
+            'admin' => $request->has('admin') ? 1 : 0,
+            'admin_users' => $request->has('admin_users') ? 1 : 0,
+            'admin_projects' => $request->has('admin_projects') ? 1 : 0,
+            'must_change_password' => $request->has('must_change_password') ? 1 : 0,
+        ]);
+       $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'login' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id), new IdentRule()],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
         ]);
 
         $user->fill($request->all());
-        if(!$request->has('admin')){
-            $user->admin = false;
-        }
-        if(!$request->has('admin_users')){
-            $user->admin_users = false;
-        }
-        if(!$request->has('admin_projects')){
-            $user->admin_projects = false;
-        }
-        if(!$request->has('must_change_password')){
-            $user->must_change_password = false;
-        }
         $user->save();
 
         return to_route('users.index', $request->query());

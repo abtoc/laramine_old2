@@ -13,7 +13,9 @@
     </div>
     <div class="d-flex flex-column flex-wrap">
         <div>
-            {!! Str::markdown($project->description, ['html_input' => 'escape']) !!}
+            @unless(is_null($project->description))
+                {!! Str::markdown($project->description, ['html_input' => 'escape']) !!}
+            @endunless
         </div>
         @php
             $subProjects = $project->children()->get()->filter(function($value, $key){

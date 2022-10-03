@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Rules\ProjectPublicChildrenRule;
+use App\Rules\ProjectPublicParentRule;
+use App\Rules\ProjectPublicRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,21 +61,19 @@ class ProjectController extends Controller
     {
         $this->authorize('create', Project::class);
 
+        $request->merge([
+            'is_public' => $request->has('is_public') ? 1 : 0,
+            'inherit_members' => $request->has('inherit_members') ? 1 : 0,
+        ]);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'parent_id' => ['nullable', 'integer', 'exists:projects,id'],
-            'inherit_members' => ['prohibited_if:parent_id,null'],
+            'is_public' => [new ProjectPublicParentRule($request->parent_id)],
+            'inherit_members' => ['declined_if:parent_id,null'],
         ]);
 
         $project = new Project();
         $project->fill($request->all());
-        if($request->has('is_public')){
-            $project->is_public = true;
-        }
-        if($request->has('inherit_members')){
-            $project->inherit_members = true;
-        }
-
         $project->save();
 
         if($request->has('_previous')){
@@ -119,10 +120,18 @@ class ProjectController extends Controller
     {
         $this->authorize('update', $project);
 
+        $request->merge([
+            'is_public' => $request->has('is_public') ? 1 : 0,
+            'inherit_members' => $request->has('inherit_members') ? 1 : 0,
+        ]);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'parent_id' => ['nullable', 'integer', 'exists:projects,id'],
-            'inherit_members' => ['prohibited_if:parent_id,null'],
+            'is_public' => [
+                    new ProjectPublicParentRule($request->parent_id),
+                    new ProjectPublicChildrenRule($project),
+                ],
+            'inherit_members' => ['declined_if:parent_id,null'],
         ]);
 
         $project->fill($request->all());

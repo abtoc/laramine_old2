@@ -115,7 +115,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
-                                <input type="checkbox" class="form-check-input @error('must_change_password') is-invalud @enderror" id="must-change-password" name="must_change_password" value="1" @checked(old('must_change_password'))>
+                                <input type="checkbox" class="form-check-input @error('must_change_password') is-invalud @enderror" id="must-change-password" name="must_change_password" value="1" @checked(old('must_change_password', 1))>
                                 <label for="must-change-password" class="form-check-label">{{ __('Forces password change at next login') }}</label>
                                 @error('must_change_password')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
