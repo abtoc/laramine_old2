@@ -24,7 +24,7 @@
 <body>
     <div class="d-flex flex-column h-100">
         <header>
-            <div class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 d-none d-md-block">
+            <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 d-none d-md-block">
                 <div class="container-fluid">
                     <ul class="navbar-nav me-auto flex-row">
                         <li class="nav-item">
@@ -43,45 +43,62 @@
                         @endcan
                     </ul>
                     <ul class="navbar-nav ms-auto flex-row">
-                        @auth
+                        @guest
+                            @if(Route::has('login'))
+                                <li class="nav-item">
+                                    <a href="{{ route('login') }}" class="nav-link p-0 px-1">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+                            @if(Route::has('register'))
+                                <li class="nav-item">
+                                    <a href="{{ route('register') }}" class="nav-link p-0 px-1">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
                             <li class="nav-item">
                                 <a href="{{ route('users.show', ['user' => Auth::user()]) }}" class="nav-link p-0 px-1">{{ Auth::user()->name }}</a>
                             </li>
-                        @endauth
+                            <li class="nav-item">
+                                <a href="{{ route('my.password.edit') }}" class="nav-link p-0 px-1">{{ __('Change Password') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('logout') }}" class="nav-link p-0 px-1" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">@csrf</form>
+                            </li>
+                        @endguest
                     </ul>
                  </div>
-            </div>
-            <div class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-                <span class="navbar-brand col-md-3 col-lg-2 me-0 px-3 d-none d-md-block">@yield('title', config('app.name', 'Laravel'))</span>
-                <div class="input-group w-100">
-                    <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            </nav>
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+                <div class="container-fluid">
+                    <span class="navbar-brand d-none d-md-block">@yield('title', config('app.name', 'Laravel'))</span>
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <input type="text" class="form-control form-control-dark" placeholder="Search" aria-label="Search">
-                </div>
-                <div class="navbar-nav d-none d-md-block">
-                    <div class="nav-item text-nowrap">
-                        @guest
-                            @if(Route::has('login'))
-                                <a href="{{ route('login') }}" class="nav-link d-inline px-1">{{ __('Login') }}</a>
-                            @endif
-                            @if(Route::has('register'))
-                                <a href="{{ route('register') }}" class="nav-link d-inline px-1">{{ __('Register') }}</a>
-                            @endif
-                        @else    
-                            <a href="{{ route('logout') }}" class="nav-link px-1" onclick="event.preventDefault();document.getElementById('logout-form-nav').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form action="{{ route('logout') }}" id="logout-form-nav" method="POST">@csrf</form>
-                        @endguest
+                    <div class="navbar-nav ms-auto">
+                        <form action="#" class="px-1 d-none d-md-block">
+                            <input type="text" class="form-control" name="search">
+                        </form>
+                        <form action="#" class="px-1">
+                            <select name="" id="" class="form-select">
+                                <option value=""></option>
+                                <option value="11111111">AAAAAAAA</option>
+                                <option value="11111111">BBBBBBBB</option>
+                                <option value="11111111">CCCCCCCC</option>
+                                <option value="11111111">DDDDDDDD</option>
+                            </select>
+                        </form>
                     </div>
                 </div>
-            </div>
+            </nav>
             @yield('navbar')
         </header>
         <div class="flex-grow-1 container-fluid">
             <div class="row">
                 <nav id="sidebar-menu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse d-md-none">
+                    <form action="">
+                        <input type="text" class="form-control" name="searcg">
+                    </form>
                     @auth
                         <ul class="navbar-nav d-flex mt-3">
                             <li class="nav-item mx-3 text-muted">{{ Auth::user()->name }}</li>
@@ -112,10 +129,13 @@
                             @endif
                         @else
                             <li class="nav-item mx-3 text-muted">
+                                <a href="{{ route('my.password.edit') }}" class="nav-link text-secondary p-1">{{ __('Change Password') }}</a>
+                            </li>
+                            <li class="nav-item mx-3 text-muted">
                                 <a href="{{ route('logout') }}" class="nav-link text-secondary p-1" onclick="event.preventDefault();document.getElementById('logout-form-nav').submit();">
                                     {{ __('Logout') }}
                                 </a>
-                                <form action="{{ route('logout') }}" id="logout-form-sidebar" method="POST">@csrf</form>
+                                <form action="{{ route('logout') }}" id="logout-form-nav" method="POST">@csrf</form>
                             </li>
                         @endguest
                     </ul>
