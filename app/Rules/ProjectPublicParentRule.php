@@ -45,6 +45,6 @@ class ProjectPublicParentRule implements Rule
      */
     public function message()
     {
-        return 'Parents are not public.';
+        return __('The parent project is not public.');
     }
 }

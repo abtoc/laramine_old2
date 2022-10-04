@@ -6,7 +6,7 @@
     @include('components.alert')
     <div id="projects-index">
         <ul class="projects root">
-            @each('components.project-item', $projects, 'project')
+            @each('projects.index-item', $projects, 'project')
         </ul>
     </div>
 </div>

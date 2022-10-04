@@ -2,25 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProjectStatus;
 use App\Models\Project;
 use App\Rules\ProjectPublicChildrenRule;
 use App\Rules\ProjectPublicParentRule;
-use App\Rules\ProjectPublicRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Prologue\Alerts\Facades\Alert;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index_admin()
+    public function admin(Request $request)
     {
         $this->authorize('viewAnyAdmin', Project::class);
 
-        $projects = Project::withDepth()->get()->toFlatTree();
+        $query = Project::query();
+
+        if($request->has('status')){
+            if($request->query('status') != ProjectStatus::NONE){
+                $query = $query->whereStatus($request->query('status', 1));
+            }
+        } else {
+            $query = $query->whereStatus(ProjectStatus::ACTIVE);
+        }
+        if(!empty($request->query('name', ''))){
+            $query = $query->where('name', 'like', '%'.$request->query('name').'%');
+        }
+
+        $projects = $query->withDepth()->get()->toFlatTree();
         return view('projects.admin', compact('projects'));
     }
 
@@ -31,7 +46,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $query = Project::query();
+        $query = Project::whereIn('status',[ProjectStatus::ACTIVE, ProjectStatus::CLOSED]);
         if(!Auth::check()){
             $query = $query->whereIsPublic(true);
         }
@@ -94,6 +109,12 @@ class ProjectController extends Controller
         if(!Auth::check() and !$project->is_public){
             abort(404);
         }
+
+        if(!$project->isActive()){
+            Alert::warning(__('This project has been closed and is read-only.'));
+            Alert::flash();
+        }
+
         return view('projects.show', ['project' => $project]);
     }
 
@@ -153,5 +174,80 @@ class ProjectController extends Controller
         $project->delete();
 
         return to_route('projects.admin');
+    }
+
+    /**
+     * Oepn the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function open(Request $request, Project $project)
+    {
+        $this->authorize('open', $project);
+
+        if(!is_null($project->parent)){
+            if($project->parent->status === ProjectStatus::ARCHIVE){
+                Alert::danger(__('The parent project is the archive. Unarchive the parent project.'));
+                Alert::flash();
+                return redirect(url()->previous());
+            }
+            $project->status = $project->parent->status;
+        } else {
+            $project->status = ProjectStatus::ACTIVE;
+        }
+        $project->save();
+        return redirect(url()->previous());
+    }
+
+    /**
+     * Close the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function close(Request $request, Project $project)
+    {
+        $this->authorize('close', $project);
+
+        foreach($project->children as $child){
+            if($child->status === ProjectStatus::ACTIVE){
+                Alert::danger(__('Sub project is active. Please close all sub projects.'));
+                Alert::flash();
+                return redirect(url()->previous());
+            }
+        }
+
+        $project->status = ProjectStatus::CLOSED;
+        $project->save();
+
+        return redirect(url()->previous());
+    }
+
+    /**
+     * Archive the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function archive(Request $request, Project $project)
+    {
+        $this->authorize('archive', $project);
+
+        foreach($project->children as $child){
+            if($child->status !== ProjectStatus::ARCHIVE){
+                Alert::danger(__('Sub project is not archive. Please archive all sub projects.'));
+                Alert::flash();
+                return redirect(url()->previous());
+            }
+        }
+
+        $project->status = ProjectStatus::ARCHIVE;
+        $project->save();
+
+        return redirect(url()->previous());
     }
 }

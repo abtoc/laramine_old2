@@ -56,9 +56,9 @@
 
                             <div class="col-md-6">
                                 <select name="parent_id" id="parent-id" class="form-select @error('parent_id') is_invalid @enderror">
-                                    <option value="" @selected(is_null(old('parent_id')))></option>
+                                    <option value="" @selected(is_null(old('parent_id', request()->query('parent_id', null))))></option>
                                     @foreach($parents as $parent)
-                                        <option value="{{ $parent->id }}" @selected(old('parent_id') == $parent->id)>{!! str_repeat('&nbsp;&nbsp;', $parent->depth).$parent->name !!}</option>
+                                        <option value="{{ $parent->id }}" @selected(old('parent_id', request()->query('parent_id', null)) == $parent->id)>{!! str_repeat('&nbsp;&nbsp;', $parent->depth).$parent->name !!}</option>
                                     @endforeach
                                 </select>
 

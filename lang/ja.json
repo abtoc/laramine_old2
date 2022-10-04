@@ -34,12 +34,14 @@
     "New User":"新しいユーザー",
     "New Group":"新しいグループ",
     "New Project":"新しいプロジェクト",
+    "Edit Project":"プロジェクトの編集",
     "Status":"ステータス",
     "Apply":"適用",
     "User Admin":"ユーザー管理者",
     "Project Admin":"プロジェクト管理者",
 
     "All User":"全て",
+    "All Project":"全て",
     "Active":"有効",
     "Registerd":"登録",
     "Locked":"ロック",
@@ -48,6 +50,8 @@
     "Unlock":"アンロック",
     "Summary":"概要",
     "Setting":"設定",
+    "Closed":"終了",
+    "Archive":"アーカイブ",
 
     "Half-width alphanumeric characters and some symbols ( _ - @ . ) can be used.":"半角英数字と一部の記号( _ - @ . )が使用可能です。",
 
@@ -58,6 +62,12 @@
     "Forces password change at next login":"次回ログイン時にパスワード変更を強制",
     "No data to display.":"表示するデータがありません。",
     "Inherit members":"メンバーを継承",
+    "This project has been closed and is read-only.":"このプロジェクトは終了しており、読み取り専用となっています。",
+    "The parent project is the archive. Unarchive the parent project.":"親プロジェクトがアーカイブです。親プロジェクトのアーカイブ解除をしてください。",
+    "Sub project is active. Please close all sub projects.":"サブプロジェクトがアクティブになっています。すべてのサブプロジェクトを終了してください。",
+    "Sub project is not archive. Please archive all sub projects.":"サブプロジェクトがアーカイブされていません。すべてのサブプロジェクトをアーカイブしてください。",
+    "The sub project is now open to the public.":"サブプロジェクトが公開になっています",
+    "The parent project is not public.":"親プロジェクトが公開になっていません。",
 
     "User":"ユーザー",
     "Group":"グループ",
@@ -77,5 +87,8 @@
     "MyPage":"マイページ",
     "Description":"説明",
     "ParentProjectID":"親プロジェクトID",
-    "All": "全般"
+    "All": "全般",
+    "Start":"開始",
+    "End":"終了"
+
 }

@@ -105,4 +105,10 @@
     </div>
 </div>
 
+@push('scripts')
+<script>
+    new EasyMDE({element: document.getElementById('markdown-edit')});
+</script>
+@endpush
+
 @endsection

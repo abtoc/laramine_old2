@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\ProjectStatus;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -45,6 +46,9 @@ class ProjectPolicy
      */
     public function view(User $user, Project $project)
     {
+        if($project->status === ProjectStatus::ARCHIVE){
+            return Response::denyAsNotFound();
+        }
         if($project->is_public){
             return Response::allow();
         }
@@ -75,6 +79,9 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
+        if($project->status !== ProjectStatus::ACTIVE){
+            return Response::denyAsNotFound();
+        }
         return ($user->admin or $user->admin_projects)
              ? Response::allow()
              : Response::denyAsNotFound();
@@ -120,5 +127,56 @@ class ProjectPolicy
         return ($user->admin or $user->admin_projects)
              ? Response::allow()
              : Response::denyAsNotFound();
+    }
+
+    /**
+     * Determine whether the user can permanently open the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function open(User $user, Project $project)
+    {
+        if($project->status !== ProjectStatus::ACTIVE){
+            return ($user->admin or $user->admin_projects)
+                ? Response::allow()
+                : Response::denyAsNotFound();
+       }
+       return Response::denyAsNotFound();
+    }
+
+    /**
+     * Determine whether the user can permanently close the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function close(User $user, Project $project)
+    {
+        if($project->status === ProjectStatus::ACTIVE){
+            return ($user->admin or $user->admin_projects)
+                ? Response::allow()
+                : Response::denyAsNotFound();
+       }
+       return Response::denyAsNotFound();
+    }
+
+    /**
+     * Determine whether the user can permanently archive the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function archive(User $user, Project $project)
+    {
+        if($project->status !== ProjectStatus::ARCHIVE){
+            return ($user->admin or $user->admin_projects)
+                ? Response::allow()
+                : Response::denyAsNotFound();
+       }
+       return Response::denyAsNotFound();
     }
 }

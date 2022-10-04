@@ -94,14 +94,14 @@
             @yield('navbar')
         </header>
         <div class="flex-grow-1 container-fluid">
-            <div class="row">
+            <div class="row h-100">
                 <nav id="sidebar-menu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse d-md-none">
                     <form action="">
-                        <input type="text" class="form-control" name="searcg">
+                        <input type="text" class="form-control" name="search">
                     </form>
                     @auth
                         <ul class="navbar-nav d-flex mt-3">
-                            <li class="nav-item mx-3 text-muted">{{ Auth::user()->name }}</li>
+                            <li class="nav-item mx-3 text-muted"><a href="{{ route('users.show', ['user'=>Auth::user()])}}" class="nav-link text-seconday p-1">{{ Auth::user()->name }}</a></li>
                         </ul>
                     @endauth
                     <h6 class="sidebar-heading justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">{{ __('All') }}</h6>

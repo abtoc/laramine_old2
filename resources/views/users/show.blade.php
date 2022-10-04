@@ -4,7 +4,7 @@
 <div class="container-fluid px-4 py-4">
     @include('components.alert')
     <div>
-        @include('compornents.alert')
+        @include('components.alert')
         <div class="d-flex">
             <div class="flex-grow-1">
                 <h2 class="mb-3">{{ $user->name }}</h2>

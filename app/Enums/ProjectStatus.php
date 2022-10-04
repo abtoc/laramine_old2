@@ -12,7 +12,7 @@ enum ProjectStatus : int
     public function string(): string
     {
         return match($this){
-            ProjectStatus::NONE    => __('None'),
+            ProjectStatus::NONE    => __('All Project'),
             ProjectStatus::ACTIVE  => __('Active'),
             ProjectStatus::CLOSED  => __('Closed'),
             ProjectStatus::ARCHIVE => __('Archive'),

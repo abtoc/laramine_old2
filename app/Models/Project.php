@@ -55,6 +55,14 @@ class Project extends Model
     }
 
     /**
+     * @return bool
+     */
+    public function isArchive(): bool
+    {
+        return $this->status === ProjectStatus::ARCHIVE;
+    }
+
+    /**
      * The "booting" method of the model
      * 
      * @return void

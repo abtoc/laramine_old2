@@ -49,6 +49,6 @@ class ProjectPublicChildrenRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return __('The sub project is now open to the public.');
     }
 }
