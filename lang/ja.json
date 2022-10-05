@@ -68,6 +68,7 @@
     "Sub project is not archive. Please archive all sub projects.":"サブプロジェクトがアーカイブされていません。すべてのサブプロジェクトをアーカイブしてください。",
     "The sub project is now open to the public.":"サブプロジェクトが公開になっています",
     "The parent project is not public.":"親プロジェクトが公開になっていません。",
+    "Move to project...":"プロジェクトへ移動...",
 
     "User":"ユーザー",
     "Group":"グループ",
@@ -89,6 +90,7 @@
     "ParentProjectID":"親プロジェクトID",
     "All": "全般",
     "Start":"開始",
-    "End":"終了"
+    "End":"終了",
+    "Search":"検索"
 
 }

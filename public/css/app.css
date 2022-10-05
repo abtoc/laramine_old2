@@ -12052,3 +12052,13 @@ main {
 #projects-index ul.projects dev.description {
   padding-top: 0.5em;
 }
+
+.markdown-body {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+  .flex-grow-xs-1 {
+    flex-grow: 1;
+  }
+}

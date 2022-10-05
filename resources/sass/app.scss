@@ -156,3 +156,12 @@ tr.unlock {
     }
 }
 
+.markdown-body {
+    font-size: $font-size-base;
+}
+
+.flex-grow-xs-1 {
+    @media (max-width: 576px) {
+        flex-grow: 1;
+    }
+}

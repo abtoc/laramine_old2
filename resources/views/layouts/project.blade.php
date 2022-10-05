@@ -11,7 +11,7 @@
     $name = Route::currentRouteName();
 @endphp
 
-<div class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 d-none d-md-block">
+<nav class="navbar navbar-light bg-light flex-md-nowrap p-0 d-none d-md-block">
     <ul class="nav nav-tabs">
         <li class="nav-item">
             @php
@@ -32,7 +32,7 @@
             </li>
         @endcan
     </ul>
-</div>
+</nav>
 @endsection
 
 @section('sidebar')

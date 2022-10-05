@@ -24,7 +24,7 @@
 <body>
     <div class="d-flex flex-column h-100">
         <header>
-            <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 d-none d-md-block">
+            <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 d-none d-md-block">
                 <div class="container-fluid">
                     <ul class="navbar-nav me-auto flex-row">
                         <li class="nav-item">
@@ -69,25 +69,27 @@
                     </ul>
                  </div>
             </nav>
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+            <nav class="navbar navbar-dark navbar-expand-md bg-dark">
                 <div class="container-fluid">
-                    <span class="navbar-brand d-none d-md-block">@yield('title', config('app.name', 'Laravel'))</span>
+                    <span class="navbar-brand d-none d-md-block">@yield('title', config('app.name', 'Laramine'))</span>
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="navbar-nav ms-auto">
-                        <form action="#" class="px-1 d-none d-md-block">
-                            <input type="text" class="form-control" name="search">
+                    <div class="navbar-nav ms-auto flex-grow-xs-1">
+                        <form action="#" class="px-1 w-100 d-none d-md-block">
+                            <input type="text" class="form-control form-control-dark" name="search" id="search" placeholder="{{ __('Search') }}...">
                         </form>
-                        <form action="#" class="px-1">
-                            <select name="" id="" class="form-select">
-                                <option value=""></option>
-                                <option value="11111111">AAAAAAAA</option>
-                                <option value="11111111">BBBBBBBB</option>
-                                <option value="11111111">CCCCCCCC</option>
-                                <option value="11111111">DDDDDDDD</option>
-                            </select>
-                        </form>
+                        <div class="dropdown">
+                            <a href="#" id="project-jump" class="nav-link dropdown-toggle w-100" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Move to project...') }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="project-jumpp">
+                                <li><a href="#" class="dropdown-item">AAAA</a></li>
+                                <li><a href="#" class="dropdown-item">BBBB</a></li>
+                                <li><a href="#" class="dropdown-item">CCCC</a></li>
+                                <li><a href="#" class="dropdown-item">DDDD</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>
