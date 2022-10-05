@@ -69,7 +69,7 @@
                     </ul>
                  </div>
             </nav>
-            <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+            <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark">
                 <div class="container-fluid">
                     <span class="navbar-brand d-none d-md-block">@yield('title', config('app.name', 'Laramine'))</span>
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
