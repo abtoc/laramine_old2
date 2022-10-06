@@ -45,16 +45,11 @@
                 {{ markdown($project->description) }}
             </div>
         @endunless
-        @php
-            $subProjects = $project->children()->get()->filter(function($value, $key){
-                return Auth::check() or $value->is_public;
-            });
-        @endphp
-        @if($subProjects->count() > 0)
+        @if($project->getSubProjects()->count() > 0)
             <div class="card">
                 <div class="card-header">{{ __('Sub Projects') }}</div>
                 <div class="card-body">
-                    @foreach($subProjects as $subProject)
+                    @foreach($project->getSubProjects() as $subProject)
                         <a href="{{ route('projects.show', ['project'=>$subProject]) }}" @class(['link-dark' => !$subProject->isActive()])>{{ __($subProject->name) }}</a>
                         @unless($loop->last),@endunless
                     @endforeach

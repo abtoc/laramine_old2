@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Kalnoy\Nestedset\NodeTrait;
 
 use function PHPSTORM_META\map;
@@ -61,6 +62,20 @@ class Project extends Model
     {
         return $this->status === ProjectStatus::ARCHIVE;
     }
+
+    /**
+     * Get sub projects with out archive
+     * 
+     * @return array
+     */
+    public function getSubProjects()
+    {
+        return $this->children()
+                    ->where('status', '<>', ProjectStatus::ARCHIVE)
+                    ->get()->filter(function($value, $key){
+                        return Auth::check() or $value->is_public;
+                    });
+}
 
     /**
      * The "booting" method of the model
