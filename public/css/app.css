@@ -12049,6 +12049,13 @@ main {
   -webkit-column-break-inside: avoid;
   width: 100%;
 }
+#projects-index ul.projects.root li.root ul.projects {
+  border-left: 3px solid #e0e0e0;
+  padding-left: 1em;
+}
+#projects-index ul.projects.root li.root ul.projects li.child {
+  margin-top: 1em;
+}
 #projects-index ul.projects dev.description {
   padding-top: 0.5em;
 }
