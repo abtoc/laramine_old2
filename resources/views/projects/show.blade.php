@@ -42,7 +42,7 @@
     <div class="d-flex flex-column flex-wrap">
         @unless(is_null($project->description))
             <div class="markdown-body mb-3">
-                {!! Str::markdown($project->description, ['html_input' => 'escape']) !!}
+                {{ markdown($project->description) }}
             </div>
         @endunless
         @php

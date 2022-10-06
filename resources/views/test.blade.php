@@ -30,29 +30,31 @@
 
 @section('content')
 
-<nav>
+<nav class="d-flex">
     <div class="nav nav-tabs" id="editor-tab" role="tablist">
-        <button id="editor-tab-edit" class="nav-link active" data-bs-toggle="tab" data-bs-target="#editor-edit" type="button" role="tab" aria-controls="editor-edit" aria-selected="true">
+        <button id="editor-tab-edit" class="nav-link py-0 active" data-bs-toggle="tab" data-bs-target="#editor-edit" type="button" role="tab" aria-controls="editor-edit" aria-selected="true">
             {{ __('Edit') }}
         </button>
-        <button id="editor-tab-preview" class="nav-link" data-bs-toggle="tab" data-bs-target="#editor-preview" type="button" role="tab" aria-controls="editor-preview" aria-selected="false">
+        <button id="editor-tab-preview" class="nav-link py-0" data-bs-toggle="tab" data-bs-target="#editor-preview" type="button" role="tab" aria-controls="editor-preview" aria-selected="false">
             {{ __('preview') }}
         </button>
-        <div class="btn-group bx-2">
-            <button type="button" class="btn btn-outline-secondary"><i class="ei ei-undo"></i></button>
-            <button type="button" class="btn btn-outline-secondary"><i class="ei ei-redo"></i></button>
+    </div>
+    <div id="toolbar" class="align-middle">
+        <div class="btn-group mx-1  align-middle">
+            <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-undo"></i></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-redo"></i></button>
         </div>
-        <div class="btn-group bx-2">
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-bold"></span></button>
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-italic"></span></button>
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-underline"></span></button>
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-strike"></span></button>
+        <div class="btn-group mx-1 align-middle">
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-bold"></span></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-italic"></span></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-underline"></span></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-strike"></span></button>
         </div>
-        <div class="btn-group bx-2">
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-list"></span></button>
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-table"></span></button>
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-link"></span></button>
-            <button type="button" class="btn btn-outline-secondary"><span class="ei-picture"></span></button>
+        <div class="btn-group mx-1 align-middle">
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-list"></span></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-table"></span></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-link"></span></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"><span class="ei-picture"></span></button>
         </div>
     </div>
 </nav>
