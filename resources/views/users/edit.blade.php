@@ -10,7 +10,7 @@
                         <div class="flex-grow-1">
                             <nav>
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="{{ route('users.index', request()->query()) }}">{{ __('User') }}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route_query('users.index') }}">{{ __('User') }}</a></li>
                                     <li class="breadcrumb-item active">{{ $user->login }}</li>
                                 </ol>
                             </nav>
@@ -28,10 +28,7 @@
 
                 <div class="card-body">
                     @include('components.alert')
-                    @php
-                        $query = array_merge(['user'=>$user], request()->query());
-                    @endphp
-                    <form method="POST" action="{{ route('users.update', $query) }}">
+                    <form method="POST" action="{{ route_query('users.update', ['user' => $user]) }}">
                         @csrf
                         @method('PUT')
 

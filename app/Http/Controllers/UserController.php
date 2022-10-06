@@ -83,7 +83,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
         
-        return to_route('users.index');
+        return to_route_query('users.index');
     }
 
     /**
@@ -132,52 +132,49 @@ class UserController extends Controller
         $user->fill($request->all());
         $user->save();
 
-        return to_route('users.index', $request->query());
+        return to_route_query('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, User $user)
+    public function destroy(User $user)
     { 
         $user->delete();
-        return to_route('users.index', $request->query());
+        return to_route_query('users.index');
     }
 
     /** Update the specified resource in storage.
     *
-    * @param  \Illuminate\Http\Request  $request
     * @param  \App\Models\User  $user
     * @return \Illuminate\Http\Response
     */
-   public function lock(Request $request, User $user)
+   public function lock(User $user)
    {
         $this->authorize('lock', $user);
 
         $user->status = UserStatus::LOCKED;
         $user->save();
 
-       return to_route('users.index', $request->query());
+       return to_route_query('users.index');
    }
 
    /** Update the specified resource in storage.
     *
-    * @param  \Illuminate\Http\Request  $request
     * @param  \App\Models\User  $user
     * @return \Illuminate\Http\Response
     */
-    public function unlock(Request $request, User $user)
+    public function unlock(User $user)
     {
         $this->authorize('unlock', $user);
 
         $user->status = UserStatus::ACTIVE;
         $user->save();
  
-        return to_route('users.index', $request->query());
+        return to_route_query('users.index');
     }
  
  }

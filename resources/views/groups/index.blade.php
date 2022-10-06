@@ -29,30 +29,27 @@
                                         <th class="text-center">{{ __('Group') }}</th>
                                         <th class="text-center">{{ __('User') }}</th>
                                         <th class="text-end">
-                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('groups.create', request()->query()) }}"> {{ __('New Group')}}</a>
+                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route_query('groups.create') }}"> {{ __('New Group')}}</a>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($groups as $group)
-                                        @php
-                                            $query = array_merge(['group'=>$group], request()->query());
-                                        @endphp
                                         <tr>
                                             <td class="text-start">
-                                                <a href="{{ route('groups.edit', $query) }}">
+                                                <a href="{{ route_query('groups.edit', ['group' => $group]) }}">
                                                     {{ $group->name }}
                                                 </a>
                                             </td>
                                             <td class="text-center">{{ $group->users->count() }}</td>
                                             <td class="text-end">
                                                 @if($group->isDelete())
-                                                    <a href="{{ route('groups.destroy', $query) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                    <a href="{{ route_query('groups.destroy', ['group' => $group]) }}" class="link-dark bi bi-trash text-decoration-none"
                                                         onclick="event.preventDefault();
                                                         document.getElementById('groups-destroy-{{$group->id}}').submit();">
                                                         {{ __('Delete') }}
                                                         </a>
-                                                    <form method="POST" class="d-none" action="{{ route('groups.destroy', $query)}}" id="groups-destroy-{{$group->id}}">
+                                                    <form method="POST" class="d-none" action="{{ route_query('groups.destroy', ['group' => $group])}}" id="groups-destroy-{{$group->id}}">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>

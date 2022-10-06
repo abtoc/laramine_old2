@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <nav>
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ route('groups.index', request()->query()) }}">{{ __('Group') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route_query('groups.index') }}">{{ __('Group') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('New Group') }}</li>
                         </ol>
                     </nav>
@@ -16,7 +16,7 @@
 
                 <div class="card-body">
                     @include('components.alert')
-                    <form method="POST" action="{{ route('groups.store') }}">
+                    <form method="POST" action="{{ route_query('groups.store') }}">
                         @csrf
 
                         <div class="row mb-3">

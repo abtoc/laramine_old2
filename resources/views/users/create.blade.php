@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <nav>
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ route('users.index', request()->query()) }}">{{ __('User') }}</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route_query('users.index') }}">{{ __('User') }}</a></li>
                             <li class="breadcrumb-item active">{{ __('New User') }}</li>
                         </ol>
                     </nav>
@@ -16,7 +16,7 @@
 
                 <div class="card-body">
                     @include('components.alert')
-                    <form method="POST" action="{{ route('users.store') }}">
+                    <form method="POST" action="{{ route_query('users.store') }}">
                         @csrf
 
                         <div class="row mb-3">

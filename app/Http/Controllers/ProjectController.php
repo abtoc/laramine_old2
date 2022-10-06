@@ -25,7 +25,7 @@ class ProjectController extends Controller
         $query = Project::query();
 
         if($request->has('status')){
-            if($request->query('status') != ProjectStatus::NONE){
+            if($request->query('status') != ProjectStatus::NONE->value){
                 $query = $query->whereStatus($request->query('status', 1));
             }
         } else {
@@ -158,7 +158,7 @@ class ProjectController extends Controller
         $project->fill($request->all());
         $project->save();
 
-        return to_route('projects.edit', ['project' => $project]);
+        return to_route('projects.show', ['project' => $project]);
     }
 
     /**
@@ -173,7 +173,7 @@ class ProjectController extends Controller
 
         $project->delete();
 
-        return to_route('projects.admin');
+        return to_route_query('projects.admin');
     }
 
     /**
@@ -198,7 +198,8 @@ class ProjectController extends Controller
             $project->status = ProjectStatus::ACTIVE;
         }
         $project->save();
-        return redirect(url()->previous());
+
+        return to_route('projects.show', ['project' => $project]);
     }
 
     /**
@@ -223,7 +224,7 @@ class ProjectController extends Controller
         $project->status = ProjectStatus::CLOSED;
         $project->save();
 
-        return redirect(url()->previous());
+        return to_route('projects.show', ['project' => $project]);
     }
 
     /**
@@ -248,6 +249,6 @@ class ProjectController extends Controller
         $project->status = ProjectStatus::ARCHIVE;
         $project->save();
 
-        return redirect(url()->previous());
+        return to_route_query('projects.admin');
     }
 }

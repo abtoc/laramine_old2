@@ -10,11 +10,11 @@
                 <div class="card-body">
                     @include('components.alert')
                     <div class="row mb-3">
-                        <form id="search" action="{{ route('projects.admin') }}" method="GET">
+                        <form id="search-project" action="{{ route('projects.admin') }}" method="GET">
                             <div class="row g-1">
                                 <label for="status" class="col-auto col-form-label text-md-end">{{ __('Status') }}:</label>
                                 <div class="col-auto">
-                                    <select name="status" id="status" class="form-select" onchange="document.getElementById('search').submit();">
+                                    <select name="status" id="status" class="form-select" onchange="document.getElementById('search-project').submit();">
                                         @foreach(App\Enums\ProjectStatus::cases() as $status)
                                             <option value="{{ $status->value }}" @selected(request()->query('status', 1) == $status->value)>{{ $status->string() }}</option>
                                         @endforeach
@@ -61,30 +61,30 @@
                                             <td class="text-center">{{ $project->created_at->toDateString() }}</td>
                                             <td class="text-end">
                                                 @if($project->isArchive())
-                                                    <a href="{{ route('projects.open', ['project' => $project]) }}" class="link-dark bi bi-unlock text-decoration-none"
+                                                    <a href="{{ route_query('projects.open', ['project' => $project]) }}" class="link-dark bi bi-unlock text-decoration-none"
                                                         onclick="event.preventDefault();
                                                         document.getElementById('projects-unlock-{{$project->id}}').submit();">
                                                         {{ __('ArchiveRelese') }}
                                                     </a>
-                                                    <form method="POST" class="d-none" action="{{ route('projects.open', ['project'=>$project])}}" id="projects-unlock-{{$project->id}}">
+                                                    <form method="POST" class="d-none" action="{{ route_query('projects.open', ['project'=>$project])}}" id="projects-unlock-{{$project->id}}">
                                                         @csrf
                                                     </form>
                                                 @else
-                                                    <a href="{{ route('projects.archive', ['project' => $project]) }}" class="link-dark bi bi-lock text-decoration-none"
+                                                    <a href="{{ route_query('projects.archive', ['project' => $project]) }}" class="link-dark bi bi-lock text-decoration-none"
                                                         onclick="event.preventDefault();
                                                         document.getElementById('projects-lock-{{$project->id}}').submit();">
                                                         {{ __('Archive') }}
                                                     </a>
-                                                    <form method="POST" class="d-none" action="{{ route('projects.archive', ['project'=>$project])}}" id="projects-lock-{{$project->id}}">
+                                                    <form method="POST" class="d-none" action="{{ route_query('projects.archive', ['project'=>$project])}}" id="projects-lock-{{$project->id}}">
                                                         @csrf
                                                     </form>
                                                 @endif
-                                                <a href="{{ route('projects.destroy', ['project' => $project]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                <a href="{{ route_query('projects.destroy', ['project' => $project]) }}" class="link-dark bi bi-trash text-decoration-none"
                                                     onclick="event.preventDefault();
                                                     document.getElementById('projects-destroy-{{$project->id}}').submit();">
                                                     {{ __('Delete') }}
                                                 </a>
-                                                <form method="POST" class="d-none" action="{{ route('projects.destroy', ['project'=>$project])}}" id="projects-destroy-{{$project->id}}">
+                                                <form method="POST" class="d-none" action="{{ route_query('projects.destroy', ['project'=>$project])}}" id="projects-destroy-{{$project->id}}">
                                                     @csrf
                                                     @method('DELETE')
                                                 </form>
