@@ -1,5 +1,5 @@
 <div>
-    @include('components.alert')
+    <x-alert/>
     <div class="table-responsive">
         <table class="table table-sm table-hover text-nowrap w-100">
             <thead>

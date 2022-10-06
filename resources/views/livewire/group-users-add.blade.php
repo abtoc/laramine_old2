@@ -8,7 +8,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="height: 460px">
-                @include('components.alert')
+                <x-alert/>
                 <div class="mb-3">
                     <input type="text" class="form-control" wire:model="search">
                 </div>

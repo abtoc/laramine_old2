@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="card-body">
-                    @include('components.alert')
+                    <x-alert/>
                     <ul class="nav nav-tabs mb-3">
                         <li class="nav-item">
                             <a href="{{ route_query('groups.edit', ['group' => $group])}}" class="nav-link" >{{ __('All') }}</a>

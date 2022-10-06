@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Project') }}</div>
                 <div class="card-body">
-                    @include('components.alert')
+                    <x-alert/>
                     <div class="row mb-3">
                         <form id="search-project" action="{{ route('projects.admin') }}" method="GET">
                             <div class="row g-1">

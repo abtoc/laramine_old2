@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    @include('components.alert')
+                    <x-alert/>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

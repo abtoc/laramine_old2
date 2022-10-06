@@ -3,7 +3,7 @@
 @section('content-project')
 
 <div class="container-fuid px-4 py-4">
-    @include('components.alert')
+    <x-alert/>
     <div class="d-flex">
         <div class="flex-grow-1">
             <h2 class="mb-3">{{ __('Summary') }}</h2>

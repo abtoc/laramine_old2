@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Group') }}</div>
                 <div class="card-body">
-                    @include('components.alert')
+                    <x-alert/>
                     <div class="row mb-3">
                         <form action="{{ route('groups.index') }}" method="GET">
                             <div class="row g-1">
