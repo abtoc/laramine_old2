@@ -52,8 +52,8 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
         Route::get('/{user}/edit', 'edit')->name('edit');
         Route::put('/{user}', 'update')->name('update');
         Route::delete('/{user}', 'destroy')->name('destroy');
-        Route::post('/{user}/lock', 'lock')->name('lock');
-        Route::post('/{user}/unlock', 'unlock')->name('unlock');
+        Route::put('/{user}/lock', 'lock')->name('lock');
+        Route::put('/{user}/unlock', 'unlock')->name('unlock');
     });
     Route::controller(GroupController::class)->prefix('groups')->name('groups.')->group(function(){
         Route::get('/', 'index')->name('index');
@@ -80,11 +80,11 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
         Route::get('/admin', 'admin')->name('admin');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
-        Route::get('/{project}/edit', 'edit')->name('edit');
-        Route::put('/{project}', 'update')->name('update');
+        Route::get('/{project}/edit/setting', 'edit')->name('edit.setting');
+        Route::put('/{project}/edit/setting', 'update')->name('update.setting');
         Route::delete('{project}', 'destroy')->name('destroy');
-        Route::post('/{project}/open', 'open')->name('open');
-        Route::post('/{project}/close', 'close')->name('close');
-        Route::post('/{project}/archive', 'archive')->name('archive');
+        Route::put('/{project}/open', 'open')->name('open');
+        Route::put('/{project}/close', 'close')->name('close');
+        Route::put('/{project}/archive', 'archive')->name('archive');
     });
 });

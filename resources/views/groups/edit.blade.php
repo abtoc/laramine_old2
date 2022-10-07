@@ -16,19 +16,7 @@
 
                 <div class="card-body">
                     <x-alert/>
-                    <ul class="nav nav-tabs mb-3">
-                        <li class="nav-item">
-                            <a href="{{ route_query('groups.edit', ['group' => $group])}}" class="nav-link active" aria-current="page"  href="#">{{ __('All') }}</a>
-                        </li>
-                        @if($group->isGroup(true))
-                            <li class="nav-item">
-                                <a href="{{ route_query('groups.users', ['group' => $group])}}" class="nav-link">{{ __('User') }}</a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a href="{{ route_query('groups.projects', ['group' => $group]) }}" class="nav-link">{{ __('Project') }}</a>
-                        </li>
-                    </ul>
+                    <x-group-edit-tab :group="$group"/>
                     <form method="POST" action="{{ route_query('groups.update', ['group' => $group]) }}">
                         @csrf
                         @method('PUT')
@@ -37,13 +25,8 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" @unless($group->isGroup(true)) disabled @endunless name="name" value="{{ old('name', $group->name) }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="name" type="text" class="form-control @invalid('name')" @unless($group->isGroup(true)) disabled @endunless name="name" value="{{ old('name', $group->name) }}" required autocomplete="name" autofocus>
+                                <x-invalid-feedback name="name"/>
                             </div>
                         </div>
 

@@ -16,13 +16,8 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" autofocus>
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password" type="password" class="form-control @invalid('password')" name="password" required autocomplete="current-password" autofocus>
+                                <x-invalid-feedback name="password"/>
                             </div>
                         </div>
 
@@ -30,13 +25,8 @@
                             <label for="new-password" class="col-md-4 col-form-label text-md-end">{{ __('New Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="new-password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" required autocomplete="new-password">
-
-                                @error('new_password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="new-password" type="password" class="form-control @invalid('new_password')" name="new_password" required autocomplete="new-password">
+                                <x-invalid-feedback name="new_password"/>
                             </div>
                         </div>
 

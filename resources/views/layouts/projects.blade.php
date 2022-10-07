@@ -15,9 +15,9 @@
             @php
                 $isProject = ($name === 'projects.index');
             @endphp
-            <a href="{{ route('projects.index') }}" @class(['nav-link', 'active' => $isProject]) @if($isProject) aria-current="page" @endif)>
+            <x-nav-link href="{{ route('projects.index') }}" active="{{ is_route_named('projects.index') }}">
                 {{ __('Project') }}
-            </a>
+            </x-nav-link>
         </li>
     </ul>
 </nav>

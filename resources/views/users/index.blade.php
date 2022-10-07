@@ -76,6 +76,7 @@
                                                             </a>
                                                         <form method="POST" class="d-none" action="{{ route_query('users.lock', ['user' => $user]) }}" id="users-lock-{{$user->id}}">
                                                             @csrf
+                                                            @method('PUT')
                                                         </form>
                                                     @else
                                                         <a href="{{ route_query('users.unlock', ['user' => $user]) }}" class="link-dark bi bi-unlock text-decoration-none"
@@ -85,6 +86,7 @@
                                                         </a>
                                                         <form method="POST" class="d-none" action="{{ route_query('users.unlock', ['user' => $user]) }}" id="users-unlock-{{$user->id}}">
                                                             @csrf
+                                                            @method('PUT')
                                                         </form>
                                                     @endif
                                                     <a href="{{ route_query('users.destroy', ['user' => $user]) }}" class="link-dark bi bi-trash text-decoration-none"

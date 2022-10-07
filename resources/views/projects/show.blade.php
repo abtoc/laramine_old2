@@ -18,7 +18,10 @@
                                 <a href="{{ route('projects.close', ['project' => $project]) }}" class="dropdown-item link-dark text-decoration-none bi bi-stop" onclick="event.preventDefault();document.getElementById('project-close').submit();">
                                     {{ __('End') }}
                                 </a>
-                                <form action="{{ route('projects.close', ['project' => $project]) }}" id="project-close" method="POST">@csrf</form>
+                                <form action="{{ route('projects.close', ['project' => $project]) }}" id="project-close" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                </form>
                             </li>
                         @endcan
                         @can('open', $project)
@@ -26,12 +29,15 @@
                                 <a href="{{ route('projects.open', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none bi bi-play" onclick="event.preventDefault();document.getElementById('project-open').submit();">
                                     {{ __('Start') }}
                                 </a>
-                                <form action="{{ route('projects.open', ['project' => $project]) }}" id="project-open" method="POST">@csrf</form>
+                                <form action="{{ route('projects.open', ['project' => $project]) }}" id="project-open" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                </form>
                             </li>
                         @endcan
                         @can('update', $project)
                             <li>
-                                <a href="{{ route('projects.edit', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none bi bi-gear">{{ __('Setting') }}</a>
+                                <a href="{{ route('projects.edit.setting', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none bi bi-gear">{{ __('Setting') }}</a>
                             </li>              
                         @endcan
                     </ul>

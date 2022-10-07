@@ -1,5 +1,29 @@
 <?php
 
+use Illuminate\Support\Arr;
+
+if(!function_exists('is_route_named')) {
+    /**
+     * Generate the URL to a named route with query.
+     *
+     * @param  array|string  $name
+     * @param  mixed  $parameters
+     * @param  bool  $absolute
+     * @return string
+     */
+
+    function is_route_named($names)
+    {
+        $names = Arr::wrap($names);
+        foreach($names as $name){
+            if(request()->route()->named($name)){
+                return true;
+            }
+        }
+        return false;
+    }
+ }
+
 if(!function_exists('route_query')) {
     /**
      * Generate the URL to a named route with query.

@@ -16,19 +16,7 @@
 
                 <div class="card-body">
                     <x-alert/>
-                    <ul class="nav nav-tabs mb-3">
-                        <li class="nav-item">
-                            <a href="{{ route_query('groups.edit', ['group' => $group])}}" class="nav-link" >{{ __('All') }}</a>
-                        </li>
-                        @if($group->isGroup(true))
-                            <li class="nav-item">
-                                <a href="{{ route_query('groups.users', ['group' => $group])}}" class="nav-link active" aria-current="page">{{ __('User') }}</a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a href="{{ route_query('groups.projects', ['group' => $group]) }}" class="nav-link">{{ __('Project') }}</a>
-                        </li>
-                    </ul>
+                    <x-group-edit-tab :group="$group"/>
                     @livewire('group-users', ['group'=>$group])
                 </div>
             </div>

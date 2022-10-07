@@ -245,22 +245,26 @@ class UserTest extends TestCase
         $user2      = User::factory()->create();
 
         $response = $this->actingAs($user_other)->post(route('users.lock', ['user'=>$user1]),[
+            '_method' => 'PUT',
         ]);
         $response->assertStatus(404);
 
         $response = $this->actingAs($user_users)->post(route('users.lock', ['user'=>$user1]),[
+            '_method' => 'PUT',
         ]);
         $response->assertRedirect(route('users.index'));
         $user1 = User::find($user1->id);
         $this->assertTrue($user1->status === UserStatus::LOCKED);
 
         $response = $this->actingAs($user_admin)->post(route('users.lock', ['user'=>$user2]),[
+            '_method' => 'PUT',
         ]);
         $response->assertRedirect(route('users.index'));
         $user2 = User::find($user2->id);
         $this->assertTrue($user2->status === UserStatus::LOCKED);
 
         $response = $this->actingAs($user_admin)->post(route('users.lock', ['user'=>$user_admin]),[
+            '_method' => 'PUT',
         ]);
         $response->assertStatus(404);
     }
@@ -274,22 +278,26 @@ class UserTest extends TestCase
         $user2      = User::factory()->create(['status' => UserStatus::LOCKED]);
 
         $response = $this->actingAs($user_other)->post(route('users.unlock', ['user'=>$user1]),[
+            '_method' => 'PUT',
         ]);
         $response->assertStatus(404);
 
         $response = $this->actingAs($user_users)->post(route('users.unlock', ['user'=>$user1]),[
+            '_method' => 'PUT',
         ]);
         $response->assertRedirect(route('users.index'));
         $user1 = User::find($user1->id);
         $this->assertTrue($user1->status === UserStatus::ACTIVE);
 
         $response = $this->actingAs($user_admin)->post(route('users.unlock', ['user'=>$user2]),[
+            '_method' => 'PUT',
         ]);
         $response->assertRedirect(route('users.index'));
         $user2 = User::find($user2->id);
         $this->assertTrue($user2->status === UserStatus::ACTIVE);
 
         $response = $this->actingAs($user_admin)->post(route('users.unlock', ['user'=>$user_admin]),[
+            '_method' => 'PUT',
         ]);
         $response->assertStatus(404);
     }

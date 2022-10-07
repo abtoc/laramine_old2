@@ -52,7 +52,7 @@
                                                 @if($project->isArchive())
                                                     <span>{{ $project->name }}</span>
                                                 @else
-                                                    <a href="{{ route('projects.edit', ['project' => $project]) }}">
+                                                    <a href="{{ route('projects.edit.setting', ['project' => $project]) }}">
                                                         {{ $project->name }}
                                                     </a>
                                                 @endif
@@ -68,6 +68,7 @@
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('projects.open', ['project'=>$project])}}" id="projects-unlock-{{$project->id}}">
                                                         @csrf
+                                                        @method('PUT')
                                                     </form>
                                                 @else
                                                     <a href="{{ route_query('projects.archive', ['project' => $project]) }}" class="link-dark bi bi-lock text-decoration-none"
@@ -77,6 +78,7 @@
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('projects.archive', ['project'=>$project])}}" id="projects-lock-{{$project->id}}">
                                                         @csrf
+                                                        @method('PUT')
                                                     </form>
                                                 @endif
                                                 <a href="{{ route_query('projects.destroy', ['project' => $project]) }}" class="link-dark bi bi-trash text-decoration-none"

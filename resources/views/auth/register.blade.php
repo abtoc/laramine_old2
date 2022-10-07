@@ -16,13 +16,8 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="name" type="text" class="form-control @invalid('name')" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <x-invalid-feedback name="name"/>
                             </div>
                         </div>
 
@@ -30,13 +25,8 @@
                             <label for="login" class="col-md-4 col-form-label text-md-end">{{ __('Login ID') }}</label>
 
                             <div class="col-md-6">
-                                <input id="login" type="login" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login') }}" required autocomplete="on">
-
-                                @error('login')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="login" type="login" class="form-control @invalid('login')" name="login" value="{{ old('login') }}" required autocomplete="on">
+                                <x-invalid-feedback name="login"/>
                             </div>
                         </div>
 
@@ -44,13 +34,8 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="email" type="email" class="form-control @invalid('email')" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <x-invalid-feedback name="email"/>
                             </div>
                         </div>
 
@@ -58,13 +43,8 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password" type="password" class="form-control @invalid('password')" name="password" required autocomplete="new-password">
+                                <x-invalid-feedback name="password"/>
                             </div>
                         </div>
 

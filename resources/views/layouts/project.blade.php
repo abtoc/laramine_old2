@@ -7,32 +7,24 @@
 @endsection
 
 @section('navbar')
-@php
-    $name = Route::currentRouteName();
-@endphp
 
 <nav class="navbar navbar-light bg-light flex-md-nowrap p-0 d-none d-md-block">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            @php
-                $isShow = ($name === 'projects.show');
-            @endphp
-            <a href="{{ route('projects.show', ['project'=>$project]) }}" @class(['nav-link', 'active' => $isShow]) @if($isShow) aria-current="page" @endif)>
+            <x-nav-link href="{{ route('projects.show', ['project' => $project]) }}" active="{{ is_route_named('projects.show') }}">
                 {{ __('Summary') }}
-            </a>
+            </x-nav-link>
         </li>
         @can('update', $project)
             <li class="nav-item">
-                @php
-                    $isEdit = ($name === 'projects.edit');
-                @endphp
-                <a href="{{ route('projects.edit', ['project'=>$project]) }}" @class(['nav-link', 'active' => $isEdit]) @if($isEdit) aria-current="page" @endif)>
+                <x-nav-link href="{{ route('projects.edit.setting', ['project'=>$project]) }}" active="{{ is_route_named('projects.edit.*') }}">
                     {{ __('Setting') }}
-                </a>
+                </x-nav-link>
             </li>
         @endcan
     </ul>
 </nav>
+
 @endsection
 
 @section('sidebar')
@@ -40,7 +32,7 @@
 <ul class="navbar-nav d-flex">
     <li class="nav-item mx-3 text-muted"><a href="{{ route('projects.show', ['project'=>$project]) }}" class="nav-link text-secondary p-1">{{ __('Summary') }}</a></li>
     @can('update', $project)
-        <li class="nav-item mx-3 text-muted"><a href="{{ route('projects.edit', ['project'=>$project]) }}" class="nav-link text-secondary p-1">{{ __('Setting') }}</a></li>
+        <li class="nav-item mx-3 text-muted"><a href="{{ route('projects.edit.setting', ['project'=>$project]) }}" class="nav-link text-secondary p-1">{{ __('Setting') }}</a></li>
     @endcan
 </ul>
 @endsection

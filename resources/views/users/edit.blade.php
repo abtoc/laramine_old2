@@ -36,13 +36,8 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $user->name) }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="name" type="text" class="form-control @invalid('name')" name="name" value="{{ old('name', $user->name) }}" required autocomplete="name" autofocus>
+                                <x-invalid-feedback name="name"/>
                             </div>
                         </div>
 
@@ -50,13 +45,8 @@
                             <label for="login" class="col-md-4 col-form-label text-md-end">{{ __('Login ID') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
-                                <input id="login" type="login" class="form-control @error('login') is-invalid @enderror" name="login" value="{{ old('login', $user->login) }}" required autocomplete="on">
-
-                                @error('login')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="login" type="login" class="form-control @invalid('login')" name="login" value="{{ old('login', $user->login) }}" required autocomplete="on">
+                                <x-invalid-feedback name="login"/>
                             </div>
                         </div>
 
@@ -64,53 +54,40 @@
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', $user->email) }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="email" type="email" class="form-control @invalid('email')" name="email" value="{{ old('email', $user->email) }}" required autocomplete="email">
+                                <x-invalid-feedback name="email"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
-                                <input type="checkbox" class="form-check-input @error('admin') is-invalid @enderror" id="admin" name="admin"  value="1" @checked(old('admin', $user->admin))>
+                                <input type="checkbox" class="form-check-input @invalid('admin')" id="admin" name="admin"  value="1" @checked(old('admin', $user->admin))>
                                 <label for="admin" class="form-check-label">{{ __('Administrator') }}</label>
-                                @error('admin')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
+                                <x-invalid-feedback name="admin"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
-                                <input type="checkbox" class="form-check-input @error('admin_users') is-invalid @enderror" id="admin-users" name="admin_users"  value="1" @checked(old('admin_users', $user->admin_users))>
+                                <input type="checkbox" class="form-check-input @invalid('admin-users')" id="admin-users" name="admin_users"  value="1" @checked(old('admin_users', $user->admin_users))>
                                 <label for="admin-users" class="form-check-label">{{ __('User Admin') }}</label>
-                                @error('admin_users')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
+                                <x-invalid-feedback name="admin-users"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
-                                <input type="checkbox" class="form-check-input @error('admin_projects') is-invalid @enderror" id="admin-projects" name="admin_projects"  value="1" @checked(old('admin_projects', $user->admin_projects))>
+                                <input type="checkbox" class="form-check-input @invalid('admin-projects')" id="admin-projects" name="admin_projects"  value="1" @checked(old('admin_projects', $user->admin_projects))>
                                 <label for="admin-projects" class="form-check-label">{{ __('Project Admin') }}</label>
-                                @error('admin_projects')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
+                                <x-invalid-feedback name="admin-projects"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
-                                <input type="checkbox" class="form-check-input @error('must_change_password') is-invalud @enderror" id="must-change-password" name="must_change_password" value="1" @checked(old('must_change_password', $user->must_change_password))>
+                                <input type="checkbox" class="form-check-input @invalid('must_change_password')" id="must-change-password" name="must_change_password" value="1" @checked(old('must_change_password', $user->must_change_password))>
                                 <label for="must-change-password" class="form-check-label">{{ __('Forces password change at next login') }}</label>
-                                @error('must_change_password')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
+                                <x-invalid-feedback name="must_change_password"/>
                             </div>
                         </div>
 
