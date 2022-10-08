@@ -69,6 +69,7 @@
                                                     <form method="POST" class="d-none" action="{{ route_query('projects.open', ['project'=>$project])}}" id="projects-unlock-{{$project->id}}">
                                                         @csrf
                                                         @method('PUT')
+                                                        <input type="hidden" name="_previous" value="{{ route_query('projects.admin') }}">
                                                     </form>
                                                 @else
                                                     <a href="{{ route_query('projects.archive', ['project' => $project]) }}" class="link-dark bi bi-lock text-decoration-none"

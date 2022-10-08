@@ -36,6 +36,8 @@ return [
     'date'                 => ':attributeには有効な日付を指定してください。',
     'date_equals'          => ':attributeには、:dateと同じ日付けを指定してください。',
     'date_format'          => ':attributeは:format形式で指定してください。',
+    'declined'             => ':attributeは有効にできません。',
+    'declined_if'          => ':otherが:valueの場合、:attributeは有効にできません。',
     'different'            => ':attributeと:otherには、異なった内容を指定してください。',
     'digits'               => ':attributeは:digits桁で指定してください。',
     'digits_between'       => ':attributeは:min桁から:max桁の間で指定してください。',
@@ -159,6 +161,9 @@ return [
         'name' => '名前',
         'email' => 'メールアドレス',
         'new_password' => '新パスワード',
+        'parent_id' => '親プロジェクトID',
+        'inherit_members' => 'メンバーを継承',
+        'empty' => '空',
     ],
 
 ];

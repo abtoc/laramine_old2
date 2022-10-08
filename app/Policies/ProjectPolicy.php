@@ -21,7 +21,7 @@ class ProjectPolicy
      */
     public function viewAnyAdmin(User $user)
     {
-        return Auth::check()
+        return ($user->admin or $user->admin_projects)
              ? Response::allow()
              : Response::denyAsNotFound();
     }

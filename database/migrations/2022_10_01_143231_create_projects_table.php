@@ -16,7 +16,11 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
+            if(config('database.default') === 'sqlite'){
+                $table->text('description')->nullable();
+            } else {
+                $table->text('description')->fulltext()->nullable();
+            }
             $table->unsignedTinyInteger('status')->default(1);
             $table->boolean('inherit_members')->default(false);
             $table->boolean('is_public')->default(false);

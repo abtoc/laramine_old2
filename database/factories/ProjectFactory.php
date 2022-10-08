@@ -18,10 +18,10 @@ class ProjectFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->words(),
-            'descrption' => implode("\n", fake()->paragraphs()),
+            'name' => fake()->word(),
+            'description' => implode("\n", fake()->paragraphs()),
             'status' => ProjectStatus::ACTIVE,
-            'inherit_members' => null,
+            'inherit_members' => false,
             'is_public' => false,
             'parent_id' => null,
         ];

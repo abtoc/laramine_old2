@@ -92,7 +92,7 @@ class ProjectController extends Controller
         $project->save();
 
         if($request->has('_previous')){
-            return redirect($request->_previous);
+            return redirect($request->post('_previous'));
         }
 
         return to_route('projects.index');
@@ -198,6 +198,10 @@ class ProjectController extends Controller
             $project->status = ProjectStatus::ACTIVE;
         }
         $project->save();
+
+        if($request->has('_previous')){
+            return redirect($request->post('_previous'));
+        }
 
         return to_route('projects.show', ['project' => $project]);
     }

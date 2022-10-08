@@ -22,7 +22,7 @@
     @livewireStyles
 </head>
 <body>
-    <div class="d-flex flex-column h-100">
+    <div id="app" class="d-flex flex-column h-100">
         <header>
             <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 d-none d-md-block">
                 <div class="container-fluid">
