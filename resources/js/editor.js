@@ -5,6 +5,7 @@ import { defaultKeymap } from '@codemirror/commands';
 import { markdown } from '@codemirror/lang-markdown';
 import { marked } from 'marked';
 import { reloadHighlight } from './highlight';
+import DOMPurify from 'dompurify';
 
 export function Editor(el) {
     this.target = el;
@@ -135,7 +136,7 @@ Editor.prototype.clickPicture = function(){
 Editor.prototype.hideTab = function(event){
     if(event.target.id === 'editor-tab-edit'){
         let preview = this.target.querySelector('#preview');
-        preview.innerHTML = marked(this.codemirror.state.doc.toString());
+        preview.innerHTML = DOMPurify.sanitize(marked(this.codemirror.state.doc.toString()));
         reloadHighlight(preview);
         //preview.innerHTML = marked(editor.value);
         let editor_edit = this.target.querySelector('#editor-edit');
