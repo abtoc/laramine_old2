@@ -5,16 +5,10 @@
 @endsection
 
 @section('navbar')
-@php
-    $name = Route::currentRouteName();
-@endphp
 
 <nav class="navbar navbar-light bg-light flex-md-nowrap p-0 d-none d-md-block">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            @php
-                $isProject = ($name === 'projects.index');
-            @endphp
             <x-nav-link href="{{ route('projects.index') }}" active="{{ is_route_named('projects.index') }}">
                 {{ __('Project') }}
             </x-nav-link>

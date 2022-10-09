@@ -38,10 +38,6 @@
                             </div>
                         </div>
 
-                        @php
-                            $parents = App\Models\Project::whereStatus(App\Enums\ProjectStatus::ACTIVE)->withDepth()->get()->toFlatTree();   
-                        @endphp
-
                         <div class="row mb-3">
                             <label for="parent-id" class="col-md-2 col-form-label text-md-end">{{ __('ParentProjectID') }}</label>
 
