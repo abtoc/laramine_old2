@@ -9,19 +9,17 @@
             </button>
         </div>
         <div id="toolbar" class="align-middle">
-            <div class="btn-group mx-1  align-middle">
-                <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-undo"></i></button>
-                <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-redo"></i></button>
-            </div>
             <div class="btn-group mx-1 align-middle">
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-bold"></i></button>
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-italic"></i></button>
-                <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-underline"></i></button>
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-strike"></i></button>
             </div>
             <div class="btn-group mx-1 align-middle">
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-list"></i></button>
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-table"></i></button>
+                <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-code"></i></button>
+            </div>
+            <div class="btn-group mx-1 align-middle">
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-link"></i></button>
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-picture"></i></button>
             </div>

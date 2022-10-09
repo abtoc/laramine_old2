@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { defaultKeymap } from '@codemirror/commands';
@@ -8,18 +9,12 @@ import { reloadHighlight } from './highlight';
 export function Editor(el) {
     this.target = el;
 
-    this.target.querySelector('.ei.ei-undo').parentNode.addEventListener('click', this.clickUndo.bind(this));
-    this.target.querySelector('.ei.ei-redo').parentNode.addEventListener('click', this.clickRedo.bind(this));
     this.target.querySelector('.ei.ei-bold').parentNode.addEventListener('click', this.clickBold.bind(this));
     this.target.querySelector('.ei.ei-italic').parentNode.addEventListener('click', this.clickItalic.bind(this));
-    this.target.querySelector('.ei.ei-underline').parentNode.addEventListener('click', this.clickUnderline.bind(this));
     this.target.querySelector('.ei.ei-strike').parentNode.addEventListener('click', this.clickStrike.bind(this));
     this.target.querySelector('.ei.ei-table').parentNode.addEventListener('click', this.clickTable.bind(this));
     this.target.querySelector('.ei.ei-list').parentNode.addEventListener('click', this.clickList.bind(this));
-//    this.target.querySelector('.ei.ei-cut').parentNode.addEventListener('click', this.clickCut.bind(this));
-//    this.target.querySelector('.ei.ei-copy').parentNode.addEventListener('click', this.clickCopy.bind(this));
-//    this.target.querySelector('.ei.ei-paste').parentNode.addEventListener('click', this.clickPaste.bind(this));
-//    this.target.querySelector('.ei.ei-code').parentNode.addEventListener('click', this.clickCode.bind(this));
+    this.target.querySelector('.ei.ei-code').parentNode.addEventListener('click', this.clickCode.bind(this));
     this.target.querySelector('.ei.ei-link').parentNode.addEventListener('click', this.clickLink.bind(this));
     this.target.querySelector('.ei.ei-picture').parentNode.addEventListener('click', this.clickPicture.bind(this));
     this.target.querySelector('button[data-bs-toggle="tab"]').parentNode.addEventListener('hide.bs.tab', this.hideTab.bind(this));
@@ -41,63 +36,100 @@ export function Editor(el) {
     }
 }
 
-
-Editor.prototype.clickUndo = function(){
-    console.log('undo');
+Editor.prototype._changeCharacters = function(cm, s, e){
+    const from = cm.state.selection.main.from;
+    const to   = cm.state.selection.main.to;
+    const text  = s + cm.state.sliceDoc(from, to) + e;
+    cm.dispatch({
+        changes: { from: from, to: to, insert: text }
+    });
 }
 
-Editor.prototype.clickRedo = function(){
-    console.log('redo');
+Editor.prototype._changeParagraph = function(cm, p)
+{
+    let from   = cm.state.selection.main.from;
+    let to     = cm.state.selection.main.to;
+    const str =  cm.state.doc.toString();
+    for(; from>0; from--){
+        if(str[from] === "\n") break;
+    }
+    for(; to<str.length; to++){
+        if(str[to] === "\n") break;
+    }
+    const text = cm.state.sliceDoc(from, to);
+    const list = text.split("\n");
+    let newList = [];
+    list.forEach((item) => {newList.push(item.replace(/^(.*)$/g, (p + ' ' + '$1')))});
+    const newText = newList.join("\n");
+    cm.dispatch({
+        changes: { from: from, to: to, insert: newText }
+    });
+}
+
+Editor.prototype._insertParagraph = function(cm, p)
+{
+    let to     = cm.state.selection.main.to;
+    const str =  cm.state.doc.toString();
+    for(; to<str.length; to++){
+        if(str[to] === "\n") break;
+    }
+    cm.dispatch({
+        changes: { from: to, insert: p }
+    });
+}
+
+Editor.prototype._changeParagraphAll = function(cm, p)
+{
+    let from   = cm.state.selection.main.from;
+    let to     = cm.state.selection.main.to;
+    const str =  cm.state.doc.toString();
+    for(; from>0; from--){
+        if(str[from] === "\n") break;
+    }
+    for(; to<str.length; to++){
+        if(str[to] === "\n") break;
+    }
+    const text = p + "\n" + cm.state.sliceDoc(from, to) + "\n" + p;
+    cm.dispatch({
+        changes: { from: from, to: to, insert: text }
+    });
 }
 
 Editor.prototype.clickBold = function(){
-    console.log('bold');
-    let cm = this.codemirror;
-    cm.dispatch(cm.state.replaceSelection("☆"));
+    this._changeCharacters(this.codemirror, '**', '**');
 }
 
 Editor.prototype.clickItalic = function(){
-    console.log('italic');
-}
-
-Editor.prototype.clickUnderline = function(){
-    console.log('underline');
+    this._changeCharacters(this.codemirror, '*', '*');
 }
 
 Editor.prototype.clickStrike = function(){
-    console.log('strike');
+    this._changeCharacters(this.codemirror, '~~', '~~');
 }
 
 Editor.prototype.clickTable = function(){
-    console.log('table');
+    this._insertParagraph(this.codemirror, `
+|A  |B  |C  |D  |
+|---|---|---|---|
+|   |   |   |   |
+|   |   |   |   |
+`);
 }
 
 Editor.prototype.clickList = function(){
-    console.log('list');
-}
-
-Editor.prototype.clickCut = function(){
-    console.log('cut');
-}
-
-Editor.prototype.clickCopy = function(){
-    console.log('copy');
-}
-
-Editor.prototype.clickPaste = function(){
-    console.log('paste');
+    this._changeParagraph(this.codemirror, '-');
 }
 
 Editor.prototype.clickCode = function(){
-    console.log('code');
+    this._changeParagraphAll(this.codemirror, '```');
 }
 
 Editor.prototype.clickLink = function(){
-    console.log('link');
+    this._changeCharacters(this.codemirror, '[', '](https://)');
 }
 
 Editor.prototype.clickPicture = function(){
-    console.log('picture');
+    this._changeCharacters(this.codemirror, '![', '](https://)');
 }
 
 Editor.prototype.hideTab = function(event){

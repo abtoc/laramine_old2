@@ -12,6 +12,16 @@
             <li><a href="#" class="dropdown-item">BBBB</a></li>
             <li><a href="#" class="dropdown-item">CCCCC</a></li>
         </ul>
+        <a href="#" id="dropdown-test2" class="" data-bs-toggle="dropdown" aria-haspopup="true">TEST</a>
+        <div class="dropdown-menu dropdown-menu-end p-0 m-0" aria-labelledby="dropdown-test2">
+            <table class="table-bordered">
+                <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;&nbsp;&nbsp;&nbsp;<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;&nbsp;&nbsp;&nbsp;<td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            </table>
+        </div>
     </div>
 
 </nav>

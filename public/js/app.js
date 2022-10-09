@@ -5795,12 +5795,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Editor": () => (/* binding */ Editor)
 /* harmony export */ });
-/* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @codemirror/state */ "./node_modules/@codemirror/state/dist/index.js");
-/* harmony import */ var _codemirror_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @codemirror/view */ "./node_modules/@codemirror/view/dist/index.js");
-/* harmony import */ var _codemirror_commands__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codemirror/commands */ "./node_modules/@codemirror/commands/dist/index.js");
-/* harmony import */ var _codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @codemirror/lang-markdown */ "./node_modules/@codemirror/lang-markdown/dist/index.js");
-/* harmony import */ var marked__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! marked */ "./node_modules/marked/lib/marked.esm.js");
-/* harmony import */ var _highlight__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./highlight */ "./resources/js/highlight.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _codemirror_state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @codemirror/state */ "./node_modules/@codemirror/state/dist/index.js");
+/* harmony import */ var _codemirror_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @codemirror/view */ "./node_modules/@codemirror/view/dist/index.js");
+/* harmony import */ var _codemirror_commands__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @codemirror/commands */ "./node_modules/@codemirror/commands/dist/index.js");
+/* harmony import */ var _codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @codemirror/lang-markdown */ "./node_modules/@codemirror/lang-markdown/dist/index.js");
+/* harmony import */ var marked__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! marked */ "./node_modules/marked/lib/marked.esm.js");
+/* harmony import */ var _highlight__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./highlight */ "./resources/js/highlight.js");
 
 
 
@@ -5812,27 +5814,21 @@ function Editor(el) {
   var _this = this;
 
   this.target = el;
-  this.target.querySelector('.ei.ei-undo').parentNode.addEventListener('click', this.clickUndo.bind(this));
-  this.target.querySelector('.ei.ei-redo').parentNode.addEventListener('click', this.clickRedo.bind(this));
   this.target.querySelector('.ei.ei-bold').parentNode.addEventListener('click', this.clickBold.bind(this));
   this.target.querySelector('.ei.ei-italic').parentNode.addEventListener('click', this.clickItalic.bind(this));
-  this.target.querySelector('.ei.ei-underline').parentNode.addEventListener('click', this.clickUnderline.bind(this));
   this.target.querySelector('.ei.ei-strike').parentNode.addEventListener('click', this.clickStrike.bind(this));
   this.target.querySelector('.ei.ei-table').parentNode.addEventListener('click', this.clickTable.bind(this));
-  this.target.querySelector('.ei.ei-list').parentNode.addEventListener('click', this.clickList.bind(this)); //    this.target.querySelector('.ei.ei-cut').parentNode.addEventListener('click', this.clickCut.bind(this));
-  //    this.target.querySelector('.ei.ei-copy').parentNode.addEventListener('click', this.clickCopy.bind(this));
-  //    this.target.querySelector('.ei.ei-paste').parentNode.addEventListener('click', this.clickPaste.bind(this));
-  //    this.target.querySelector('.ei.ei-code').parentNode.addEventListener('click', this.clickCode.bind(this));
-
+  this.target.querySelector('.ei.ei-list').parentNode.addEventListener('click', this.clickList.bind(this));
+  this.target.querySelector('.ei.ei-code').parentNode.addEventListener('click', this.clickCode.bind(this));
   this.target.querySelector('.ei.ei-link').parentNode.addEventListener('click', this.clickLink.bind(this));
   this.target.querySelector('.ei.ei-picture').parentNode.addEventListener('click', this.clickPicture.bind(this));
   this.target.querySelector('button[data-bs-toggle="tab"]').parentNode.addEventListener('hide.bs.tab', this.hideTab.bind(this));
   this.target.querySelector('button[data-bs-toggle="tab"]').parentNode.addEventListener('show.bs.tab', this.showTab.bind(this));
   var textarea = this.target.querySelector('#editor');
-  this.codemirror = new _codemirror_view__WEBPACK_IMPORTED_MODULE_2__.EditorView({
-    state: _codemirror_state__WEBPACK_IMPORTED_MODULE_3__.EditorState.create({
+  this.codemirror = new _codemirror_view__WEBPACK_IMPORTED_MODULE_3__.EditorView({
+    state: _codemirror_state__WEBPACK_IMPORTED_MODULE_4__.EditorState.create({
       doc: textarea.value,
-      extensions: [_codemirror_view__WEBPACK_IMPORTED_MODULE_2__.keymap.of(_codemirror_commands__WEBPACK_IMPORTED_MODULE_4__.defaultKeymap), (0,_codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_5__.markdown)()]
+      extensions: [_codemirror_view__WEBPACK_IMPORTED_MODULE_3__.keymap.of(_codemirror_commands__WEBPACK_IMPORTED_MODULE_5__.defaultKeymap), (0,_codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_6__.markdown)()]
     }),
     parent: this.target.querySelector('#editor-edit')
   });
@@ -5844,69 +5840,124 @@ function Editor(el) {
   }
 }
 
-Editor.prototype.clickUndo = function () {
-  console.log('undo');
+Editor.prototype._changeCharacters = function (cm, s, e) {
+  var from = cm.state.selection.main.from;
+  var to = cm.state.selection.main.to;
+  var text = s + cm.state.sliceDoc(from, to) + e;
+  cm.dispatch({
+    changes: {
+      from: from,
+      to: to,
+      insert: text
+    }
+  });
 };
 
-Editor.prototype.clickRedo = function () {
-  console.log('redo');
+Editor.prototype._changeParagraph = function (cm, p) {
+  var from = cm.state.selection.main.from;
+  var to = cm.state.selection.main.to;
+  var str = cm.state.doc.toString();
+
+  for (; from > 0; from--) {
+    if (str[from] === "\n") break;
+  }
+
+  for (; to < str.length; to++) {
+    if (str[to] === "\n") break;
+  }
+
+  var text = cm.state.sliceDoc(from, to);
+  var list = text.split("\n");
+  var newList = [];
+  list.forEach(function (item) {
+    newList.push(item.replace(/^(.*)$/g, p + ' ' + '$1'));
+  });
+  var newText = newList.join("\n");
+  cm.dispatch({
+    changes: {
+      from: from,
+      to: to,
+      insert: newText
+    }
+  });
+};
+
+Editor.prototype._insertParagraph = function (cm, p) {
+  var to = cm.state.selection.main.to;
+  var str = cm.state.doc.toString();
+
+  for (; to < str.length; to++) {
+    if (str[to] === "\n") break;
+  }
+
+  cm.dispatch({
+    changes: {
+      from: to,
+      insert: p
+    }
+  });
+};
+
+Editor.prototype._changeParagraphAll = function (cm, p) {
+  var from = cm.state.selection.main.from;
+  var to = cm.state.selection.main.to;
+  var str = cm.state.doc.toString();
+
+  for (; from > 0; from--) {
+    if (str[from] === "\n") break;
+  }
+
+  for (; to < str.length; to++) {
+    if (str[to] === "\n") break;
+  }
+
+  var text = p + "\n" + cm.state.sliceDoc(from, to) + "\n" + p;
+  cm.dispatch({
+    changes: {
+      from: from,
+      to: to,
+      insert: text
+    }
+  });
 };
 
 Editor.prototype.clickBold = function () {
-  console.log('bold');
-  var cm = this.codemirror;
-  cm.dispatch(cm.state.replaceSelection("☆"));
+  this._changeCharacters(this.codemirror, '**', '**');
 };
 
 Editor.prototype.clickItalic = function () {
-  console.log('italic');
-};
-
-Editor.prototype.clickUnderline = function () {
-  console.log('underline');
+  this._changeCharacters(this.codemirror, '*', '*');
 };
 
 Editor.prototype.clickStrike = function () {
-  console.log('strike');
+  this._changeCharacters(this.codemirror, '~~', '~~');
 };
 
 Editor.prototype.clickTable = function () {
-  console.log('table');
+  this._insertParagraph(this.codemirror, "\n|A  |B  |C  |D  |\n|---|---|---|---|\n|   |   |   |   |\n|   |   |   |   |\n");
 };
 
 Editor.prototype.clickList = function () {
-  console.log('list');
-};
-
-Editor.prototype.clickCut = function () {
-  console.log('cut');
-};
-
-Editor.prototype.clickCopy = function () {
-  console.log('copy');
-};
-
-Editor.prototype.clickPaste = function () {
-  console.log('paste');
+  this._changeParagraph(this.codemirror, '-');
 };
 
 Editor.prototype.clickCode = function () {
-  console.log('code');
+  this._changeParagraphAll(this.codemirror, '```');
 };
 
 Editor.prototype.clickLink = function () {
-  console.log('link');
+  this._changeCharacters(this.codemirror, '[', '](https://)');
 };
 
 Editor.prototype.clickPicture = function () {
-  console.log('picture');
+  this._changeCharacters(this.codemirror, '![', '](https://)');
 };
 
 Editor.prototype.hideTab = function (event) {
   if (event.target.id === 'editor-tab-edit') {
     var preview = this.target.querySelector('#preview');
-    preview.innerHTML = (0,marked__WEBPACK_IMPORTED_MODULE_0__.marked)(this.codemirror.state.doc.toString());
-    (0,_highlight__WEBPACK_IMPORTED_MODULE_1__.reloadHighlight)(preview); //preview.innerHTML = marked(editor.value);
+    preview.innerHTML = (0,marked__WEBPACK_IMPORTED_MODULE_1__.marked)(this.codemirror.state.doc.toString());
+    (0,_highlight__WEBPACK_IMPORTED_MODULE_2__.reloadHighlight)(preview); //preview.innerHTML = marked(editor.value);
 
     var editor_edit = this.target.querySelector('#editor-edit');
     preview.style.height = editor_edit.clientHeight + "px";
