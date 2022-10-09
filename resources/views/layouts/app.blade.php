@@ -156,7 +156,6 @@
     </div>
     @livewireScripts
     <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
     @stack('scripts')
 </body>
 </html>

@@ -34,6 +34,7 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.32.11",
         "sass-loader": "^13.0.2",
-        "sass-svg-uri": "github:waldemarfm/sass-svg-uri"
+        "sass-svg-uri": "github:waldemarfm/sass-svg-uri",
+        "url-loader": "^4.1.1"
     }
 }
