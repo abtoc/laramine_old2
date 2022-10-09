@@ -3,6 +3,7 @@ import './highlight';
 import { Editor } from './editor';
 import { reloadHighlight } from './highlight';
 import mermaid from 'mermaid';
+import { renderMermaid } from './mermaid';
 
 document.addEventListener('DOMContentLoaded', function(){
     let editor_wrap = document.querySelector('#editor-wrap');
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function(){
     reloadHighlight(document);
 
     mermaid.initialize({startOnLoad: false})
-    mermaid.init(undefined,  document.querySelectorAll('.language-mermaid'));
+    renderMermaid(document.querySelectorAll('.language-mermaid'));
 });
 
 window.mermaid = mermaid;

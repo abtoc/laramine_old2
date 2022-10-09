@@ -6,6 +6,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { marked } from 'marked';
 import { reloadHighlight } from './highlight';
 import DOMPurify from 'dompurify';
+import { renderMermaid } from './mermaid';
 
 export function Editor(el) {
     this.target = el;
@@ -138,7 +139,7 @@ Editor.prototype.hideTab = function(event){
         let preview = this.target.querySelector('#preview');
         preview.innerHTML = DOMPurify.sanitize(marked(this.codemirror.state.doc.toString()));
         reloadHighlight(preview);
-        //preview.innerHTML = marked(editor.value);
+        renderMermaid(this.target.querySelectorAll('pre code.language-mermaid'));
         let editor_edit = this.target.querySelector('#editor-edit');
         preview.style.height = editor_edit.clientHeight + "px";
         this.target.querySelector('#toolbar').style.display = "none";
