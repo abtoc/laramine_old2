@@ -32,7 +32,7 @@
                         <div class="row mb-3">
                             <label for="description" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-10">
-                                <textarea id="markdown-edit" name="description" id="description" rows="8" class="form-control @invalid('description')">{{ old('description') }}</textarea>
+                                <x-editor name="description">{{ old('description') }}</x-editor>
                                 <x-invalid-feedback name="description"/>
                             </div>
                         </div>
@@ -84,11 +84,5 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script>
-    new EasyMDE({element: document.getElementById('markdown-edit')});
-</script>
-@endpush
 
 @endsection

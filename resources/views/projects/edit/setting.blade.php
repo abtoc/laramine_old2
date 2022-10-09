@@ -26,25 +26,15 @@
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @invalid('name')" name="name" value="{{ old('name', $project->name) }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <x-invalid-feedback name="name"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="description" class="col-md-2 col-form-label text-md-end">{{ __('Description') }}</label>
                             <div class="col-md-10">
-                                <textarea id="markdown-edit" name="description" id="description" rows="8" class="form-control @error('description') is-invalid @enderror">{{ old('description', $project->description) }}</textarea>
-
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <x-editor name="description">{{ old('description', $project->description) }}</x-editor>
+                                <x-invalid-feedback name="description"/>
                             </div>
                         </div>
 
@@ -56,38 +46,29 @@
                             <label for="parent-id" class="col-md-2 col-form-label text-md-end">{{ __('ParentProjectID') }}</label>
 
                             <div class="col-md-6">
-                                <select name="parent_id" id="parent-id" class="form-select @error('parent_id') is_invalid @enderror">
+                                <select name="parent_id" id="parent-id" class="form-select @invalid('parent_id')">
                                     <option value="" @selected(is_null(old('parent_id', $project->parent_id)))></option>
                                     @foreach($parents as $parent)
                                         <option value="{{ $parent->id }}" @selected(old('parent_id', $project->parent_id) == $parent->id)>{!! str_repeat('&nbsp;&nbsp;', $parent->depth).$parent->name !!}</option>
                                     @endforeach
                                 </select>
-
-                                @error('parent_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <x-invalid-feedback name="parent_id"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
-                                <input type="checkbox" class="form-check-input @error('is_public') is-invalid @enderror" id="is-public" name="is_public"  value="1" @checked(old('is_public', $project->is_public))>
+                                <input type="checkbox" class="form-check-input @invalid('is_public')" id="is-public" name="is_public"  value="1" @checked(old('is_public', $project->is_public))>
                                 <label for="is-public" class="form-check-label">{{ __('Public') }}</label>
-                                @error('is_public')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
+                                <x-invalid-feedback name="is_public"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-2">
-                                <input type="checkbox" class="form-check-input @error('inherit_members') is-invalid @enderror" id="inherit-members" name="inherit_members"  value="1" @checked(old('is_public', $project->inherit_members))>
+                                <input type="checkbox" class="form-check-input @invalid('inherit_members')" id="inherit-members" name="inherit_members"  value="1" @checked(old('is_public', $project->inherit_members))>
                                 <label for="inherit-members" class="form-check-label">{{ __('Inherit members') }}</label>
-                                @error('inherit_members')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
+                                <x-invalid-feedback name="inherit_members"/>
                             </div>
                         </div>
 
@@ -104,11 +85,5 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-<script>
-    new EasyMDE({element: document.getElementById('markdown-edit')});
-</script>
-@endpush
 
 @endsection
