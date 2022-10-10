@@ -122,8 +122,19 @@ class RoleController extends Controller
     {
         $this->authorize('move', Role::class);
 
+        $request->validate([
+            'from' => ['required', 'integer', 'exists:roles,id'],
+            'to' => ['required', 'integer', 'exists:roles,id'],
+        ]);
+
         $role_from = Role::findOrFail($request->post('from'));
+        if($role_from->builtin !== 0){
+            abort(404);
+        }
         $role_to = Role::findOrFail($request->post('to'));
+        if($role_to->builtin !== 0){
+            abort(404);
+        }
 
         $role_from->position = $role_to->position;
         $role_from->save();
