@@ -5731,6 +5731,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 document.addEventListener('DOMContentLoaded', function () {
   var editor_wrap = document.querySelector('#editor-wrap');
 
@@ -5743,6 +5744,27 @@ document.addEventListener('DOMContentLoaded', function () {
     startOnLoad: false
   });
   (0,_mermaid__WEBPACK_IMPORTED_MODULE_3__.renderMermaid)(document.querySelectorAll('.language-mermaid'));
+  var items = document.querySelectorAll('.dragged-item');
+  items.forEach(function (item) {
+    item.querySelector('.dragged-button').addEventListener('mousedown', function (event) {
+      item.draggable = true;
+      item.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text/plain', event.target.id);
+      });
+    });
+    item.addEventListener('mouseout', function (event) {});
+    item.addEventListener('dragover', function (event) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'copy';
+    });
+    item.addEventListener('drop', function (event) {
+      event.preventDefault();
+      this.draggable = false;
+      var form = this.querySelector('#dragged-form');
+      form.querySelector('#from').value = event.dataTransfer.getData('text');
+      form.submit();
+    });
+  });
 });
 window.mermaid = mermaid__WEBPACK_IMPORTED_MODULE_4__["default"];
 

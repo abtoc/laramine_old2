@@ -17,6 +17,11 @@
                     <a href="{{ route('groups.index') }}" class="nav-link link-dark bi bi-people"> {{ __('Group') }}</a>
                 </li>
             @endcan
+            @can('admin')
+                <li class="nav-item">
+                    <a href="{{ route('roles.index') }}" class="nav-link link-dark bi bi-key"> {{ __('Role') }}</a>
+                </li>
+            @endcan
         </ul>
     </div>
     <div class="align-items-stretch flex-glow-1 w-100">
@@ -34,6 +39,9 @@
     @can('admin-users')
         <li class="nav-item mx-3 text-muted"><a href="{{ route('users.index') }}" class="nav-link text-secondary p-1 bi bi-person">{{ __('User') }}</a></li>
         <li class="nav-item mx-3 text-muted"><a href="{{ route('groups.index') }}" class="nav-link text-secondary p-1 bi bi-people">{{ __('Group') }}</a></li>
+    @endcan
+    @can('admin')
+        <li class="nav-item mx-3 text-muted"><a href="{{ route('roles.index') }}" class="nav-link text-secondary p-1 bi bi-key">{{ __('Role') }}</a></li>
     @endcan
 </ul>
 @endsection

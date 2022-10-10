@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\My\ResetPasswordController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -86,5 +87,17 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
         Route::put('/{project}/open', 'open')->name('open');
         Route::put('/{project}/close', 'close')->name('close');
         Route::put('/{project}/archive', 'archive')->name('archive');
+    });
+});
+
+Route::group(['middleware' => ['auth', 'usercheck']], function(){
+    Route::controller(RoleController::class)->prefix('roles')->name('roles.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{role}', 'edit')->name('edit');
+        Route::put('/{role}', 'update')->name('update');
+        Route::delete('/{role}', 'destroy')->name('destroy');
+        Route::put('/move', 'move')->name('move');
     });
 });

@@ -25,7 +25,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @invalid('name')" @unless($group->isGroup(true)) disabled @endunless name="name" value="{{ old('name', $group->name) }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @invalid('name')" @disabled(!$group->isGroup(true)) name="name" value="{{ old('name', $group->name) }}" required autocomplete="name" autofocus>
                                 <x-invalid-feedback name="name"/>
                             </div>
                         </div>
