@@ -7,6 +7,18 @@ use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Group
+ * 
+ * @property integer $id
+ * @property \App\Enums\UserType $type
+ * @property string $name
+ * @property \App\Enums\UserStatus $status
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<User> $users
+ */
+
 class Group extends Model
 {
     use HasFactory;
@@ -64,6 +76,7 @@ class Group extends Model
      */
 
     public function users() { return $this->belongsToMany(User::class, 'groups_users', 'group_id', 'user_id'); }
+    public function projects() { return $this->belongToMany(Project::class, 'members', 'user_id', 'project_id'); }
 
     /**
      * return bool

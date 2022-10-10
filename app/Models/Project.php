@@ -8,7 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Kalnoy\Nestedset\NodeTrait;
 
-use function PHPSTORM_META\map;
+/**
+ * Project
+ * 
+ * @property integer $id
+ * @property string $name
+ * @property string $description
+ * @property \App\Enums\ProjectStatus $status
+ * @property boolean $inherit_members
+ * @property boolean $is_public
+ * @property integer $parent_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at 
+ * @property \Illuminate\Database\Eloquent\Collection<Member> $members 
+ * @property \Illuminate\Database\Eloquent\Collection<User> $users
+ */
 
 class Project extends Model
 {
@@ -46,6 +60,13 @@ class Project extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * relation
+     */
+
+    public function members() { return $this->hasMany(Member::class); }
+    public function users() { return $this->belongsToMany(User::class,  'members', 'project_id', 'user_id'); }
 
     /**
      * @return bool

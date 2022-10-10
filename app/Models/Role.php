@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Role
+ * 
+ * @property integer $id
+ * @property string $name
+ * @property integer $position
+ * @property integer $buildtin
+ * @property array $permissions
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ */
+
 class Role extends Model
 {
     use HasFactory;

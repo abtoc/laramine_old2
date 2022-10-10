@@ -12,6 +12,31 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Kyslik\ColumnSortable\Sortable;
 
+/**
+ * User
+ * 
+ * @property integer $id
+ * @property \App\Enums\UserType $type
+ * @property string $name
+ * @property string $login
+ * @property string $email
+ * @property \Carbon\Carbon $email_verified_at
+ * @property string $password
+ * @property \App\Enums\UserStatus $status
+ * @property boolean $admin
+ * @property boolean $admin_users
+ * @property boolean $admin_projects
+ * @property boolean $must_change_password
+ * @property string $remember_token
+ * @property \Carbon\Carbon $last_login_at
+ * @property \Carbon\Carbon $password_change_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<Group> $groups
+ * @property \Illuminate\Database\Eloquent\Collection<Project> $projects
+ * @property \Illuminate\Database\Eloquent\Collection<Member> $members 
+ */
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Sortable;
@@ -85,6 +110,8 @@ class User extends Authenticatable
      */
 
     public function groups() { return $this->belongsToMany(Group::class, 'groups_users', 'user_id', 'group_id'); }
+    public function members() { return $this->hasMany(Member::class); }
+    public function projects() { return $this->belongsToMany(Project::class, 'members', 'user_id', 'project_id'); }
 
     /**
      * return bool
