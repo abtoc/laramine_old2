@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { defaultKeymap } from '@codemirror/commands';
+import { indentWithTab } from '@codemirror/commands';
 import { markdown } from '@codemirror/lang-markdown';
 import { marked } from 'marked';
 import { reloadHighlight } from './highlight';
@@ -27,7 +28,7 @@ export function Editor(el) {
         state: EditorState.create({
             doc: textarea.value,
             extensions: [
-                keymap.of(defaultKeymap),
+                keymap.of([defaultKeymap, indentWithTab]),
                 markdown()
             ],
         }),

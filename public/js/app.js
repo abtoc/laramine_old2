@@ -5876,6 +5876,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 function Editor(el) {
   var _this = this;
 
@@ -5894,7 +5895,7 @@ function Editor(el) {
   this.codemirror = new _codemirror_view__WEBPACK_IMPORTED_MODULE_5__.EditorView({
     state: _codemirror_state__WEBPACK_IMPORTED_MODULE_6__.EditorState.create({
       doc: textarea.value,
-      extensions: [_codemirror_view__WEBPACK_IMPORTED_MODULE_5__.keymap.of(_codemirror_commands__WEBPACK_IMPORTED_MODULE_7__.defaultKeymap), (0,_codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_8__.markdown)()]
+      extensions: [_codemirror_view__WEBPACK_IMPORTED_MODULE_5__.keymap.of([_codemirror_commands__WEBPACK_IMPORTED_MODULE_7__.defaultKeymap, _codemirror_commands__WEBPACK_IMPORTED_MODULE_7__.indentWithTab]), (0,_codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_8__.markdown)()]
     }),
     parent: this.target.querySelector('#editor-edit')
   });

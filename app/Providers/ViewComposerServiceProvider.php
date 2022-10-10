@@ -29,7 +29,10 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('projects/*', function($view){
-            $view->with('parents', Project::whereStatus(ProjectStatus::ACTIVE)->withDepth()->get()->toFlatTree());
+            $view->with('parents', Project::select(['id', 'name'])
+                                    ->whereStatus(ProjectStatus::ACTIVE)
+                                    ->withDepth()
+                                    ->get()->toFlatTree());
         });
         View::composer('roles/*', function($view){
             $view->with('permissions_project', [
