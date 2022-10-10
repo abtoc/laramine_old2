@@ -45,10 +45,9 @@
                                             <td class="text-end">
                                                 @if($group->isDelete())
                                                     <a href="{{ route_query('groups.destroy', ['group' => $group]) }}" class="link-dark bi bi-trash text-decoration-none"
-                                                        onclick="event.preventDefault();
-                                                        document.getElementById('groups-destroy-{{$group->id}}').submit();">
+                                                        data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#groups-destroy-{{$group->id}}">
                                                         {{ __('Delete') }}
-                                                        </a>
+                                                    </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('groups.destroy', ['group' => $group])}}" id="groups-destroy-{{$group->id}}">
                                                         @csrf
                                                         @method('DELETE')

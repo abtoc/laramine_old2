@@ -30,17 +30,16 @@
                                             <td class="text-end">
                                                 @can('delete', $role)
                                                     <span class="dragged-button" style="cursor: move;"><i class="bi bi-arrows-move"></i></span>
-                                                    <form action="{{ route('roles.move') }}" id="dragged-form" method="POST" class="d-inline">
+                                                    <form action="{{ route('roles.move') }}" id="dragged-form" method="POST" class="d-none">
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" id="from" name="from">
                                                         <input type="hidden" id="to" name="to" value="{{ $role->id }}">
                                                     </form>
                                                     <a href="{{ route('roles.destroy', ['role' => $role]) }}" class="link-dark bi bi-trash text-decoration-none"
-                                                        onclick="event.preventDefault();
-                                                        document.getElementById('roles-destroy-{{$role->id}}').submit();">
+                                                        data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#roles-destroy-{{$role->id}}">
                                                         {{ __('Delete') }}
-                                                        </a>
+                                                    </a>
                                                     <form method="POST" class="d-none" action="{{ route('roles.destroy', ['role' => $role])}}" id="roles-destroy-{{$role->id}}">
                                                         @csrf
                                                         @method('DELETE')

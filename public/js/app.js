@@ -5752,7 +5752,6 @@ document.addEventListener('DOMContentLoaded', function () {
         event.dataTransfer.setData('text/plain', event.target.id);
       });
     });
-    item.addEventListener('mouseout', function (event) {});
     item.addEventListener('dragover', function (event) {
       event.preventDefault();
       event.dataTransfer.dropEffect = 'copy';
@@ -5763,6 +5762,37 @@ document.addEventListener('DOMContentLoaded', function () {
       var form = this.querySelector('#dragged-form');
       form.querySelector('#from').value = event.dataTransfer.getData('text');
       form.submit();
+    });
+  });
+  var confirms = document.querySelectorAll('a[data-confirm]');
+  confirms.forEach(function (confirm) {
+    confirm.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      if (!window.confirm(confirm.getAttribute('data-confirm'))) {
+        return false;
+      }
+
+      var form = document.querySelector(confirm.getAttribute('data-confirm-for'));
+
+      if (form) {
+        form.submit();
+      }
+
+      return true;
+    });
+  });
+  var submits = document.querySelectorAll('a[data-submit-for]');
+  submits.forEach(function (submit) {
+    submit.addEventListener('click', function (event) {
+      event.preventDefault();
+      var form = document.querySelector(submit.getAttribute('data-submit-for'));
+
+      if (form) {
+        form.submit();
+      }
+
+      return true;
     });
   });
 });

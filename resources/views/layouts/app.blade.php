@@ -136,7 +136,7 @@
                                 <a href="{{ route('my.password.edit') }}" class="nav-link text-secondary p-1">{{ __('Change Password') }}</a>
                             </li>
                             <li class="nav-item mx-3 text-muted">
-                                <a href="{{ route('logout') }}" class="nav-link text-secondary p-1" onclick="event.preventDefault();document.getElementById('logout-form-nav').submit();">
+                                <a href="{{ route('logout') }}" class="nav-link text-secondary p-1" data-submit-for="#logout">
                                     {{ __('Logout') }}
                                 </a>
                                 <form action="{{ route('logout') }}" id="logout-form-nav" method="POST">@csrf</form>
@@ -147,7 +147,6 @@
                 <main>@yield('content')</main>
             </div>
         </div>
-    <!--    <footer class="footer mt-auto bg-light fixed-bottom"> -->
         <footer class="footer mt-auto">
             <div class="container">
                 <div class="text-center text-muted fs-6">Powered by Laramine © 2022-2022 abtoc</div>

@@ -15,7 +15,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="project-dropdown">
                         @can('close', $project)
                             <li>
-                                <a href="{{ route('projects.close', ['project' => $project]) }}" class="dropdown-item link-dark text-decoration-none bi bi-stop" onclick="event.preventDefault();document.getElementById('project-close').submit();">
+                                <a href="{{ route('projects.close', ['project' => $project]) }}" class="dropdown-item link-dark text-decoration-none bi bi-stop" data-submit-for="#project-close">
                                     {{ __('End') }}
                                 </a>
                                 <form action="{{ route('projects.close', ['project' => $project]) }}" id="project-close" method="POST">
@@ -26,7 +26,7 @@
                         @endcan
                         @can('open', $project)
                             <li>
-                                <a href="{{ route('projects.open', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none bi bi-play" onclick="event.preventDefault();document.getElementById('project-open').submit();">
+                                <a href="{{ route('projects.open', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none bi bi-play" data-submit-for="#project-open">
                                     {{ __('Start') }}
                                 </a>
                                 <form action="{{ route('projects.open', ['project' => $project]) }}" id="project-open" method="POST">

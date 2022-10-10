@@ -61,9 +61,7 @@
                                             <td class="text-center">{{ $project->created_at->toDateString() }}</td>
                                             <td class="text-end">
                                                 @if($project->isArchive())
-                                                    <a href="{{ route_query('projects.open', ['project' => $project]) }}" class="link-dark bi bi-unlock text-decoration-none"
-                                                        onclick="event.preventDefault();
-                                                        document.getElementById('projects-unlock-{{$project->id}}').submit();">
+                                                    <a href="{{ route_query('projects.open', ['project' => $project]) }}" class="link-dark bi bi-unlock text-decoration-none" data-submit-for="#projects-unlock-{{$project->id}}">
                                                         {{ __('ArchiveRelese') }}
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('projects.open', ['project'=>$project])}}" id="projects-unlock-{{$project->id}}">
@@ -72,9 +70,7 @@
                                                         <input type="hidden" name="_previous" value="{{ route_query('projects.admin') }}">
                                                     </form>
                                                 @else
-                                                    <a href="{{ route_query('projects.archive', ['project' => $project]) }}" class="link-dark bi bi-lock text-decoration-none"
-                                                        onclick="event.preventDefault();
-                                                        document.getElementById('projects-lock-{{$project->id}}').submit();">
+                                                    <a href="{{ route_query('projects.archive', ['project' => $project]) }}" class="link-dark bi bi-unlock text-decoration-none" data-submit-for="#projects-lock-{{$project->id}}">
                                                         {{ __('Archive') }}
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('projects.archive', ['project'=>$project])}}" id="projects-lock-{{$project->id}}">
@@ -83,8 +79,7 @@
                                                     </form>
                                                 @endif
                                                 <a href="{{ route_query('projects.destroy', ['project' => $project]) }}" class="link-dark bi bi-trash text-decoration-none"
-                                                    onclick="event.preventDefault();
-                                                    document.getElementById('projects-destroy-{{$project->id}}').submit();">
+                                                    data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#projects-destroy-{{$project->id}}">
                                                     {{ __('Delete') }}
                                                 </a>
                                                 <form method="POST" class="d-none" action="{{ route_query('projects.destroy', ['project'=>$project])}}" id="projects-destroy-{{$project->id}}">

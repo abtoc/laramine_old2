@@ -69,30 +69,25 @@
                                             <td class="text-end">
                                                 @if(Auth::id() !== $user->id)
                                                     @if($user->isActive())
-                                                        <a href="{{ route_query('users.lock', ['user' => $user]) }}" class="link-dark bi bi-lock text-decoration-none"
-                                                            onclick="event.preventDefault();
-                                                            document.getElementById('users-lock-{{$user->id}}').submit();">
+                                                        <a href="{{ route_query('users.lock', ['user' => $user]) }}" class="link-dark bi bi-lock text-decoration-none" data-submit-for="#users-lock-{{$user->id}}">
                                                             {{ __('Lock') }}
-                                                            </a>
+                                                        </a>
                                                         <form method="POST" class="d-none" action="{{ route_query('users.lock', ['user' => $user]) }}" id="users-lock-{{$user->id}}">
                                                             @csrf
                                                             @method('PUT')
                                                         </form>
                                                     @else
-                                                        <a href="{{ route_query('users.unlock', ['user' => $user]) }}" class="link-dark bi bi-unlock text-decoration-none"
-                                                            onclick="event.preventDefault();
-                                                            document.getElementById('users-unlock-{{$user->id}}').submit();">
-                                                        {{ __('Unlock') }}
+                                                        <a href="{{ route_query('users.unlock', ['user' => $user]) }}" class="link-dark bi bi-unlock text-decoration-none" data-submit-for="#users-unlock-{{$user->id}}">
+                                                            {{ __('Unlock') }}
                                                         </a>
                                                         <form method="POST" class="d-none" action="{{ route_query('users.unlock', ['user' => $user]) }}" id="users-unlock-{{$user->id}}">
                                                             @csrf
                                                             @method('PUT')
                                                         </form>
                                                     @endif
-                                                    <a href="{{ route_query('users.destroy', ['user' => $user]) }}" class="link-dark bi bi-trash text-decoration-none"
-                                                        onclick="event.preventDefault();
-                                                        document.getElementById('users-destroy-{{$user->id}}').submit();">
-                                                        {{ __('Delete') }}
+                                                        <a href="{{ route_query('users.destroy', ['user' => $user]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                           data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#users-destroy-{{$user->id}}">
+                                                            {{ __('Delete') }}
                                                         </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('users.destroy', ['user' => $user])}}" id="users-destroy-{{$user->id}}">
                                                         @csrf
