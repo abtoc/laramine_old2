@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\UserStatus;
 use App\Enums\UserType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -154,6 +155,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Active User
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereStatus(UserStatus::ACTIVE);
+    }
+
+    /**
      * The "booting" method of the model
      * 
      * @return void
@@ -172,6 +184,20 @@ class User extends Authenticatable
                 $user->must_change_password = false;
                 $user->password_change_at = now();
             }
+        });
+    }
+
+    /**
+     * The "bootted" method of the model
+     * 
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::booted();
+        
+        static::addGlobalScope('group', function(Builder $builder){
+            $builder->whereIn('type',  [UserType::USER]);
         });
     }
 }

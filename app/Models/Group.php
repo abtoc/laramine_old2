@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Enums\UserStatus;
 use App\Enums\UserType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Group
@@ -115,6 +117,29 @@ class Group extends Model
     }
 
     /**
+     * @param \App\Models\User $user
+     * @return bool
+     */
+    public function hasUser($user): bool
+    {
+        $query = DB::table('groups_users')
+            ->whereGroupId($this->id)
+            ->whereUserId($user->id);
+        return $query->exists();
+    }
+
+    /**
+     * Active Group
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereStatus(UserStatus::ACTIVE);
+    }
+
+    /**
      * The "booting" method of the model
      * 
      * @return void
@@ -135,5 +160,19 @@ class Group extends Model
             $user->password = "";
             $user->must_change_password = false;
         });
-   }
+    }
+
+    /**
+     * The "bootted" method of the model
+     * 
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::booted();
+        
+        static::addGlobalScope('group', function(Builder $builder){
+            $builder->whereIn('type',  [UserType::GROUP, UserType::GROUP_ANONYMOUS, UserType::GROUP_NON_MEMBER]);
+        });
+    }
 }

@@ -27,11 +27,10 @@ class GroupController extends Controller
      */
     public function index(Request $request)
     {
-        $query= Group::whereIn('type', [UserType::GROUP, UserType::GROUP_ANONYMOUS, UserType::GROUP_NON_MEMBER])
-                    ->where('status', '<>', UserStatus::LOCKED);
-        if(!empty($request->query('name', ''))){
-            $query = $query->where('name', 'like', '%'.$request->query('name').'%');
-        }
+        $query= Group::active();
+        $query = $query->when(!empty($request->query('name', '')), function($q) use($request){
+                        return $q->where('name', 'like', '%'.$request->query('name').'%');
+                    });
         $groups = $query->orderBy('name', 'asc')->paginate(config('laramine.per_page'));
         return view('groups.index', compact('groups'));
     }

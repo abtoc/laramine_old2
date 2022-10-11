@@ -22,19 +22,16 @@ class ProjectController extends Controller
     {
         $this->authorize('viewAnyAdmin', Project::class);
 
-        $query = Project::query();
-
-        if($request->has('status')){
-            if($request->query('status') != ProjectStatus::NONE->value){
-                $query = $query->whereStatus($request->query('status', 1));
-            }
-        } else {
-            $query = $query->whereStatus(ProjectStatus::ACTIVE);
-        }
-        if(!empty($request->query('name', ''))){
-            $query = $query->where('name', 'like', '%'.$request->query('name').'%');
-        }
-
+        $query = Project::query()
+            ->when(!$request->has('status'), function($q){
+                return $q->whereStatus(ProjectStatus::ACTIVE);
+            })
+            ->when($request->query('status') != ProjectStatus::NONE->value, function($q) use($request){
+                return $q->whereStatus($request->query('status', 1));
+            })
+            ->when(!empty($request->query('name', '')), function($q) use($request){
+                return $q->where('name', 'like', '%'.$request->query('name').'%');
+            });
         $projects = $query->withDepth()->get()->toFlatTree();
         return view('projects.admin', compact('projects'));
     }

@@ -16,6 +16,6 @@ class MemberRole extends Model
 {
     use HasFactory;
 
-    function member() { $this->belongTo(Member::class); }
-    function role()   { $this->belongTo(Role::class); }
+    public function member() { $this->belongTo(Member::class); }
+    public function role()   { $this->belongTo(Role::class); }
 }

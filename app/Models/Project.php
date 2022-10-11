@@ -6,6 +6,7 @@ use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Kalnoy\Nestedset\NodeTrait;
 
 /**
@@ -18,6 +19,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property boolean $inherit_members
  * @property boolean $is_public
  * @property integer $parent_id
+ * @property \App\Models\Project $parent
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at 
  * @property \Illuminate\Database\Eloquent\Collection<Member> $members 
@@ -65,6 +67,7 @@ class Project extends Model
      * relation
      */
 
+    public function groups() { return $this->belongsToMany(Group::class,  'members', 'project_id', 'user_id'); }
     public function members() { return $this->hasMany(Member::class); }
     public function users() { return $this->belongsToMany(User::class,  'members', 'project_id', 'user_id'); }
 
@@ -96,7 +99,18 @@ class Project extends Model
                     ->get()->filter(function($value, $key){
                         return Auth::check() or $value->is_public;
                     });
-}
+    }
+
+    /**
+     * Active Project
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereStatus(ProjectStatus::ACTIVE);
+    }
 
     /**
      * The "booting" method of the model

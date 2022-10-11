@@ -37,13 +37,11 @@ class GroupUsersAdd extends Component
             ->whereNotIn("id", function($query) use($group){
                 $query->select("user_id")->from("groups_users")->where("group_id", $group->id);
             })
-            ->whereType(UserType::USER)
-            ->whereStatus(UserStatus::ACTIVE)
-            ->orderBy('name', 'asc');
-        if(!empty($this->search)){
-            $query = $query->where("name", "like", "%".$this->search."%");
-        }
-        
+            ->active()
+            ->orderBy('name', 'asc')
+            ->when(!empty($this->search), function($q){
+                return $q->where('name', 'like', '%'.$this->search.'%');
+            });
         $users = $query->simplePaginate(30, ['*'], 'users-page');
 
         return view('livewire.group-users-add', compact('users'));

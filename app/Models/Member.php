@@ -25,7 +25,8 @@ class Member extends Model
     /**
      * Relation
      */
-    function project() { return $this->belongsTo(Project::class); }
-    function member_roles() { return $this->hasMany(MemberRole::class); }
-    function user() { return $this->belongsTo(User::class); }
+    public function project() { return $this->belongsTo(Project::class); }
+    public function member_roles() { return $this->hasMany(MemberRole::class); }
+    public function roles() { return $this->belongsToMany(Role::class, 'member_roles', 'member_id', 'role_id'); }
+    public function user() { return $this->belongsTo(User::class); }
 }

@@ -15,7 +15,6 @@
 
     <!-- Scripts -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     @stack('styles')
     @livewireStyles
 </head>

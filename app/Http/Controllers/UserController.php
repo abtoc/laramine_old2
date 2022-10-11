@@ -31,18 +31,16 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::whereType(UserType::USER);
-
-        if($request->has('status')){
-            if($request->query('status') != UserStatus::ANONYMOUS->value){
-                $query = $query->whereStatus($request->query('status', 1));
-            }
-        } else {
-            $query = $query->whereStatus(UserStatus::ACTIVE);
-        }
-        if(!empty($request->query('name', ''))){
-            $query = $query->where('name', 'like', '%'.$request->query('name').'%');
-        }
+        $query = User::query()
+            ->when(!$request->has('status'), function($q){
+                return $q->whereStatus(UserStatus::ACTIVE);
+            })
+            ->when($request->query('status') != UserStatus::ANONYMOUS->value, function($q) use($request){
+                return $q->whereStatus($request->query('status', 1));
+            })
+            ->when(!empty($request->query('name', '')), function($q) use($request) {
+                return $q->where('name', 'like', '%'.$request->query('name').'%');
+            });
         $users = $query->sortable(['created_at' => 'asc'])->paginate(config('laramine.per_page'));
         return view('users.index', compact('users'));
     }
