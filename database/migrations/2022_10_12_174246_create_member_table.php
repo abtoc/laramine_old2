@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Project;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,20 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('members', function (Blueprint $table) {
+        Schema::create('member', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Project::class);
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(App\Models\Project::class);
+            $table->foreignIdFor(App\Models\User::class);
             $table->timestamps();
 
             $table->foreign('project_id')
-                ->references('id')
                 ->on('projects')
-                ->onDelete('cascade');
-            $table->foreign('user_id')
                 ->references('id')
+                ->cascadeOnDelete();
+            $table->foreign('user_id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->references('id')
+                ->cascadeOnDelete();
         });
     }
 
@@ -39,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('members');
+        Schema::dropIfExists('member');
     }
 };

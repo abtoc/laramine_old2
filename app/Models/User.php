@@ -110,9 +110,9 @@ class User extends Authenticatable
      * relations
      */
 
-    public function groups() { return $this->belongsToMany(Group::class, 'groups_users', 'user_id', 'group_id'); }
+    public function groups() { return $this->belongsToMany(Group::class, 'groups_users'); }
     public function members() { return $this->hasMany(Member::class); }
-    public function projects() { return $this->belongsToMany(Project::class, 'members', 'user_id', 'project_id'); }
+    public function projects() { return $this->belongsToMany(User::class,  'members')->using(Member::class)->withPivot(['id']); }
 
     /**
      * return bool

@@ -67,9 +67,9 @@ class Project extends Model
      * relation
      */
 
-    public function groups() { return $this->belongsToMany(Group::class,  'members', 'project_id', 'user_id'); }
+    public function groups() { return $this->belongsToMany(Group::class,  'members')->using(Member::class)->withPivot(['id']); }
     public function members() { return $this->hasMany(Member::class); }
-    public function users() { return $this->belongsToMany(User::class,  'members', 'project_id', 'user_id'); }
+    public function users() { return $this->belongsToMany(User::class,  'members')->using(Member::class)->withPivot(['id']); }
 
     /**
      * @return bool

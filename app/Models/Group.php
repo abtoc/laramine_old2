@@ -77,8 +77,9 @@ class Group extends Model
      * relations
      */
 
-    public function users() { return $this->belongsToMany(User::class, 'groups_users', 'group_id', 'user_id'); }
-    public function projects() { return $this->belongToMany(Project::class, 'members', 'user_id', 'project_id'); }
+    public function members() { return $this->hasMany(Member::class); }
+    public function projects() { return $this->belongsToMany(User::class,  'members')->using(Member::class)->withPivot(['id']); }
+    public function users() { return $this->belongsToMany(User::class, 'groups_users'); }
 
     /**
      * return bool

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Member;
-use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,14 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('member_roles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Member::class);
-            $table->foreignIdFor(Role::class);
-            $table->timestamps();
+            $table->unsignedBigInteger('member_id');
+            $table->unsignedBigInteger('role_id');
+            $table->primary(['member_id', 'role_id']);
 
             $table->foreign('member_id')
                 ->references('id')
-                ->on('members')
+                ->on('member')
                 ->onDelete('cascade');
             $table->foreign('role_id')
                 ->references('id')

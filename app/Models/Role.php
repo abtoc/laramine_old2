@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
  * @property array $permissions
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<Group> $groups
  */
 
 class Role extends Model
@@ -42,6 +43,12 @@ class Role extends Model
     protected $casts = [
         'permissions' => 'json',
     ];
+
+    /**
+     * relations
+     */
+
+    public function members() { return $this->belongsToMany(Member::class, 'member_roles'); }
 
     /**
      * Get all of the models from the database.
