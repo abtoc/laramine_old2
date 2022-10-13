@@ -21,10 +21,17 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class Member extends Pivot
 {
     /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+
+    /**
      * Relation
      */
     public function project() { return $this->belongsTo(Project::class); }
     public function group() { return $this->belongsTo(Group::class); }
-    public function roles() { return $this->belongsToMany(Role::class, 'member_roles'); }
+    public function roles() { return $this->belongsToMany(Role::class, 'member_roles', 'member_id', 'role_id'); }
     public function user() { return $this->belongsTo(User::class); }
 }

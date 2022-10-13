@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleBuiltin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\DB;
  * @property integer $id
  * @property string $name
  * @property integer $position
- * @property integer $buildtin
+ * @property \App\Enums\Builtin $builtin
  * @property array $permissions
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -41,6 +42,7 @@ class Role extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'builtin' => RoleBuiltin::class,
         'permissions' => 'json',
     ];
 
@@ -49,6 +51,14 @@ class Role extends Model
      */
 
     public function members() { return $this->belongsToMany(Member::class, 'member_roles'); }
+
+    /**
+     * @return bool
+     */
+    public function isOther()
+    {
+        return $this->builtin === RoleBuiltin::OTHER;
+    }
 
     /**
      * Get all of the models from the database.

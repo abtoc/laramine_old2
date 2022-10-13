@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\RoleBuiltin;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -74,7 +75,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        if($role->builtin !== 0){
+        if($role->builtin !== RoleBuiltin::OTHER){
             return Response::deny();            
         }
         return ($user->admin)
@@ -105,7 +106,7 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role)
     {
-        if($role->builtin !== 0){
+        if($role->builtin !== RoleBuiltin::OTHER){
             return Response::deny();            
         }
         return ($user->admin)

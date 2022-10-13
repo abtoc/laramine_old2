@@ -21,7 +21,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($roles as $role)
-                                        <tr id="{{ $role->id }}" @class(['dragged-item' => $role->builtin === 0])>
+                                        <tr id="{{ $role->id }}" @class(['dragged-item' => $role->isOther()])>
                                             <td class="text-start">
                                                 <a href="{{ route('roles.edit', ['role' => $role]) }}">
                                                     {{ $role->name }}

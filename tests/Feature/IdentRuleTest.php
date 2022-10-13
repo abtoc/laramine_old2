@@ -3,9 +3,6 @@
 namespace Tests\Feature;
 
 use App\Rules\IdentRule;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Tests\CreatesApplication;

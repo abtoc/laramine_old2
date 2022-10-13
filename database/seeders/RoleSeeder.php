@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Permissions;
+use App\Enums\RoleBuiltin;
 use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,20 +21,21 @@ class RoleSeeder extends Seeder
             ['name' => __('Non Member')],
             [
                 'position' => 0,
-                'builtin' => 1,
+                'builtin' => RoleBuiltin::NON_MEMBER,
             ]
         );
         Role::updateOrCreate(
             ['name' => __('Anonymous')],
             [ 
                 'position' => 0,
-                'builtin' => 2,
+                'builtin' => RoleBuiltin::ANONYMOUS,
             ]
         );
         Role::updateOrCreate(
             ['name' => __('Administrator')],
             [ 
                 'position' => 1,
+                'builtin' => RoleBuiltIn::OTHER,
                 'permissions' => [
                     Permissions::EDIT_PROJECT->value,
                     Permissions::CLOSE_PROJECT->value,
@@ -46,6 +48,7 @@ class RoleSeeder extends Seeder
             ['name' => __('Developer')],
             [ 
                 'position' => 2,
+                'builtin' => RoleBuiltin::OTHER,
                 'permissions' => [],
             ]
         );
@@ -53,6 +56,7 @@ class RoleSeeder extends Seeder
             ['name' => __('Reporter')],
             [ 
                 'position' => 3,
+                'builtin' => RoleBuiltin::OTHER,
                 'permissions' => [],
             ]
         );

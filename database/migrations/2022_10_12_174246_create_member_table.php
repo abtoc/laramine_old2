@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(App\Models\User::class);
             $table->timestamps();
 
+            $table->unique(['project_id', 'user_id']);
+
             $table->foreign('project_id')
                 ->on('projects')
                 ->references('id')

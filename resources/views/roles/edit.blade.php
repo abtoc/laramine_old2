@@ -23,7 +23,7 @@
                             <label for="name" class="col-md-2 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @invalid('name')" name="name" @disabled($role->builtin !== 0) value="{{ old('name', $role->name) }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @invalid('name')" name="name" @disabled($role->isOther()) value="{{ old('name', $role->name) }}" required autocomplete="name" autofocus>
                                 <x-invalid-feedback name="name"/>
                             </div>
                         </div>

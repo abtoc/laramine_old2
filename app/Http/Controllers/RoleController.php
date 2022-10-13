@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Permissions;
+use App\Enums\RoleBuiltin;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -128,11 +128,11 @@ class RoleController extends Controller
         ]);
 
         $role_from = Role::findOrFail($request->post('from'));
-        if($role_from->builtin !== 0){
+        if($role_from->builtin !== RoleBuiltin::OTHER){
             abort(404);
         }
         $role_to = Role::findOrFail($request->post('to'));
-        if($role_to->builtin !== 0){
+        if($role_to->builtin !== RoleBuiltin::OTHER){
             abort(404);
         }
 
