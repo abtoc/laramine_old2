@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\UserType as Type;
-use App\Enums\UserStatus as Status;
 use Livewire\Component;
 use Livewire\WithPagination;
 

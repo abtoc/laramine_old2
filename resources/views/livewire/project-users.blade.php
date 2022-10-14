@@ -22,11 +22,10 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            @foreach($user->pivot->roles()->get() as $role)
-                                <span>{{ $role->name }}@unless($loop->last),@endunless</span>
-                            @endforeach
+                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$user->id, 'roles'=>$user->pivot->roles()->get()])
                         </td>
                         <td class="text-end">
+                            <a href="#" class="link-dark text-decoration-none bi bi-pencil" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $user->id }})">{{ __('Edit') }}</a>
                             <a href="#" class="link-dark text-decoration-none bi bi-trash" wire:click.prevent="destroy({{ $user->id }})">{{ __('Delete') }}</a>
                         </td>
                     </tr>
