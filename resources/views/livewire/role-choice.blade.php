@@ -10,7 +10,6 @@
             <button class="btn btn-primary" wire:click="save">{{ __('Save') }}</button>
             <button class="btn btn-secondary" wire:click="cancel">{{ __('Cancel') }}</button>
         </div>
-        {{ var_dump($checks) }}
     @else
         @foreach($roles as $role)
             {{ $role->name }}@unless($loop->last),@endunless

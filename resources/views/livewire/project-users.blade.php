@@ -21,8 +21,8 @@
                                 <i class="bi bi-people"></i>{{ $user->name }}                                
                             @endif
                         </td>
-                        <td class="text-center">
-                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$user->id, 'roles'=>$user->pivot->roles()->get()])
+                        <td class="text-start">
+                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$user->id], key($user->id))
                         </td>
                         <td class="text-end">
                             <a href="#" class="link-dark text-decoration-none bi bi-pencil" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $user->id }})">{{ __('Edit') }}</a>

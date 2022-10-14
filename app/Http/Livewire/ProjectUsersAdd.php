@@ -18,7 +18,7 @@ class ProjectUsersAdd extends Component
     public $check_roles = [];
     public $check_users = [];
 
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
 
     public function regist(AttachAction $action)
     {
@@ -39,7 +39,7 @@ class ProjectUsersAdd extends Component
         $this->check_roles = [];
         $this->check_projects = [];
         $this->setPage(1, 'users-page');
-        $this->emit('refreshComponent');
+        $this->emit('refresh');
     }
 
     public function render()

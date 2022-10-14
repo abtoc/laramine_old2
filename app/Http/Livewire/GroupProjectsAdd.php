@@ -17,7 +17,7 @@ class GroupProjectsAdd extends Component
     public $check_roles = [];
     public $check_projects = [];
 
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
 
     public function regist(AttachAction $action)
     {
@@ -38,7 +38,7 @@ class GroupProjectsAdd extends Component
         $this->check_roles = [];
         $this->check_projects = [];
         $this->setPage(1, 'projects-page');
-        $this->emit('refreshComponent');
+        $this->emit('refresh');
     }
 
     public function render()

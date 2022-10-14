@@ -11,7 +11,7 @@ class GroupProjects extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
     
     public $group;
 
@@ -29,6 +29,6 @@ class GroupProjects extends Component
     public function destroy($id)
     {
         $this->group->projects()->detach($id);
-        $this->emit('refreshComponent');
+        $this->emit('refresh');
     }
 }

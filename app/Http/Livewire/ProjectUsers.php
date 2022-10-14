@@ -10,7 +10,7 @@ class ProjectUsers extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
     
     public $project;
 
@@ -28,6 +28,6 @@ class ProjectUsers extends Component
     public function destroy($id)
     {
         $this->project->users()->detach($id);
-        $this->emit('refreshComponent');
+        $this->emit('refresh');
     }
 }

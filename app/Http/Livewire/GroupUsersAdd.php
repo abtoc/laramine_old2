@@ -14,7 +14,7 @@ class GroupUsersAdd extends Component
     public $search = "";
     public $checks = [];
 
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
 
     public function regist()
     {
@@ -25,7 +25,7 @@ class GroupUsersAdd extends Component
         }
         $this->checks = [];
         $this->setPage(1, 'users-page');
-        $this->emit('refreshComponent');
+        $this->emit('refresh');
     }
 
     public function render()

@@ -17,12 +17,11 @@
                         <td class="text-start">
                             <a href="{{ route('projects.show', ['project' => $project]) }}">{{ $project->name }}</a>
                         </td>
-                        <td class="text-center">
-                            @foreach($project->pivot->roles()->get() as $role)
-                                <span>{{ $role->name }}@unless($loop->last),@endunless</span>
-                            @endforeach
+                        <td class="text-start">
+                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$group->id], key($project->id))
                         </td>
                         <td class="text-end">
+                            <a href="#" class="link-dark text-decoration-none bi bi-pencil" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $group->id }})">{{ __('Edit') }}</a>
                             <a href="#" class="link-dark text-decoration-none bi bi-trash" wire:click.prevent="destroy({{ $project->id }})">{{ __('Delete') }}</a>
                         </td>
                     </tr>

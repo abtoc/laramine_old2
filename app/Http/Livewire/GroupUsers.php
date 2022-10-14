@@ -10,7 +10,7 @@ class GroupUsers extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refresh' => '$refresh'];
     
     public $group;
 
@@ -24,6 +24,6 @@ class GroupUsers extends Component
     public function destroy($id)
     {
         $this->group->users()->detach($id);
-        $this->emit('refreshComponent');
+        $this->emit('refresh');
     }
 }
