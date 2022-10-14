@@ -78,11 +78,10 @@ class Group extends Model
      */
 
     public function members() { return $this->hasMany(Member::class); }
-    public function projects() { return $this->belongsToMany(User::class,  'members')->using(Member::class)->withPivot(['id']); }
+    public function projects() { return $this->belongsToMany(Project::class,  'member', 'user_id')->using(Member::class)->withPivot(['id']); }
     public function users() { return $this->belongsToMany(User::class, 'groups_users'); }
 
     /**
-     * return bool
      * @return bool
      */
     public function isGroup($only=false): bool

@@ -112,7 +112,7 @@ class User extends Authenticatable
 
     public function groups() { return $this->belongsToMany(Group::class, 'groups_users'); }
     public function members() { return $this->hasMany(Member::class); }
-    public function projects() { return $this->belongsToMany(User::class,  'members')->using(Member::class)->withPivot(['id']); }
+    public function projects() { return $this->belongsToMany(User::class,  'member')->using(Member::class)->withPivot(['id']); }
 
     /**
      * return bool
@@ -196,7 +196,7 @@ class User extends Authenticatable
     {
         parent::booted();
         
-        static::addGlobalScope('group', function(Builder $builder){
+        static::addGlobalScope('user', function(Builder $builder){
             $builder->whereIn('type',  [UserType::USER]);
         });
     }

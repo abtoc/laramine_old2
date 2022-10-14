@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\UserStatus;
-use App\Enums\UserType;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,7 +12,7 @@ class GroupUsersAdd extends Component
 
     public $group;
     public $search = "";
-    public $checks = array();
+    public $checks = [];
 
     protected $listeners = ['refreshComponent' => '$refresh'];
 
@@ -25,7 +23,7 @@ class GroupUsersAdd extends Component
                 $this->group->users()->attach($key);
             }
         }
-        $this->checks = array();
+        $this->checks = [];
         $this->setPage(1, 'users-page');
         $this->emit('refreshComponent');
     }

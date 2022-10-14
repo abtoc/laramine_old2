@@ -179,4 +179,21 @@ class ProjectPolicy
        }
        return Response::denyAsNotFound();
     }
+
+    /**
+     * Determine whether the user can permanently member the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Project  $project
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function member(User $user, Project $project)
+    {
+        if($project->status !== ProjectStatus::ARCHIVE){
+            return ($user->admin or $user->admin_projects)
+                ? Response::allow()
+                : Response::denyAsNotFound();
+       }
+       return Response::denyAsNotFound();
+    }
 }

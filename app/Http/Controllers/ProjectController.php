@@ -252,4 +252,16 @@ class ProjectController extends Controller
 
         return to_route_query('projects.admin');
     }
+
+    /**
+     * Edit Member the specified resource.
+     *
+     * @param  \App\Models\Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function member(Project $project)
+    {
+        $this->authorize('member', $project);
+        return view('projects.edit.member', compact('project'));
+    }
 }

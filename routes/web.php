@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
         Route::post('/', 'store')->name('store');
         Route::get('/{project}/edit/setting', 'edit')->name('edit.setting');
         Route::put('/{project}/edit/setting', 'update')->name('update.setting');
+        Route::get('/{project}/edit/member', 'member')->name('edit.member');
         Route::delete('{project}', 'destroy')->name('destroy');
         Route::put('/{project}/open', 'open')->name('open');
         Route::put('/{project}/close', 'close')->name('close');

@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Enums\ProjectStatus;
+use App\Enums\ProjectStatus as Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Kalnoy\Nestedset\NodeTrait;
 
 /**
@@ -50,7 +49,7 @@ class Project extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'status' => ProjectStatus::class,
+        'status' => Status::class,
     ];
 
     /**
@@ -76,7 +75,7 @@ class Project extends Model
      */
     public function isActive(): bool
     {
-        return $this->status === ProjectStatus::ACTIVE;
+        return $this->status === Status::ACTIVE;
     }
 
     /**
@@ -84,7 +83,7 @@ class Project extends Model
      */
     public function isArchive(): bool
     {
-        return $this->status === ProjectStatus::ARCHIVE;
+        return $this->status === Status::ARCHIVE;
     }
 
     /**
@@ -95,7 +94,7 @@ class Project extends Model
     public function getSubProjects()
     {
         return $this->children()
-                    ->where('status', '<>', ProjectStatus::ARCHIVE)
+                    ->where('status', '<>', Status::ARCHIVE)
                     ->get()->filter(function($value, $key){
                         return Auth::check() or $value->is_public;
                     });
@@ -109,7 +108,18 @@ class Project extends Model
      */
     public function scopeActive($query)
     {
-        return $query->whereStatus(ProjectStatus::ACTIVE);
+        return $query->whereStatus(Status::ACTIVE);
+    }
+
+    /**
+     * Active or Closed Project
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActiveOrClosed($query)
+    {
+        return $query->whereIn([Status::ACTIVE, Status::CLOSED]);
     }
 
     /**
@@ -123,7 +133,7 @@ class Project extends Model
 
         self::creating(function($project){
             if(is_null($project->status)){
-                $project->status = ProjectStatus::ACTIVE;
+                $project->status = Status::ACTIVE;
             }
             if(is_null($project->parent_id)){
                 $project->inherit_members = false;

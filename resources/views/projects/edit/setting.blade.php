@@ -17,6 +17,7 @@
 
                 <div class="card-body">
                     <x-alert/>
+                    <x-project-edit-tab :project="$project"/>
                     <form method="POST" action="{{ route('projects.update.setting', ['project' => $project]) }}">
                         @csrf
                         @method('PUT')

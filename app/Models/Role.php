@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\RoleBuiltin;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -68,7 +69,7 @@ class Role extends Model
      */
     public static function all($columns = ['*'])
     {
-        $roles = parent::all($columns);
+        $roles = parent::withoutGlobalScope('other')->get($columns);
         return $roles->sortBy(fn($item, $ley) => ($item->position === 0) ? 9999 : $item->position);
     }
 
@@ -85,6 +86,18 @@ class Role extends Model
             }
         }
         return false;
+    }
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return static::withOutGlobalScope('other')->where($field ?? 'id', $value)->first();
     }
 
     /**
@@ -117,4 +130,17 @@ class Role extends Model
         });
     }
 
+    /**
+     * The "bootted" method of the model
+     * 
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::booted();
+        
+        static::addGlobalScope('other', function(Builder $builder){
+            $builder->whereIn('builtin',  [RoleBuiltin::OTHER]);
+        });
+    }
 }
