@@ -101,6 +101,23 @@ class Project extends Model
     }
 
     /**
+     * Get Role Name
+     * 
+     * @param int $member_id
+     * @return string
+     */
+    public function getRoleNames($member_id)
+    {
+        $member = Member::find($member_id);
+        $roles = $member->roles()->select('name')->get();
+        $names = [];
+        foreach($roles as $role){
+            $names[] = $role->name;
+        }
+        return implode(',', $names);
+    }
+
+    /**
      * Active Project
      * 
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -119,7 +136,7 @@ class Project extends Model
      */
     public function scopeActiveOrClosed($query)
     {
-        return $query->whereIn([Status::ACTIVE, Status::CLOSED]);
+        return $query->whereIn('status', [Status::ACTIVE, Status::CLOSED]);
     }
 
     /**

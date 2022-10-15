@@ -6,6 +6,7 @@ use App\Enums\ProjectStatus;
 use App\Models\Project;
 use App\Rules\ProjectPublicChildrenRule;
 use App\Rules\ProjectPublicParentRule;
+use App\UseCases\Project\ShowAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Prologue\Alerts\Facades\Alert;
@@ -101,7 +102,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Project $project, ShowAction $action)
     {
         if(!Auth::check() and !$project->is_public){
             abort(404);
@@ -112,7 +113,9 @@ class ProjectController extends Controller
             Alert::flash();
         }
 
-        return view('projects.show', ['project' => $project]);
+        list($users) = $action($project);
+
+        return view('projects.show', compact('project', 'users'));
     }
 
     /**

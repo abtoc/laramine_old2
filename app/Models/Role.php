@@ -140,7 +140,7 @@ class Role extends Model
         parent::booted();
         
         static::addGlobalScope('other', function(Builder $builder){
-            $builder->whereIn('builtin',  [RoleBuiltin::OTHER]);
+            $builder->whereIn('builtin',  [RoleBuiltin::OTHER])->orderBy('position', 'asc');
         });
     }
 }

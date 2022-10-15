@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStatus;
-use App\Enums\UserType;
 use App\Models\User;
 use App\Rules\IdentRule;
+use App\UseCases\User\ShowAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -90,9 +90,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user, ShowAction $action)
     {
-        return view('users.show', compact('user'));
+        list($projects) = $action($user);
+        return view('users.show', compact('user', 'projects'));
     }
 
     /**

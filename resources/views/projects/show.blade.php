@@ -45,23 +45,51 @@
             @endcanany
         </div>
     </div>
-    <div class="d-flex flex-column flex-wrap">
-        @unless(is_null($project->description))
-            <div class="markdown-body mb-3">
-                {{ markdown($project->description) }}
-            </div>
-        @endunless
-        @if($project->getSubProjects()->count() > 0)
-            <div class="card">
-                <div class="card-header">{{ __('Sub Projects') }}</div>
-                <div class="card-body">
-                    @foreach($project->getSubProjects() as $subProject)
-                        <a href="{{ route('projects.show', ['project'=>$subProject]) }}" @class(['link-dark' => !$subProject->isActive()])>{{ __($subProject->name) }}</a>
-                        @unless($loop->last),@endunless
-                    @endforeach
+    <div class="row">
+        <div class="col-md-6">
+            @unless(is_null($project->description))
+                <div class="markdown-body mb-3">
+                    {{ markdown($project->description) }}
                 </div>
-            </div>
-        @endif
+            @endunless
+        </div>
+        <div class="col-md-6">
+            @if(count($users) > 0)
+                <div class="card mb-3">
+                    <div class="card-header">{{ __('Member') }}</div>
+                    <div class="card-body">
+                        @foreach($users as $key => $value)
+                            <p>
+                                <span>{{ $key }}:</span>
+                                @foreach($value as $user)
+                                    @if($user->isUser())
+                                        @can('view', $user)
+                                            <a href="{{ route('users.show', ['user'=>$user->id]) }}"> {{ $user->name }}</a>
+                                        @else
+                                            <span>{{ $user->name }}</span>                                            
+                                        @endcan
+                                    @else
+                                        <span>{{ $user->name }}</span>
+                                    @endif
+                                    @unless($loop->last),@endunless
+                                @endforeach
+                            </p>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+            @if($project->getSubProjects()->count() > 0)
+                <div class="card mb-3">
+                    <div class="card-header">{{ __('Sub Projects') }}</div>
+                    <div class="card-body">
+                        @foreach($project->getSubProjects() as $subProject)
+                            <a href="{{ route('projects.show', ['project'=>$subProject]) }}" @class(['link-dark' => !$subProject->isActive()])>{{ __($subProject->name) }}</a>
+                            @unless($loop->last),@endunless
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        </div>
     </div>
 </div>
 

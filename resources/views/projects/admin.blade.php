@@ -51,8 +51,12 @@
                                                 {!! str_repeat('&nbsp;&nbsp;&nbsp;', $project->depth) !!}@if($project->depth > 0) > @endif
                                                 @if($project->isArchive())
                                                     <span>{{ $project->name }}</span>
-                                                @else
+                                                @elseif($project->isActive())
                                                     <a href="{{ route('projects.edit.setting', ['project' => $project]) }}">
+                                                        {{ $project->name }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('projects.show', ['project' => $project]) }}">
                                                         {{ $project->name }}
                                                     </a>
                                                 @endif

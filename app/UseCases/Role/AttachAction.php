@@ -3,7 +3,6 @@
 namespace App\UseCases\Role;
 
 use App\Models\Member;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class AttachAction {
