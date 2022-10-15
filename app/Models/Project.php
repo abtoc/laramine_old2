@@ -118,6 +118,24 @@ class Project extends Model
     }
 
     /**
+     * Join User
+     * 
+     * @return bool
+     */
+    public function isJoining()
+    {
+        $query = Member::query()
+                    ->whereProjectId($this->id)
+                    ->where(function($q){
+                        $q->whereUserId(Auth::user()->id)
+                          ->orWhereIn('user_id', function($q){
+                            $q->select('group_id')->from('groups_users')->where('user_id', Auth::user()->id);
+                        });
+                    });
+        return $query->exists();
+    }
+
+    /**
      * Active Project
      * 
      * @param  \Illuminate\Database\Eloquent\Builder  $query
