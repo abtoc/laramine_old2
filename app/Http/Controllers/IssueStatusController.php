@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\RoleBuiltin;
-use App\Models\Role;
+use App\Models\IssueStatus;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class IssueStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        return view('roles.index', compact('roles'));
+        $issue_statuses = IssueStatus::all();
+        return view('issue_statuses.index', compact('issue_statuses'));
     }
 
     /**
@@ -26,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        return view('issue_statuses.create');
     }
 
     /**
@@ -37,16 +36,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'is_closed' => $request->has('is_closed') ? 1 : 0,
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $role = new Role();
-        $role->fill($request->all());
+        $issue_status = new IssueStatus();
+        $issue_status->fill($request->all());
+        $issue_status->save();
 
-        $role->save();
-
-        return to_route('roles.index');
+        return to_route('issue_statuses.index');
     }
 
     /**
@@ -63,43 +65,47 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\IssueStatus  $issue_status
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($issue_status)
     {
-        return view('roles.edit', compact('role'));
+        return view('issue_statuses.edit', compact('issue_status'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\IssueStatus  $issue_status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, IssueStatus $issue_status)
     {
+        $request->merge([
+            'is_closed' => $request->has('is_closed') ? 1 : 0,
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $role->fill($request->all());
-        $role->save();
+        $issue_status->fill($request->all());
+        $issue_status->save();
 
-        return to_route('roles.index');
+        return to_route('issue_statuses.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\IssueStatus  $issue_status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(IssueStatus $issue_status)
     {
-        $role->delete();
-        return to_route('roles.index');
+        $issue_status->delete();
+        return to_route('issue_statuses.index');
     }
 
     /**
@@ -111,22 +117,16 @@ class RoleController extends Controller
     public function move(Request $request)
     {
         $request->validate([
-            'from' => ['required', 'integer', 'exists:roles,id'],
-            'to' => ['required', 'integer', 'exists:roles,id'],
+            'from' => ['required', 'integer', 'exists:issue_statuses,id'],
+            'to' => ['required', 'integer', 'exists:issue_statuses,id'],
         ]);
 
-        $role_from = Role::findOrFail($request->post('from'));
-        if($role_from->builtin !== RoleBuiltin::OTHER){
-            abort(404);
-        }
-        $role_to = Role::findOrFail($request->post('to'));
-        if($role_to->builtin !== RoleBuiltin::OTHER){
-            abort(404);
-        }
+        $issue_status_from = IssueStatus::findOrFail($request->post('from'));
+        $issue_status_to = IssueStatus::findOrFail($request->post('to'));
 
-        $role_from->position = $role_to->position;
-        $role_from->save();
+        $issue_status_from->position = $issue_status_to->position;
+        $issue_status_from->save();
 
-        return to_route('roles.index');
+        return to_route('issue_statuses.index');
     }
 }

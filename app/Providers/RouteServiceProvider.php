@@ -37,10 +37,13 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
 
+        Route::model('issue_status', \App\Models\IssueStatus::class);
+
         Route::pattern('user', '[0-9]+');
         Route::pattern('group', '[0-9]+');
         Route::pattern('project', '[0-9]+');
         Route::pattern('role', '[0-9]+');
+        Route::pattern('issue_status', '[0-9]+');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\IssueStatusController;
 use App\Http\Controllers\My\ResetPasswordController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
@@ -48,10 +49,10 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::controller(UserController::class)->prefix('users')->name('users.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
+        Route::post('/create', 'store')->name('store');
         Route::get('/{user}', 'show')->name('show');
         Route::get('/{user}/edit', 'edit')->name('edit');
-        Route::put('/{user}', 'update')->name('update');
+        Route::put('/{user}/edit', 'update')->name('update');
         Route::delete('/{user}', 'destroy')->name('destroy');
         Route::put('/{user}/lock', 'lock')->name('lock');
         Route::put('/{user}/unlock', 'unlock')->name('unlock');
@@ -59,10 +60,10 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::controller(GroupController::class)->prefix('groups')->name('groups.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
+        Route::post('/create', 'store')->name('store');
         Route::get('/{group}', 'show')->name('show');
         Route::get('/{group}/edit', 'edit')->name('edit');
-        Route::put('/{group}', 'update')->name('update');
+        Route::put('/{group}/edit', 'update')->name('update');
         Route::delete('/{group}', 'destroy')->name('destroy');
         Route::get('/{group}/users', 'users')->name('users');
         Route::get('/{group}/projects', 'projects')->name('projects');
@@ -80,7 +81,7 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::controller(ProjectController::class)->prefix('projects')->name('projects.')->group(function(){
         Route::get('/admin', 'admin')->name('admin');
         Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
+        Route::post('/create', 'store')->name('store');
         Route::get('/{project}/edit/setting', 'edit')->name('edit.setting');
         Route::put('/{project}/edit/setting', 'update')->name('update.setting');
         Route::get('/{project}/edit/member', 'member')->name('edit.member');
@@ -91,14 +92,26 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
     });
 });
 
-Route::group(['middleware' => ['auth', 'usercheck']], function(){
+Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
     Route::controller(RoleController::class)->prefix('roles')->name('roles.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
-        Route::get('/{role}', 'edit')->name('edit');
-        Route::put('/{role}', 'update')->name('update');
+        Route::post('/create', 'store')->name('store');
+        Route::get('/{role}/edit', 'edit')->name('edit');
+        Route::put('/{role}/edit', 'update')->name('update');
         Route::delete('/{role}', 'destroy')->name('destroy');
+        Route::put('/move', 'move')->name('move');
+    });
+});
+
+Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
+    Route::controller(IssueStatusController::class)->prefix('issue_status')->name('issue_statuses.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{issue_status}/edit', 'edit')->name('edit');
+        Route::put('/{issue_status}/edit', 'update')->name('update');
+        Route::delete('/{issue_status}', 'destroy')->name('destroy');
         Route::put('/move', 'move')->name('move');
     });
 });

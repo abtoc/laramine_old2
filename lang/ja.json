@@ -38,7 +38,9 @@
     "Close Project":"プロジェクトの終了/再開",
     "Delete Project":"プロジェクトの削除",
     "Manage Members":"メンバーの管理",
+    "Ticket Status":"チケットのステータス",
     "New Role":"新しいロール",
+    "New Status":"新しいステータス",
     "Status":"ステータス",
     "Apply":"適用",
     "User Admin":"ユーザー管理者",
@@ -59,6 +61,7 @@
     "Archive":"アーカイブ",
     "ArchiveRelese":"アーカイブリリース",
     "Non Member":"非メンバー",
+    "Ended Tickets":"終了したチケット",
 
     "Half-width alphanumeric characters and some symbols ( _ - @ . ) can be used.":"半角英数字と一部の記号( _ - @ . )が使用可能です。",
 
@@ -103,6 +106,10 @@
     "All": "全般",
     "Start":"開始",
     "End":"終了",
-    "Search":"検索"
-
+    "Search":"検索",
+    "New":"新規",
+    "Progress":"進行中",
+    "Solution":"解決",
+    "Feedback":"フィードバック",
+    "Rejection":"却下"
 }
