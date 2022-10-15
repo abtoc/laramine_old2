@@ -124,6 +124,7 @@ class Project extends Model
      */
     public function isJoining()
     {
+        if(!Auth::check())  return false;
         $query = Member::query()
                     ->whereProjectId($this->id)
                     ->where(function($q){

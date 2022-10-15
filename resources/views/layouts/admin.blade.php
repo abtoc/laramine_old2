@@ -24,6 +24,9 @@
                 <li class="nav-item">
                     <a href="{{ route('issue_statuses.index') }}" class="nav-link link-dark bi bi-pencil-square">{{ __('Ticket Status') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.info') }}" class="nav-link link-dark bi bi-question-circle">{{ __('Information') }}</a>
+                </li>
             @endcan
         </ul>
     </div>
@@ -46,6 +49,7 @@
     @can('admin')
         <li class="nav-item mx-3 text-muted"><a href="{{ route('roles.index') }}" class="nav-link text-secondary p-1 bi bi-key">{{ __('Role') }}</a></li>
         <li class="nav-items mx-3 text-muted"><a href="{{ route('issue_statuses.index') }}" class="nav-link text-secondary p-1 bi bi-pencil-square">{{ __('Ticket Status') }}</a></li>
+        <li class="nav-items mx-3 text-muted"><a href="{{ route('admin.info') }}" class="nav-link text-secondary p-1 bi bi-question-circle">{{ __('Information') }}</a></li>
     @endcan
 </ul>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\InfoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\IssueStatusController;
@@ -29,6 +30,8 @@ Route::get('/test', function(){
 });
 
 Auth::routes();
+
+Route::get('/admin/info', [InfoController::class, 'info'])->name('admin.info');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::prefix('my')->name('my.')->group(function(){
