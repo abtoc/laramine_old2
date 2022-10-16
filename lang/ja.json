@@ -113,5 +113,8 @@
     "Feedback":"フィードバック",
     "Rejection":"却下",
     "Infromation":"情報",
-    "Personalization":"個人設定"
+    "Personalization":"個人設定",
+    "Bug":"バグ",
+    "Feature":"機能",
+    "Support":"サポート"
 }

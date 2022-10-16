@@ -32,7 +32,7 @@ class IssueStatus extends Model
         'is_closed',
     ];
 
-        /**
+    /**
      * The "booting" method of the model
      * 
      * @return void
@@ -75,5 +75,4 @@ class IssueStatus extends Model
             $builder->orderBy('position', 'asc');
         });
     }
-
 }
