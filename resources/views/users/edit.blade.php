@@ -19,9 +19,14 @@
                             <a href="{{ route('users.show', ['user' => $user]) }}" class="ms-2 text-reset text-decoration-none bi bi-person">
                                 {{ __('Profile') }}
                             </a>
-                            <a href="{{ route('users.destroy', ['user' => $user]) }}" class="ms-2 text-reset text-decoration-none bi bi-trash">
+                            <a href="{{ route_query('users.destroy', ['user' => $user]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#user-destroy">
                                 {{ __('Delete') }}
                             </a>
+                            <form method="POST" class="d-none" action="{{ route_query('users.destroy', ['user' => $user])}}" id="user-destroy">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                         </div>
                     </div>
                 </div>

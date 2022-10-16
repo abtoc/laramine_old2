@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\InfoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\IssueStatusController;
+use App\Http\Controllers\My\SettingController;
 use App\Http\Controllers\My\ResetPasswordController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
@@ -37,6 +38,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::prefix('my')->name('my.')->group(function(){
         Route::get('/password', [ResetPasswordController::class, 'edit'])->name('password.edit');
         Route::post('/password', [ResetPasswordController::class, 'update'])->name('password.update');
+        Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
+        Route::put('/setting', [SettingController::class, 'update'])->name('setting.update');
     });
 });
 

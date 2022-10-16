@@ -58,7 +58,7 @@
                                 <a href="{{ route('users.show', ['user' => Auth::user()]) }}" class="nav-link p-0 px-1">{{ Auth::user()->name }}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('my.password.edit') }}" class="nav-link p-0 px-1">{{ __('Change Password') }}</a>
+                                <a href="{{ route('my.setting.edit') }}" class="nav-link p-0 px-1">{{ __('Personalization') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('logout') }}" class="nav-link p-0 px-1" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
@@ -132,7 +132,7 @@
                             @endif
                         @else
                             <li class="nav-item mx-3 text-muted">
-                                <a href="{{ route('my.password.edit') }}" class="nav-link text-secondary p-1">{{ __('Change Password') }}</a>
+                                <a href="{{ route('my.setting.edit') }}" class="nav-link text-secondary p-1">{{ __('Personalization') }}</a>
                             </li>
                             <li class="nav-item mx-3 text-muted">
                                 <a href="{{ route('logout') }}" class="nav-link text-secondary p-1" data-submit-for="#logout">
