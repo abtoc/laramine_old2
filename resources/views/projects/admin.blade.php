@@ -48,7 +48,7 @@
                                     @forelse($projects as $project)
                                         <tr @class(['lock' => !$project->isActive()])>
                                             <td class="text-start">
-                                                {!! str_repeat('&nbsp;&nbsp;&nbsp;', $project->depth) !!}@if($project->depth > 0) > @endif
+                                                @if($project->depth > 0){!! str_repeat('&nbsp;&nbsp;&nbsp;', $project->depth) !!}>@endif
                                                 @if($project->isArchive())
                                                     <span>{{ $project->name }}</span>
                                                 @elseif($project->isActive())
@@ -56,7 +56,7 @@
                                                         {{ $project->name }}
                                                     </a>
                                                 @else
-                                                    <a href="{{ route('projects.show', ['project' => $project]) }}">
+                                                    <a href="{{ route('projects.edit.setting', ['project' => $project]) }}">
                                                         {{ $project->name }}
                                                     </a>
                                                 @endif

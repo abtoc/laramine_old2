@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ProjectStatus as Status;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -184,6 +185,32 @@ class Project extends Model
                     $project->inherit_members = false;
                 }
             }
+        });
+    }
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return static::withOutGlobalScope('project')->where($field ?? 'id', $value)->first();
+    }
+
+    /**
+     * The "bootted" method of the model
+     * 
+     * @return void
+     */
+    protected static function booted()
+    {
+        parent::booted();
+        
+        static::addGlobalScope('project', function(Builder $builder){
+            $builder->where('status',  '<>', Status::ARCHIVE);
         });
     }
 }

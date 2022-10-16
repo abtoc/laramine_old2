@@ -19,7 +19,6 @@ class GroupProjects extends Component
     {
         $projects = $this->group
                     ->projects()
-                    ->where('status', '<>', Status::ARCHIVE)
                     ->orderBy('name', 'asc')
                     ->paginate(config('laramine.per_page'));
 

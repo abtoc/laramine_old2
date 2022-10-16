@@ -23,7 +23,7 @@ class ProjectController extends Controller
     {
         $this->authorize('viewAnyAdmin', Project::class);
 
-        $query = Project::query()
+        $query = Project::withoutGlobalScope('project')
             ->when(!$request->has('status'), function($q){
                 return $q->whereStatus(ProjectStatus::ACTIVE);
             })
@@ -44,7 +44,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $query = Project::whereIn('status',[ProjectStatus::ACTIVE, ProjectStatus::CLOSED]);
+        $query = Project::query();
         if(!Auth::check()){
             $query = $query->whereIsPublic(true);
         }
