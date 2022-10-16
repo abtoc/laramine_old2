@@ -20,7 +20,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($issue_statuses as $issue_status)
-                                        <tr id="{{ $issue_status->id }}" class="dragged-item">
+                                        <tr id="status-{{ $issue_status->id }}" class="dragged-item">
                                             <td class="text-start">
                                                 <a href="{{ route('issue_statuses.edit', ['issue_status' => $issue_status]) }}">
                                                     {{ $issue_status->name }}

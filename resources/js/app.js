@@ -32,9 +32,13 @@ document.addEventListener('DOMContentLoaded', function(){
         item.addEventListener('drop', function(event){
             event.preventDefault();
             this.draggable = false;
-            const form = this.querySelector('#dragged-form');
-            form.querySelector('#from').value = event.dataTransfer.getData('text');
-            form.submit();
+            const from = /(.+)-([0-9]+)/.exec(event.dataTransfer.getData('text'));
+            const to = /(.+)-([0-9]+)/.exec(this.id);
+            if(from[1] === to[1]){
+                const form = this.querySelector('#dragged-form');
+                form.querySelector('#from').value = from[2];
+                form.submit();
+            }
         });
     });
 

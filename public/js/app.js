@@ -5759,9 +5759,14 @@ document.addEventListener('DOMContentLoaded', function () {
     item.addEventListener('drop', function (event) {
       event.preventDefault();
       this.draggable = false;
-      var form = this.querySelector('#dragged-form');
-      form.querySelector('#from').value = event.dataTransfer.getData('text');
-      form.submit();
+      var from = /(.+)-([0-9]+)/.exec(event.dataTransfer.getData('text'));
+      var to = /(.+)-([0-9]+)/.exec(this.id);
+
+      if (from[1] === to[1]) {
+        var form = this.querySelector('#dragged-form');
+        form.querySelector('#from').value = from[2];
+        form.submit();
+      }
     });
   });
   var confirms = document.querySelectorAll('a[data-confirm]');
