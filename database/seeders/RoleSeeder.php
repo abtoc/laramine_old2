@@ -22,6 +22,10 @@ class RoleSeeder extends Seeder
             [
                 'position' => 0,
                 'builtin' => RoleBuiltin::NON_MEMBER,
+                'permissions' => [
+                    Permissions::VIEW_ISSUE->value,
+                    Permissions::ADD_ISSUE->value,
+                ],
             ]
         );
         Role::updateOrCreate(
@@ -29,6 +33,9 @@ class RoleSeeder extends Seeder
             [ 
                 'position' => 0,
                 'builtin' => RoleBuiltin::ANONYMOUS,
+                'permissions' => [
+                    Permissions::VIEW_ISSUE->value,
+                ],
             ]
         );
         Role::updateOrCreate(
@@ -41,6 +48,17 @@ class RoleSeeder extends Seeder
                     Permissions::CLOSE_PROJECT->value,
                     Permissions::DELETE_PROJECT->value,
                     Permissions::MANAGE_MEMBERS->value,
+                    Permissions::ADD_SUBPROJECTS->value,
+
+                    Permissions::VIEW_ISSUE->value,
+                    Permissions::ADD_ISSUE->value,
+                    Permissions::EDIT_ISSUE->value,
+                    Permissions::EDIT_OWN_ISSUE->value,
+                    Permissions::COPY_ISSUE->value,
+                    Permissions::MANAGE_ISSUE_RELATIONS->value,
+                    Permissions::MANAGE_SUBTASKS->value,
+                    Permissions::SET_ISSUES_PRIVATE->value,
+                    Permissions::SET_OWN_ISSUES_PRIVATE->value,
                 ],
             ]
         );
@@ -49,7 +67,13 @@ class RoleSeeder extends Seeder
             [ 
                 'position' => 2,
                 'builtin' => RoleBuiltin::OTHER,
-                'permissions' => [],
+                'permissions' => [
+                    Permissions::VIEW_ISSUE->value,
+                    Permissions::ADD_ISSUE->value,
+                    Permissions::EDIT_ISSUE->value,
+                    Permissions::MANAGE_ISSUE_RELATIONS->value,
+                    Permissions::MANAGE_SUBTASKS->value,
+                ],
             ]
         );
         Role::updateOrCreate(
@@ -57,7 +81,10 @@ class RoleSeeder extends Seeder
             [ 
                 'position' => 3,
                 'builtin' => RoleBuiltin::OTHER,
-                'permissions' => [],
+                'permissions' => [
+                    Permissions::VIEW_ISSUE->value,
+                    Permissions::ADD_ISSUE->value,
+                ],
             ]
         );
     }

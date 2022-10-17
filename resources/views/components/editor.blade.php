@@ -1,14 +1,14 @@
 <div id="markdown-editor">
-    <nav class="d-flex">
-        <div class="nav nav-tabs" id="editor-tab" role="tablist">
+    <nav class="d-flex flex-wrap">
+        <nav class="nav nav-tabs" id="editor-tab" role="tablist">
             <button id="editor-tab-edit" class="nav-link py-1 active" data-bs-toggle="tab" data-bs-target="#editor-edit" type="button" role="tab" aria-controls="editor-edit" aria-selected="true">
                 {{ __('Edit') }}
             </button>
             <button id="editor-tab-preview" class="nav-link py-1" data-bs-toggle="tab" data-bs-target="#editor-preview" type="button" role="tab" aria-controls="editor-preview" aria-selected="false">
                 {{ __('Preview') }}
             </button>
-        </div>
-        <div id="toolbar" class="align-middle">
+        </nav>
+        <nav id="toolbar" class="align-middle">
             <div class="btn-group mx-1 align-middle">
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-bold"></i></button>
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-italic"></i></button>
@@ -23,7 +23,7 @@
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-link"></i></button>
                 <button type="button" class="btn btn-outline-secondary btn-sm"><i class="ei ei-picture"></i></button>
             </div>
-        </div>
+        </nav>
     </nav>
     <style>
         .cm-editor {

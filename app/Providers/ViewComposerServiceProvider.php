@@ -40,6 +40,18 @@ class ViewComposerServiceProvider extends ServiceProvider
                 Permissions::CLOSE_PROJECT,
                 Permissions::DELETE_PROJECT,
                 Permissions::MANAGE_MEMBERS,
+                Permissions::ADD_SUBPROJECTS,
+            ]);
+            $view->with('permissions_issue', [
+                Permissions::VIEW_ISSUE,
+                Permissions::ADD_ISSUE,
+                Permissions::EDIT_ISSUE,
+                Permissions::EDIT_OWN_ISSUE,
+                Permissions::COPY_ISSUE,
+                Permissions::MANAGE_ISSUE_RELATIONS,
+                Permissions::MANAGE_SUBTASKS,
+                Permissions::SET_ISSUES_PRIVATE,
+                Permissions::SET_OWN_ISSUES_PRIVATE,
             ]);
         });
     }
