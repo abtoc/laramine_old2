@@ -6,7 +6,7 @@
                 <th class="text-center">{{ __('Project') }}</th>
                 <th class="text-center">{{ __('Role') }}</th>
                 <th class="text-end">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#group-projects-add-modal" class="link-dark text-decoration-none">
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-modal-for="#group-projects-add-modal" class="link-dark text-decoration-none">
                         <i class="bi bi-plus-circle"></i>
                         {{ __('New Project') }}
                     </a>

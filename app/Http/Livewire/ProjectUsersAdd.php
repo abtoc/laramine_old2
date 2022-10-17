@@ -18,7 +18,10 @@ class ProjectUsersAdd extends Component
     public $check_roles = [];
     public $check_users = [];
 
-    protected $listeners = ['refresh' => '$refresh'];
+    protected $listeners = [
+        'hiddenModal' => 'hidden',
+        'refresh' => '$refresh'
+    ];
 
     public function regist(AttachAction $action)
     {
@@ -29,16 +32,23 @@ class ProjectUsersAdd extends Component
             }
         }
         if(count($roles) === 0){
+            $this->emit('errorModal', __('Please select a role.'));
             return;
         }
+        $hidden = false;
         foreach($this->check_users as $key => $value){
             if($value){
+                $hidden = true;
                 $action($this->project->id, $key, $roles);
              }
         }
+        if($hidden) $this->emit('hideModal');
+    }
+
+    public function hidden()
+    {
         $this->check_roles = [];
-        $this->check_projects = [];
-        $this->setPage(1, 'users-page');
+        $this->check_users = [];
         $this->emit('refresh');
     }
 

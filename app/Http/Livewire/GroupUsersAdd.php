@@ -14,17 +14,27 @@ class GroupUsersAdd extends Component
     public $search = "";
     public $checks = [];
 
-    protected $listeners = ['refresh' => '$refresh'];
+    protected $listeners = [
+        'hiddenModal' => 'hidden',
+        'refresh' => '$refresh'
+    ];
 
     public function regist()
     {
+        $hidden = false;
         foreach($this->checks as $key => $value){
             if($value){
+                $hidden = true;
                 $this->group->users()->attach($key);
             }
         }
+        if($hidden) $this->emit('hideModal');
+    }
+
+    public function hidden()
+    {
         $this->checks = [];
-        $this->setPage(1, 'users-page');
+
         $this->emit('refresh');
     }
 

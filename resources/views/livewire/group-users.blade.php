@@ -5,7 +5,7 @@
             <thead>
                 <th class="text-center">{{ __('User') }}</th>
                 <th class="text-end">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#group-users-add-modal" class="link-dark text-decoration-none">
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-modal-for="#group-users-add-modal" class="link-dark text-decoration-none">
                         <i class="bi bi-plus-circle"></i>
                         {{ __('New User') }}
                     </a>

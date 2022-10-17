@@ -4,7 +4,8 @@ import { Editor } from './editor';
 import { reloadHighlight } from './highlight';
 import mermaid from 'mermaid';
 import { renderMermaid } from './mermaid';
-import { fromCodePoint } from '@codemirror/state';
+import { Modal } from 'bootstrap';
+import { message } from 'laravel-mix/src/Log';
 
 document.addEventListener('DOMContentLoaded', function(){
     let editor_wrap = document.querySelector('#editor-wrap');
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function(){
             if(!window.confirm(confirm.getAttribute('data-confirm'))){
                 return false;
             }
-            const form = document.querySelector(confirm.getAttribute('data-confirm-for'));
+            const form = confirm.getAttribute('data-confirm-for');
             if(form){
                 form.submit();
             }
@@ -66,6 +67,25 @@ document.addEventListener('DOMContentLoaded', function(){
                 form.submit();
             }
             return true;
+        });
+    });
+
+    const modals = document.querySelectorAll('a[data-modal-for]');
+    modals.forEach((el) => {
+        const target = document.querySelector(el.getAttribute('data-modal-for'));
+        const modal = new Modal(target);
+        el.addEventListener('click', (event) => {
+            event.preventDefault();
+            modal.show();
+        });
+        target.addEventListener('hidden.bs.modal', (event) =>{
+            Livewire.emit('hiddenModal');
+        });
+        Livewire.on('hideModal', ()=>{
+            modal.hide();
+        });
+        Livewire.on('errorModal', (message) =>{
+            alert(message);
         });
     });
 });

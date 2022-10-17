@@ -17,7 +17,10 @@ class GroupProjectsAdd extends Component
     public $check_roles = [];
     public $check_projects = [];
 
-    protected $listeners = ['refresh' => '$refresh'];
+    protected $listeners = [
+        'hiddenModal' => 'hidden',
+        'refresh' => '$refresh'
+    ];
 
     public function regist(AttachAction $action)
     {
@@ -28,18 +31,26 @@ class GroupProjectsAdd extends Component
             }
         }
         if(count($roles) === 0){
+            $this->emit('errorModal', __('Please select a role.'));
             return;
         }
+        $hidden = false;
         foreach($this->check_projects as $key => $value){
             if($value){
+                $hidden = true;
                 $action($key, $this->group->id, $roles);
              }
         }
+        if($hidden) $this->emit('hideModal');
+    }
+
+    public function hidden()
+    {
         $this->check_roles = [];
         $this->check_projects = [];
-        $this->setPage(1, 'projects-page');
+
         $this->emit('refresh');
-    }
+    } 
 
     public function render()
     {
