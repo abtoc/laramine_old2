@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(IssueStatusSeeder::class);
         $this->call(TrackerSeeder::class);
+        $this->call(EnumerationSeeder::class);
     }
 }

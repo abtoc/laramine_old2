@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\InfoController;
+use App\Http\Controllers\EnumerationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\IssueStatusController;
@@ -118,6 +119,18 @@ Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
         Route::get('/{issue_status}/edit', 'edit')->name('edit');
         Route::put('/{issue_status}/edit', 'update')->name('update');
         Route::delete('/{issue_status}', 'destroy')->name('destroy');
+        Route::put('/move', 'move')->name('move');
+    });
+});
+
+Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
+    Route::controller(EnumerationController::class)->prefix('enumerations')->name('enumerations.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{enumeration}/edit', 'edit')->name('edit');
+        Route::put('/{enumeration}/edit', 'update')->name('update');
+        Route::delete('/{enumeration}', 'destroy')->name('destroy');
         Route::put('/move', 'move')->name('move');
     });
 });

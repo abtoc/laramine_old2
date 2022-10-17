@@ -41,6 +41,7 @@
     "Ticket Status":"チケットのステータス",
     "New Role":"新しいロール",
     "New Status":"新しいステータス",
+    "Choice Value":"選択肢の値",
     "Status":"ステータス",
     "Apply":"適用",
     "User Admin":"ユーザー管理者",
@@ -58,10 +59,13 @@
     "Summary":"概要",
     "Setting":"設定",
     "Closed":"終了",
+    "Default":"デフォルト値",
     "Archive":"アーカイブ",
     "ArchiveRelese":"アーカイブリリース",
     "Non Member":"非メンバー",
     "Ended Tickets":"終了したチケット",
+    "Ticket Priority":"チケットの優先度",
+    "New Value":"新しい値",
 
     "Half-width alphanumeric characters and some symbols ( _ - @ . ) can be used.":"半角英数字と一部の記号( _ - @ . )が使用可能です。",
 
@@ -116,5 +120,11 @@
     "Personalization":"個人設定",
     "Bug":"バグ",
     "Feature":"機能",
-    "Support":"サポート"
+    "Support":"サポート",
+
+    "lowest":"低め",
+    "default":"通常",
+    "high3":"高め",
+    "high2":"急いで",
+    "highest":"今すぐ"
 }
