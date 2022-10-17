@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\IssueStatus;
+use App\UseCases\IssueStatus\DestroyAction;
+use App\UseCases\IssueStatus\MoveAction;
+use App\UseCases\IssueStatus\UpdateAction;
 use Illuminate\Http\Request;
 
 class IssueStatusController extends Controller
@@ -32,9 +35,10 @@ class IssueStatusController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\UseCases\IssueStatus\UpdateAction $action;
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, UpdateAction $action)
     {
         $request->merge([
             'is_closed' => $request->has('is_closed') ? 1 : 0,
@@ -45,8 +49,7 @@ class IssueStatusController extends Controller
         ]);
 
         $issue_status = new IssueStatus();
-        $issue_status->fill($request->all());
-        $issue_status->save();
+        $action($issue_status, $request->all());
 
         return to_route('issue_statuses.index');
     }
@@ -78,9 +81,10 @@ class IssueStatusController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\IssueStatus  $issue_status
+     * @param  \App\UseCases\IssueStatus\UpdateAction $action;
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IssueStatus $issue_status)
+    public function update(Request $request, IssueStatus $issue_status, UpdateAction $action)
     {
         $request->merge([
             'is_closed' => $request->has('is_closed') ? 1 : 0,
@@ -90,8 +94,8 @@ class IssueStatusController extends Controller
             'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $issue_status->fill($request->all());
-        $issue_status->save();
+
+        $action($issue_status, $request->all());
 
         return to_route('issue_statuses.index');
     }
@@ -100,11 +104,12 @@ class IssueStatusController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\IssueStatus  $issue_status
+     * @param  \App\UseCases\IssueStatus\UpdateAction $action;
      * @return \Illuminate\Http\Response
      */
-    public function destroy(IssueStatus $issue_status)
+    public function destroy(IssueStatus $issue_status, DestroyAction $action)
     {
-        $issue_status->delete();
+        $action($issue_status);
         return to_route('issue_statuses.index');
     }
 
@@ -112,20 +117,17 @@ class IssueStatusController extends Controller
      * Move the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\UseCases\IssueStatus\UpdateAction $action;
      * @return \Illuminate\Http\Response
      */
-    public function move(Request $request)
+    public function move(Request $request, MoveAction $action)
     {
         $request->validate([
             'from' => ['required', 'integer', 'exists:issue_statuses,id'],
             'to' => ['required', 'integer', 'exists:issue_statuses,id'],
         ]);
 
-        $issue_status_from = IssueStatus::findOrFail($request->post('from'));
-        $issue_status_to = IssueStatus::findOrFail($request->post('to'));
-
-        $issue_status_from->position = $issue_status_to->position;
-        $issue_status_from->save();
+        $action($request->post('from'), $request->post('to'));
 
         return to_route('issue_statuses.index');
     }

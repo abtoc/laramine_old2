@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\RoleBuiltin;
 use App\Models\Role;
+use App\UseCases\Role\DestroyAction;
+use App\UseCases\Role\MoveAction;
+use App\UseCases\Role\UpdateAction;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -33,18 +36,17 @@ class RoleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\UseCases\Role\UpdateAction $action
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, UpdateAction $action)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
 
         $role = new Role();
-        $role->fill($request->all());
-
-        $role->save();
+        $action($role, $request->all());
 
         return to_route('roles.index');
     }
@@ -76,16 +78,16 @@ class RoleController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Role  $role
+     * @param  \App\UseCases\Role\UpdateAction $action
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Role $role, UpdateAction $action)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $role->fill($request->all());
-        $role->save();
+        $action($role, $request->all());
 
         return to_route('roles.index');
     }
@@ -94,11 +96,12 @@ class RoleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Role  $role
+     * @param  \App\UseCases\Role\DestroyAction $action
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role, DestroyAction $action)
     {
-        $role->delete();
+        $action($role);
         return to_route('roles.index');
     }
 
@@ -106,26 +109,17 @@ class RoleController extends Controller
      * Move the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\UseCases\Role\MoveAction $action
      * @return \Illuminate\Http\Response
      */
-    public function move(Request $request)
+    public function move(Request $request, MoveAction $action)
     {
         $request->validate([
             'from' => ['required', 'integer', 'exists:roles,id'],
             'to' => ['required', 'integer', 'exists:roles,id'],
         ]);
 
-        $role_from = Role::findOrFail($request->post('from'));
-        if($role_from->builtin !== RoleBuiltin::OTHER){
-            abort(404);
-        }
-        $role_to = Role::findOrFail($request->post('to'));
-        if($role_to->builtin !== RoleBuiltin::OTHER){
-            abort(404);
-        }
-
-        $role_from->position = $role_to->position;
-        $role_from->save();
+        $action($request->post('from'), $request->post('to'));
 
         return to_route('roles.index');
     }

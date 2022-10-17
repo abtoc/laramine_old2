@@ -47,17 +47,6 @@ class Enumeration extends Model
     ];
 
     /**
-     * Active
-     * 
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeActive($query)
-    {
-        return $query->whereActive(true);
-    }
-
-    /**
      * Has Type
      * 
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -100,6 +89,18 @@ class Enumeration extends Model
     }
 
     /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return static::withOutGlobalScope('enumeration')->where($field ?? 'id', $value)->first();
+    }
+
+    /**
      * The "bootted" method of the model
      * 
      * @return void
@@ -108,8 +109,8 @@ class Enumeration extends Model
     {
         parent::booted();
         
-        static::addGlobalScope('other', function(Builder $builder){
-            $builder->orderBy('position', 'asc');
+        static::addGlobalScope('enumeration', function(Builder $builder){
+            $builder->whereActive(true)->orderBy('position', 'asc');
         });
     }
 }

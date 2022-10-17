@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\EnumerationType as Type;
 use App\Models\Enumeration;
+use App\UseCases\Enumeration\DestroyAction;
+use App\UseCases\Enumeration\MoveAction;
+use App\UseCases\Enumeration\UpdateAction;
 use Illuminate\Http\Request;
 
 class EnumerationController extends Controller
@@ -15,7 +18,9 @@ class EnumerationController extends Controller
      */
     public function index()
     {
-        $issue_priorities = Enumeration::hasType(Type::ISSUE_PRIORITY)->get();
+        $issue_priorities = Enumeration::withoutGlobalScope('enumeration')
+                                    ->hasType(Type::ISSUE_PRIORITY)
+                                    ->orderBy('position', 'asc')->get();
         return view('enumerations.index', compact('issue_priorities'));
     }
 
@@ -33,9 +38,10 @@ class EnumerationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\UseCases\Enumeration\UpdateAction $action;
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, UpdateAction $action)
     {
         $request->merge([
             'active' => $request->has('active') ? 1 : 0,
@@ -49,8 +55,7 @@ class EnumerationController extends Controller
         ]);
 
         $enumeration = new Enumeration();
-        $enumeration->fill($request->all());
-        $enumeration->save();
+        $action($enumeration, $request->all());
 
         return to_route('enumerations.index');
     }
@@ -82,9 +87,10 @@ class EnumerationController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Enumeration $enumeration
+     * @param  \App\UseCases\Enumeration\UpdateAction $action;
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Enumeration $enumeration)
+    public function update(Request $request, Enumeration $enumeration, UpdateAction $action)
     {
         $request->merge([
             'active' => $request->has('active') ? 1 : 0,
@@ -96,8 +102,7 @@ class EnumerationController extends Controller
             'is_default' => ['boolean']
         ]);
 
-        $enumeration->fill($request->all());
-        $enumeration->save();
+        $action($enumeration, $request->all());
 
         return to_route('enumerations.index');
     }
@@ -106,11 +111,12 @@ class EnumerationController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Enumeration $enumeration
+     * @param  \App\UseCases\Enumeration\DestroyAction $action
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Enumeration $enumeration)
+    public function destroy(Enumeration $enumeration, DestroyAction $action)
     {
-        $enumeration->delete();
+        $action($enumeration);
         return to_route('enumerations.index');
     }
 
@@ -118,20 +124,17 @@ class EnumerationController extends Controller
      * Move the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\UseCases\Enumeration\MoveAction $action
      * @return \Illuminate\Http\Response
      */
-    public function move(Request $request)
+    public function move(Request $request, MoveAction $action)
     {
         $request->validate([
             'from' => ['required', 'integer', 'exists:enumerations,id'],
             'to' => ['required', 'integer', 'exists:enumerations,id'],
         ]);
 
-        $enum_from = Enumeration::findOrFail($request->post('from'));
-        $enum_to   = Enumeration::findOrFail($request->post('to'));
-
-        $enum_from->position = $enum_to->position;
-        $enum_from->save();
+        $action($request->post('from'), $request->post('to'));
 
         return to_route('enumerations.index');
     }
