@@ -69,6 +69,7 @@ class Project extends Model
 
     public function groups() { return $this->belongsToMany(Group::class,  'member', 'project_id', 'user_id')->using(Member::class)->withPivot(['id']); }
     public function members() { return $this->hasMany(Member::class); }
+    public function trackers() { return $this->belongsToMany(Tracker::class, 'projects_trackers'); }
     public function users() { return $this->belongsToMany(User::class,  'member')->using(Member::class)->withPivot(['id']); }
 
     /**
@@ -177,6 +178,12 @@ class Project extends Model
             } elseif(is_null($project->inherit_members)){
                 $project->inherit_members = true;
             }
+        });
+
+        self::created(function($project){
+            $project->trackers()->sync(
+                Tracker::all()->pluck('id')->toArray()
+            );
         });
 
         self::updating(function($project){

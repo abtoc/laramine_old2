@@ -32,7 +32,6 @@ class Tracker extends Model
     protected $fillable = [
         'name',
         'description',
-        'position',
         'issue_status_id',
     ];
 
@@ -40,6 +39,7 @@ class Tracker extends Model
      * Relation
      */
     public function issue_status() { return $this->belongsTo(IssueStatus::class); }
+    public function projects() { return $this->belongsToMany(Project::class, 'projects_trackers'); }
 
     /**
      * The "booting" method of the model
