@@ -5,7 +5,8 @@
             <thead>
                 <th class="text-center">{{ __('User') }}</th>
                 <th class="text-end">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#group-users-add-modal" class="bi bi-plus-circle link-dark text-decoration-none">
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#group-users-add-modal" class="link-dark text-decoration-none">
+                        <i class="bi bi-plus-circle"></i>
                         {{ __('New User') }}
                     </a>
                 </th>
@@ -17,7 +18,7 @@
                             <a href="{{ route('users.show', ['user' => $user]) }}">{{ $user->name }}</a>
                         </td>
                         <td class="text-end">
-                            <a href="#" class="link-dark text-decoration-none bi bi-trash" wire:click.prevent="destroy({{ $user->id }})">{{ __('Delete') }}</a>
+                            <a href="#" class="link-dark text-decoration-none" wire:click.prevent="destroy({{ $user->id }})"><i class="bi bi-trash"></i> {{ __('Delete') }}</a>
                         </td>
                     </tr>
                 @empty

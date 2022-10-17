@@ -11,11 +11,14 @@
         <div>
             @canany(['update','open','close'], $project)
                 <div class="dropdown">
-                    <a href="#" class="dropdown-toggle link-dark text-decoration-none bi bi-three-dots" role="button" id="project-dropdown" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                    <a href="#" class="dropdown-toggle link-dark text-decoration-none" role="button" id="project-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
+                    </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="project-dropdown">
                         @can('close', $project)
                             <li>
-                                <a href="{{ route('projects.close', ['project' => $project]) }}" class="dropdown-item link-dark text-decoration-none bi bi-stop" data-submit-for="#project-close">
+                                <a href="{{ route('projects.close', ['project' => $project]) }}" class="dropdown-item link-dark text-decoration-none" data-submit-for="#project-close">
+                                    <i class="bi bi-stop"></i>
                                     {{ __('End') }}
                                 </a>
                                 <form action="{{ route('projects.close', ['project' => $project]) }}" id="project-close" method="POST">
@@ -26,7 +29,8 @@
                         @endcan
                         @can('open', $project)
                             <li>
-                                <a href="{{ route('projects.open', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none bi bi-play" data-submit-for="#project-open">
+                                <a href="{{ route('projects.open', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none" data-submit-for="#project-open">
+                                    <i class="bi bi-play"></i>
                                     {{ __('Start') }}
                                 </a>
                                 <form action="{{ route('projects.open', ['project' => $project]) }}" id="project-open" method="POST">
@@ -37,7 +41,10 @@
                         @endcan
                         @can('update', $project)
                             <li>
-                                <a href="{{ route('projects.edit.setting', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none bi bi-gear">{{ __('Setting') }}</a>
+                                <a href="{{ route('projects.edit.setting', ['project' => $project])}}" class="dropdown-item link-dark text-decoration-none">
+                                    <i class="bi bi-gear"></i>
+                                    {{ __('Setting') }}
+                                </a>
                             </li>              
                         @endcan
                     </ul>

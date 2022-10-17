@@ -29,7 +29,7 @@
                                         <th class="text-center">{{ __('Group') }}</th>
                                         <th class="text-center">{{ __('User') }}</th>
                                         <th class="text-end">
-                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route_query('groups.create') }}"> {{ __('New Group')}}</a>
+                                            <a class="link-dark text-decoration-none" href="{{ route_query('groups.create') }}"><i class="bi bi-plus-circle"></i> {{ __('New Group')}}</a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -44,8 +44,9 @@
                                             <td class="text-center">{{ $group->users->count() }}</td>
                                             <td class="text-end">
                                                 @if($group->isDelete())
-                                                    <a href="{{ route_query('groups.destroy', ['group' => $group]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                    <a href="{{ route_query('groups.destroy', ['group' => $group]) }}" class="link-dark text-decoration-none"
                                                         data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#groups-destroy-{{$group->id}}">
+                                                        <i class="bi bi-trash"></i>
                                                         {{ __('Delete') }}
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('groups.destroy', ['group' => $group])}}" id="groups-destroy-{{$group->id}}">

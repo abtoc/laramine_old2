@@ -15,7 +15,10 @@
                                     <tr>
                                         <th class="text-center">{{ __('Role') }}</th>
                                         <th class="text-end">
-                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('roles.create') }}"> {{ __('New Role')}}</a>
+                                            <a class="link-dark text-decoration-none" href="{{ route('roles.create') }}">
+                                                <i class="bi bi-plus-circle"></i>
+                                                {{ __('New Role')}}
+                                            </a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -36,8 +39,9 @@
                                                         <input type="hidden" id="from" name="from">
                                                         <input type="hidden" id="to" name="to" value="{{ $role->id }}">
                                                     </form>
-                                                    <a href="{{ route('roles.destroy', ['role' => $role]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                    <a href="{{ route('roles.destroy', ['role' => $role]) }}" class="link-dark text-decoration-none"
                                                         data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#roles-destroy-{{$role->id}}">
+                                                        <i class="bi bi-trash"></i>
                                                         {{ __('Delete') }}
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route('roles.destroy', ['role' => $role])}}" id="roles-destroy-{{$role->id}}">

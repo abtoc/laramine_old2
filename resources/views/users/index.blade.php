@@ -43,7 +43,10 @@
                                         <th class="text-center">@sortablelink('created_at', __('CreatedAt'))</th>
                                         <th class="text-center">@sortablelink('last_login_at', __('LastLoginAt'))</th>
                                         <th class="text-end">
-                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route_query('users.create') }}"> {{ __('Create User')}}</a>
+                                            <a class="link-dark text-decoration-none" href="{{ route_query('users.create') }}">
+                                                <i class="bi bi-plus-circle"></i>
+                                                {{ __('Create User')}}
+                                            </a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -69,7 +72,8 @@
                                             <td class="text-end">
                                                 @if(Auth::id() !== $user->id)
                                                     @if($user->isActive())
-                                                        <a href="{{ route_query('users.lock', ['user' => $user]) }}" class="link-dark bi bi-lock text-decoration-none" data-submit-for="#users-lock-{{$user->id}}">
+                                                        <a href="{{ route_query('users.lock', ['user' => $user]) }}" class="link-dark text-decoration-none" data-submit-for="#users-lock-{{$user->id}}">
+                                                            <i class="bi bi-lock"></i>
                                                             {{ __('Lock') }}
                                                         </a>
                                                         <form method="POST" class="d-none" action="{{ route_query('users.lock', ['user' => $user]) }}" id="users-lock-{{$user->id}}">
@@ -77,7 +81,8 @@
                                                             @method('PUT')
                                                         </form>
                                                     @else
-                                                        <a href="{{ route_query('users.unlock', ['user' => $user]) }}" class="link-dark bi bi-unlock text-decoration-none" data-submit-for="#users-unlock-{{$user->id}}">
+                                                        <a href="{{ route_query('users.unlock', ['user' => $user]) }}" class="link-dark text-decoration-none" data-submit-for="#users-unlock-{{$user->id}}">
+                                                            <i class="bi bi-unlock"></i>
                                                             {{ __('Unlock') }}
                                                         </a>
                                                         <form method="POST" class="d-none" action="{{ route_query('users.unlock', ['user' => $user]) }}" id="users-unlock-{{$user->id}}">
@@ -85,9 +90,10 @@
                                                             @method('PUT')
                                                         </form>
                                                     @endif
-                                                        <a href="{{ route_query('users.destroy', ['user' => $user]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                        <a href="{{ route_query('users.destroy', ['user' => $user]) }}" class="link-dark text-decoration-none"
                                                            data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#users-destroy-{{$user->id}}">
-                                                            {{ __('Delete') }}
+                                                            <i class="bi bi-trash"></i>
+                                                           {{ __('Delete') }}
                                                         </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('users.destroy', ['user' => $user])}}" id="users-destroy-{{$user->id}}">
                                                         @csrf

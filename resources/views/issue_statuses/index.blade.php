@@ -15,7 +15,7 @@
                                     <th class="text-center">{{ __('Status') }}</th>
                                     <th class="text-center">{{ __('Ended Tickets') }}</th>
                                     <th class="text-end">
-                                        <a href="{{ route('issue_statuses.create') }}" class="bi bi-plus-circle link-dark text-decoration-none">{{ __('New Status') }}</a>
+                                        <a href="{{ route('issue_statuses.create') }}" class="link-dark text-decoration-none"><i class="bi bi-plus-circle"></i> {{ __('New Status') }}</a>
                                     </th>
                                 </thead>
                                 <tbody>
@@ -35,8 +35,9 @@
                                                     <input type="hidden" id="from" name="from">
                                                     <input type="hidden" id="to" name="to" value="{{ $issue_status->id}}">
                                                 </form>
-                                                <a href="{{ route('issue_statuses.destroy', ['issue_status' => $issue_status]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                <a href="{{ route('issue_statuses.destroy', ['issue_status' => $issue_status]) }}" class="link-dark text-decoration-none"
                                                     data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#issue-status-destroy-{{ $issue_status->id }}">
+                                                    <i class="bi bi-trash"></i>
                                                     {{ __('Delete') }}
                                                 </a>
                                                 <form method="POST" class="d-none" action="{{ route('issue_statuses.destroy', ['issue_status' => $issue_status])}}" id="issue-status-destroy-{{ $issue_status->id }}">

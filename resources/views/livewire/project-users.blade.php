@@ -6,7 +6,8 @@
                 <th class="text-center">{{ __('User') }}/{{__('Group') }}</th>
                 <th class="text-center">{{ __('Role') }}</th>
                 <th class="text-end">
-                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#project-users-add-modal" class="bi bi-plus-circle link-dark text-decoration-none">
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#project-users-add-modal" class="link-dark text-decoration-none">
+                        <i class="bi bi-plus-circle"></i>
                         {{ __('New User') }}
                     </a>
                 </th>
@@ -25,8 +26,8 @@
                             @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$user->id], key($user->id))
                         </td>
                         <td class="text-end">
-                            <a href="#" class="link-dark text-decoration-none bi bi-pencil" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $user->id }})">{{ __('Edit') }}</a>
-                            <a href="#" class="link-dark text-decoration-none bi bi-trash" wire:click.prevent="destroy({{ $user->id }})">{{ __('Delete') }}</a>
+                            <a href="#" class="link-dark text-decoration-none" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $user->id }})"><i class="bi bi-pencil"></i> {{ __('Edit') }}</a>
+                            <a href="#" class="link-dark text-decoration-none" wire:click.prevent="destroy({{ $user->id }})"><i class="bi bi-trash"></i> {{ __('Delete') }}</a>
                         </td>
                     </tr>
                 @empty

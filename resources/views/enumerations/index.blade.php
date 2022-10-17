@@ -17,7 +17,7 @@
                                         <th class="text-center">{{ __('Default') }}</th>
                                         <th class="text-center">{{ __('Active') }}</th>
                                         <th class="text-end">
-                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('enumerations.create', ['type' => 'IssuePriority']) }}"> {{ __('New Value')}}</a>
+                                            <a class="link-dark text-decoration-none" href="{{ route('enumerations.create', ['type' => 'IssuePriority']) }}"><i class="bi bi-plus-circle"></i> {{ __('New Value')}}</a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -37,8 +37,9 @@
                                                     <input type="hidden" id="from" name="from">
                                                     <input type="hidden" id="to" name="to" value="{{ $issue_priority->id }}">
                                                 </form>
-                                                <a href="{{ route('enumerations.destroy', ['enumeration' => $issue_priority]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                <a href="{{ route('enumerations.destroy', ['enumeration' => $issue_priority]) }}" class="link-dark text-decoration-none"
                                                     data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#roles-destroy-{{$issue_priority->id}}">
+                                                    <i class="bi bi-trash"></i>
                                                     {{ __('Delete') }}
                                                 </a>
                                                 <form method="POST" class="d-none" action="{{ route('enumerations.destroy', ['enumeration' => $issue_priority])}}" id="roles-destroy-{{$issue_priority->id}}">

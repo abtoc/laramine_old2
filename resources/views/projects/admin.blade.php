@@ -40,7 +40,9 @@
                                         <th class="text-center">{{ __('Public') }}</th>
                                         <th class="text-center">{{ __('CreatedAt') }}</th>
                                         <th class="text-end">
-                                            <a class="bi bi-plus-circle link-dark text-decoration-none" href="{{ route('projects.create') }}"> {{ __('Create Project')}}</a>
+                                            <a class="link-dark text-decoration-none" href="{{ route('projects.create') }}">
+                                                <i class="bi bi-plus-circle"></i>
+                                                {{ __('Create Project')}}</a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -65,7 +67,8 @@
                                             <td class="text-center">{{ $project->created_at->toDateString() }}</td>
                                             <td class="text-end">
                                                 @if($project->isArchive())
-                                                    <a href="{{ route_query('projects.open', ['project' => $project]) }}" class="link-dark bi bi-unlock text-decoration-none" data-submit-for="#projects-unlock-{{$project->id}}">
+                                                    <a href="{{ route_query('projects.open', ['project' => $project]) }}" class="link-dark text-decoration-none" data-submit-for="#projects-unlock-{{$project->id}}">
+                                                        <i class="bi bi-unlock"></i>
                                                         {{ __('ArchiveRelese') }}
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('projects.open', ['project'=>$project])}}" id="projects-unlock-{{$project->id}}">
@@ -74,7 +77,8 @@
                                                         <input type="hidden" name="_previous" value="{{ route_query('projects.admin') }}">
                                                     </form>
                                                 @else
-                                                    <a href="{{ route_query('projects.archive', ['project' => $project]) }}" class="link-dark bi bi-unlock text-decoration-none" data-submit-for="#projects-lock-{{$project->id}}">
+                                                    <a href="{{ route_query('projects.archive', ['project' => $project]) }}" class="link-dark text-decoration-none" data-submit-for="#projects-lock-{{$project->id}}">
+                                                        <i class="bi bi-lock"></i>
                                                         {{ __('Archive') }}
                                                     </a>
                                                     <form method="POST" class="d-none" action="{{ route_query('projects.archive', ['project'=>$project])}}" id="projects-lock-{{$project->id}}">
@@ -82,8 +86,9 @@
                                                         @method('PUT')
                                                     </form>
                                                 @endif
-                                                <a href="{{ route_query('projects.destroy', ['project' => $project]) }}" class="link-dark bi bi-trash text-decoration-none"
+                                                <a href="{{ route_query('projects.destroy', ['project' => $project]) }}" class="link-dark text-decoration-none"
                                                     data-confirm="{{ __('Can I delete it?') }}" data-confirm-for="#projects-destroy-{{$project->id}}">
+                                                    <i class="bi bi-trash"></i>
                                                     {{ __('Delete') }}
                                                 </a>
                                                 <form method="POST" class="d-none" action="{{ route_query('projects.destroy', ['project'=>$project])}}" id="projects-destroy-{{$project->id}}">
