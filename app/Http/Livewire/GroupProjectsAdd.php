@@ -54,7 +54,7 @@ class GroupProjectsAdd extends Component
             ->when(!empty($this->search), function($q){
                 return $q->where('name', 'like', '%'.$this->search.'%');
             });
-        $projects = $query->simplePaginate(30, ['*'], 'projects-page');
+        $projects = $query->get();
         $roles = Role::orderBy('position', 'asc')->get();
         return view('livewire.group-projects-add', compact('projects', 'roles'));
     }

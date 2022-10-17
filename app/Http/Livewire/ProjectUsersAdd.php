@@ -57,7 +57,7 @@ class ProjectUsersAdd extends Component
             ->when(!empty($this->search), function($q){
                 return $q->where('name', 'like', '%'.$this->search.'%');
             });
-        $users = $query->simplePaginate(30, ['*'], 'users-page');
+        $users = $query->get();
         $roles = Role::orderBy('position', 'asc')->get();
 
         return view('livewire.project-users-add', compact('users', 'roles'));

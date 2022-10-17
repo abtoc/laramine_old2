@@ -5821,6 +5821,7 @@ __webpack_require__.r(__webpack_exports__);
 
 window._ = (lodash__WEBPACK_IMPORTED_MODULE_0___default());
 
+window.bootstrap = bootstrap__WEBPACK_IMPORTED_MODULE_1__;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

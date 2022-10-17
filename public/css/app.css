@@ -12158,6 +12158,18 @@ main {
   width: 280px;
 }
 
+.principals {
+  -webkit-column-count: auto;
+  -webkit-column-width: 200px;
+  -webkit-column-gap: 0.5em;
+  -webkit-column-rule: 1px solid #ccc;
+}
+
+.roles-selection .form-check {
+  display: inline-block;
+  width: 140px;
+}
+
 input[type=radio], input[type=checkbox] {
   position: relative;
 }
