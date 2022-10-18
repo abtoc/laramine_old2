@@ -111,12 +111,7 @@ class Project extends Model
     public function getRoleNames($member_id)
     {
         $member = Member::find($member_id);
-        $roles = $member->roles()->select('name')->get();
-        $names = [];
-        foreach($roles as $role){
-            $names[] = $role->name;
-        }
-        return implode(',', $names);
+        return $member->roles()->get()->implode('name', ',');
     }
 
     /**
