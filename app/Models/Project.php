@@ -103,41 +103,30 @@ class Project extends Model
     }
 
     /**
-     * Get Role Name
-     * 
-     * @param int $member_id
-     * @return string
-     */
-    public function getRoleNames($member_id)
-    {
-        $member = Member::find($member_id);
-        return $member->roles()->get()->implode('name', ',');
-    }
-
-    /**
      * Join User
      *
+     * @param  \App\Models\User    $user
      * @param  \App\Models\Project $project 
      * @return bool
      */
-    public function isJoining($project = null)
+    public function isJoining($user = null, $project = null)
     {
-        if(!Auth::check())  return false;
+        if(is_null($user))  return false;
 
         if(is_null($project))  $project = $this;
 
         $query = Member::query()
                     ->whereProjectId($project->id)
-                    ->where(function($q){
-                        $q->whereUserId(Auth::user()->id)
-                          ->orWhereIn('user_id', function($q){
-                            $q->select('group_id')->from('groups_users')->where('user_id', Auth::user()->id);
+                    ->where(function($q) use($user) {
+                        $q->whereUserId($user->id)
+                          ->orWhereIn('user_id', function($q) use($user){
+                            $q->select('group_id')->from('groups_users')->where('user_id', $user->id);
                         });
                     });
         if($query->exists()){
             return true;
         } elseif($project->inherit_members and $project->parent_id){
-            return $this->isJoining($project->parent);
+            return $this->isJoining($user, $project->parent);
         }
         return false;
     }

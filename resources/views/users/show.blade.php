@@ -40,10 +40,10 @@
                                     @foreach($projects as $project)
                                         <tr>
                                             <td class="text-start">
-                                                <a href="{{ route('projects.show', ['project'=>$project]) }}">{{ $project->name }}</a>
+                                                <a href="{{ route('projects.show', ['project'=>$project->id]) }}">{{ $project->name }}</a>
                                             </td>
-                                            <td class="text-start">{{ $project->getRoleNames($project->member_id) }}</td>
-                                            <td class="text-center">{{ $project->created_at->toDateString() }}</td>
+                                            <td class="text-start">{{ $project->roles }}</td>
+                                            <td class="text-center">@if($project->created_at){{ $project->created_at->toDateString()}}@endif</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
