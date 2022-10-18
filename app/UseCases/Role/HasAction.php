@@ -20,20 +20,13 @@ class HasAction {
         while($project){
             $member = $project->members()->whereUserId($user->id)->first();
             if($member){
-                foreach($member->roles as $role){
-                    if($role->has($permissions)){
-                        return true;
-                    }
-                }
+                $index = $member->roles->search(fn($item, $key) => $item->has($permissions));
+                if($index !== false)  return true;
             }
             foreach($project->groups as $group){
                 if(!$group->hasUser($user)) continue;
-                $roles = $group->pivot->roles()->get();
-                foreach($roles as $role){
-                    if($role->has($permissions)){
-                        return true;
-                    }
-                }
+                $index = $group->pivot->roles()->get()->search(fn($item, $key) => $item->has($permissions));
+                if($index !== false) return true;
             }
             if(!$project->inherit_members)  break;
             $project = $project->parent;
