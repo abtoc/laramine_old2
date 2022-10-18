@@ -121,21 +121,30 @@ class Project extends Model
 
     /**
      * Join User
-     * 
+     *
+     * @param  \App\Models\Project $project 
      * @return bool
      */
-    public function isJoining()
+    public function isJoining($project = null)
     {
         if(!Auth::check())  return false;
+
+        if(is_null($project))  $project = $this;
+
         $query = Member::query()
-                    ->whereProjectId($this->id)
+                    ->whereProjectId($project->id)
                     ->where(function($q){
                         $q->whereUserId(Auth::user()->id)
                           ->orWhereIn('user_id', function($q){
                             $q->select('group_id')->from('groups_users')->where('user_id', Auth::user()->id);
                         });
                     });
-        return $query->exists();
+        if($query->exists()){
+            return true;
+        } elseif($project->inherit_members and $project->parent_id){
+            return $this->isJoining($project->parent);
+        }
+        return false;
     }
 
     /**
