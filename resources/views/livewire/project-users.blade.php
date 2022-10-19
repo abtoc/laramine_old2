@@ -16,18 +16,20 @@
                 @forelse($users as $user)
                     <tr class="text-start">
                         <td class="text-start">
-                            @if($user->isUser())
-                                <a href="{{ route('users.show', ['user' => $user]) }}">{{ $user->name }}</a>
+                            @if($user->type === 'User')
+                                <a href="{{ route('users.show', ['user' => $user->id]) }}">{{ $user->name }}</a>
                             @else
                                 <i class="bi bi-people"></i>{{ $user->name }}                                
                             @endif
                         </td>
                         <td class="text-start">
-                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$user->id], key($user->id))
+                            @livewire('role-choice', ['project_id'=>$project->id, 'user'=>$user], key($user->id))
                         </td>
                         <td class="text-end">
                             <a href="#" class="link-dark text-decoration-none" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $user->id }})"><i class="bi bi-pencil"></i> {{ __('Edit') }}</a>
-                            <a href="#" class="link-dark text-decoration-none" wire:click.prevent="destroy({{ $user->id }})"><i class="bi bi-trash"></i> {{ __('Delete') }}</a>
+                            @if($user->is_delete)
+                                <a href="#" class="link-dark text-decoration-none" wire:click.prevent="destroy({{ $user->id }})"><i class="bi bi-trash"></i> {{ __('Delete') }}</a>
+                            @endif
                         </td>
                     </tr>
                 @empty
@@ -40,6 +42,5 @@
             </tbody>
         </table>
     </div>
-    {{ $users->links() }}
     @livewire('project-users-add', ['project' => $project])
 </div>

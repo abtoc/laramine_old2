@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\UseCases\ProjectUsers\RenderAction;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,14 +15,9 @@ class ProjectUsers extends Component
     
     public $project;
 
-    public function render()
+    public function render(RenderAction $action)
     {
-        $users = $this->project
-                    ->users()
-                    ->withoutGlobalScope('user')
-                    ->orderBy('name', 'asc')
-                    ->paginate(config('laramine.per_page'));
-
+        list($users) = $action($this->project);
         return view('livewire.project-users', compact('users'));
     }
 

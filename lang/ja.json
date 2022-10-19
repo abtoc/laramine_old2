@@ -57,6 +57,8 @@
     "Apply":"適用",
     "User Admin":"ユーザー管理者",
     "Project Admin":"プロジェクト管理者",
+    "Inherited from parent project":"親プロジェクトから継承",
+    "Inherited from group":"グループから継承",
 
     "All User":"全て",
     "All Project":"全て",
