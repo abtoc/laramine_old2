@@ -67,7 +67,7 @@
                     <div class="card-body">
                         @foreach($users as $key => $value)
                             <p>
-                                <span>{{ $key }}:</span>
+                                <span>{{ preg_replace('/^[0-9]+.(.*)$/','$1', $key) }}:</span>
                                 @foreach($value as $user)
                                     @if($user->isUser())
                                         @can('view', $user)

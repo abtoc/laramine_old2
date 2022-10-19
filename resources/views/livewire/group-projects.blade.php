@@ -14,12 +14,12 @@
             </thead>
             <tbody>
                 @forelse($projects as $project)
-                    <tr @class(['text-start', 'lock' => !$project->isActive()])>
+                    <tr @class(['text-start', 'lock' => $project->status !== 1])>
                         <td class="text-start">
-                            <a href="{{ route('projects.show', ['project' => $project]) }}">{{ $project->name }}</a>
+                            <a href="{{ route('projects.show', ['project' => $project->id]) }}">{{ $project->name }}</a>
                         </td>
                         <td class="text-start">
-                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$group->id], key($project->id))
+                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$group->id, 'roles' => $project->roles], key($project->id))
                         </td>
                         <td class="text-end">
                             <a href="#" class="link-dark text-decoration-none" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $group->id }})"><i class="bi bi-pencil"></i> {{ __('Edit') }}</a>
@@ -36,6 +36,5 @@
             </tbody>
         </table>
     </div>
-    {{ $projects->links() }}
     @livewire('group-projects-add', ['group' => $group])
 </div>

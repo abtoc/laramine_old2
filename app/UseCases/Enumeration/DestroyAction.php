@@ -4,7 +4,8 @@ namespace App\UseCases\Enumeration;
 
 use Illuminate\Support\Facades\DB;
 
-class DestroyAction {
+class DestroyAction
+{
     /**
      * IssueStatus Move Action
      * 

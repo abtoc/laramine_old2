@@ -6,7 +6,8 @@ use App\Models\Enumeration;
 use Illuminate\Support\Enumerable;
 use Illuminate\Support\Facades\DB;
 
-class MoveAction {
+class MoveAction
+{
     /**
      * IssueStatus Move Action
      * 

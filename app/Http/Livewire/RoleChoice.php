@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
-use App\Models\Member;
 use App\Models\Role;
 use App\UseCases\Role\AttachAction;
 use Exception;
@@ -12,7 +10,8 @@ use Livewire\Component;
 class RoleChoice extends Component
 {
     public $project_id;
-    public $user;
+    public $user_id;
+    public $roles;
     public $isEdit = false;
     public $checks;
     public $inherits = [];
@@ -23,12 +22,12 @@ class RoleChoice extends Component
         'edit' => 'edit',
     ];
 
-    public function mount($user)
+    public function mount($roles)
     {
-        $this->user = (array)$user;
+        $this->roles = (array)$roles;
     
         $this->checks = [];
-        foreach($user->roles as $role){
+        foreach($roles as $role){
             if($role->inherit){
                 $this->inherits[$role->id] = "1";
             } elseif($role->group){
@@ -41,16 +40,15 @@ class RoleChoice extends Component
 
     public function render()
     {
-        $user_obj = (object)$this->user;
-        $user_obj->roles = collect($user_obj->roles);
+        $roles = (object)$this->roles;
 
         $all_roles = Role::query()->get();
-        return view('livewire.role-choice', compact('user_obj', 'all_roles'));
+        return view('livewire.role-choice', compact('roles', 'all_roles'));
     }
 
     public function edit($project_id, $user_id)
     {
-        if(($this->project_id === $project_id) and ($this->user['id'] === $user_id)){
+        if(($this->project_id === $project_id) and ($this->user_id === $user_id)){
             $this->isEdit = true;
         }
     }
@@ -63,8 +61,7 @@ class RoleChoice extends Component
                 $roles[] = $key;
             }
         }
-        $user = (object)$this->user;
-        $action($this->project_id, $user->id, $roles);
+        $action($this->project_id, $this->user_id, $roles);
         $this->isEdit = false;
         $this->emit('refresh');
     }

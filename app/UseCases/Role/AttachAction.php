@@ -5,7 +5,8 @@ namespace App\UseCases\Role;
 use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 
-class AttachAction {
+class AttachAction
+{
     /**
      * Attach Role
      * 

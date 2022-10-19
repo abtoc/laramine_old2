@@ -4,7 +4,8 @@ namespace App\UseCases\Enumeration;
 
 use Illuminate\Support\Facades\DB;
 
-class UpdateAction {
+class UpdateAction
+{
     /**
      * IssueStatus Move Action
      * 

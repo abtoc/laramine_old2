@@ -23,7 +23,7 @@
                             @endif
                         </td>
                         <td class="text-start">
-                            @livewire('role-choice', ['project_id'=>$project->id, 'user'=>$user], key($user->id))
+                            @livewire('role-choice', ['project_id'=>$project->id, 'user_id'=>$user->id, 'roles' => $user->roles], key($user->id))
                         </td>
                         <td class="text-end">
                             <a href="#" class="link-dark text-decoration-none" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $user->id }})"><i class="bi bi-pencil"></i> {{ __('Edit') }}</a>

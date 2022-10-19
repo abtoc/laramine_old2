@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\ProjectStatus as Status;
+use App\UseCases\GroupProjects\RenderAction;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,13 +15,9 @@ class GroupProjects extends Component
     
     public $group;
 
-    public function render()
+    public function render(RenderAction $action)
     {
-        $projects = $this->group
-                    ->projects()
-                    ->orderBy('name', 'asc')
-                    ->paginate(config('laramine.per_page'));
-
+        list($projects) = $action($this->group);
         return view('livewire.group-projects', compact('projects'));
     }
 

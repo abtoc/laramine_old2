@@ -5,7 +5,8 @@ namespace App\UseCases\IssueStatus;
 use App\Models\IssueStatus;
 use Illuminate\Support\Facades\DB;
 
-class MoveAction {
+class MoveAction
+{
     /**
      * IssueStatus Move Action
      * 

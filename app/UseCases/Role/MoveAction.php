@@ -6,7 +6,8 @@ use App\Enums\RoleBuiltin;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 
-class MoveAction {
+class MoveAction 
+{
     /**
      * IssueStatus Move Action
      * 

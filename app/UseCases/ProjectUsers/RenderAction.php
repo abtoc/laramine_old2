@@ -7,13 +7,14 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class RenderAction {
+class RenderAction
+{
 
     /**
      * Get Members
      * 
      * @param  \App\Models\Project $project
-     * @return array
+     * @return \Illuminate\Support\Collection;
      */
     public function __invoke($project)
     {

@@ -6,7 +6,8 @@ use App\Models\Member;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-class HasAction {
+class HasAction
+{
     /**
      * Attach Role
      * 
