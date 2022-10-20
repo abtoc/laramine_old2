@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function(){
             if(!window.confirm(confirm.getAttribute('data-confirm'))){
                 return false;
             }
-            const form = confirm.getAttribute('data-confirm-for');
+            const form = document.querySelector(confirm.getAttribute('data-confirm-for'));
+            console.log(form);
             if(form){
                 form.submit();
             }

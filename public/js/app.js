@@ -5957,7 +5957,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
       }
 
-      var form = confirm.getAttribute('data-confirm-for');
+      var form = document.querySelector(confirm.getAttribute('data-confirm-for'));
+      console.log(form);
 
       if (form) {
         form.submit();
