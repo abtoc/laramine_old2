@@ -9,6 +9,7 @@ use App\Http\Controllers\My\SettingController;
 use App\Http\Controllers\My\ResetPasswordController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TrackerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -121,9 +122,7 @@ Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
         Route::delete('/{issue_status}', 'destroy')->name('destroy');
         Route::put('/move', 'move')->name('move');
     });
-});
 
-Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
     Route::controller(EnumerationController::class)->prefix('enumerations')->name('enumerations.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
@@ -131,6 +130,16 @@ Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
         Route::get('/{enumeration}/edit', 'edit')->name('edit');
         Route::put('/{enumeration}/edit', 'update')->name('update');
         Route::delete('/{enumeration}', 'destroy')->name('destroy');
+        Route::put('/move', 'move')->name('move');
+    });
+
+    Route::controller(TrackerController::class)->prefix('trackers')->name('trackers.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{tracker}/edit', 'edit')->name('edit');
+        Route::put('/{tracker}/edit', 'update')->name('update');
+        Route::delete('/{tracker}', 'destroy')->name('destroy');
         Route::put('/move', 'move')->name('move');
     });
 });

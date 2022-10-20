@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Rules\ProjectPublicChildrenRule;
 use App\Rules\ProjectPublicParentRule;
 use App\UseCases\Project\ShowAction;
+use App\UseCases\Project\StoreAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Prologue\Alerts\Facades\Alert;
@@ -68,9 +69,10 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\UseCases\Project\StoreAction $action
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, StoreAction $action)
     {
         $this->authorize('create', Project::class);
 
@@ -85,9 +87,7 @@ class ProjectController extends Controller
             'inherit_members' => ['declined_if:parent_id,null'],
         ]);
 
-        $project = new Project();
-        $project->fill($request->all());
-        $project->save();
+        $action($request->all());
 
         if($request->has('_previous')){
             return redirect($request->post('_previous'));

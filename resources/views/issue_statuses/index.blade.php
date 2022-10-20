@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content-admin')
-<div class="container-fluid py-4">
+<div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Enums\ProjectStatus;
 use App\Enums\Permissions;
+use App\Models\IssueStatus;
 use App\Models\Project;
 use Faker\Provider\ar_EG\Person;
 use Illuminate\Support\Facades\View;
@@ -53,6 +54,13 @@ class ViewComposerServiceProvider extends ServiceProvider
                 Permissions::SET_ISSUES_PRIVATE,
                 Permissions::SET_OWN_ISSUES_PRIVATE,
             ]);
+        });
+        View::composer('trackers/*', function($view){
+            $view->with('issue_statuses', IssueStatus::query()->get());
+            $view->with('projects', Project::query()
+                                        ->activeOrClosed()
+                                        ->withDepth()
+                                        ->get()->toTree());
         });
     }
 }
