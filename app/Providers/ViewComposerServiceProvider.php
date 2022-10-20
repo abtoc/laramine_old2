@@ -6,6 +6,7 @@ use App\Enums\ProjectStatus;
 use App\Enums\Permissions;
 use App\Models\IssueStatus;
 use App\Models\Project;
+use App\Models\Tracker;
 use Faker\Provider\ar_EG\Person;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -61,6 +62,10 @@ class ViewComposerServiceProvider extends ServiceProvider
                                         ->activeOrClosed()
                                         ->withDepth()
                                         ->get()->toTree());
+        });
+        View::composer('workflows/*', function($view){
+            $view->with('trackers', Tracker::query()->get());
+            $view->with('issue_statuses', IssueStatus::query()->get());
         });
     }
 }

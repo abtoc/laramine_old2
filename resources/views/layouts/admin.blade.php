@@ -28,6 +28,9 @@
                     <a href="{{ route('issue_statuses.index') }}" class="nav-link link-dark"><i class="bi bi-pencil-square"></i> {{ __('Ticket Status') }}</a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('workflows.edit') }}" class="nav-link link-dark"><i class="bi bi-box-arrow-right"></i> {{ __('Workflow') }}</a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('enumerations.index') }}" class="nav-link link-dark"><i class="bi bi-list-ul"></i> {{ __('Choice Value') }}</a>
                 </li>
                 <li class="nav-item">
@@ -56,6 +59,7 @@
         <li class="nav-item mx-3 text-muted"><a href="{{ route('roles.index') }}" class="nav-link text-secondary p-1"><i class="bi bi-key"></i> {{ __('Role') }}</a></li>
         <li class="nav-item mx-3 text-muted"><a href="{{ route('trackers.index') }}" class="nav-link text-secondary p-1"><i class="bi bi-sticky"></i> {{ __('Tracker') }}</a></li>
         <li class="nav-items mx-3 text-muted"><a href="{{ route('issue_statuses.index') }}" class="nav-link text-secondary p-1"><i class="bi bi-pencil-square"></i> {{ __('Ticket Status') }}</a></li>
+        <li class="nav-items mx-3 text-muted"><a href="{{ route('workflows.edit') }}" class="nav-link text-secondary p-1"><i class="bi bi-box-arrow-right"></i> {{ __('Workflow') }}</a></li>
         <li class="nav-items mx-3 text-muted"><a href="{{ route('enumerations.index') }}" class="nav-link text-secondary p-1"><i class="bi bi-list-ul"></i> {{ __('Choice Value') }}</a></li>
         <li class="nav-items mx-3 text-muted"><a href="{{ route('admin.info') }}" class="nav-link text-secondary p-1"><i class="bi bi-question-circle"></i> {{ __('Information') }}</a></li>
     @endcan

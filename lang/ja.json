@@ -86,6 +86,8 @@
     "Ended Tickets":"終了したチケット",
     "Ticket Priority":"チケットの優先度",
     "New Value":"新しい値",
+    "Current Status":"現在のステータス",
+    "Transitional status":"遷移できるステータス",
 
     "Half-width alphanumeric characters and some symbols ( _ - @ . ) can be used.":"半角英数字と一部の記号( _ - @ . )が使用可能です。",
 
@@ -109,6 +111,7 @@
     "Project":"プロジェクト",
     "Role":"ロール",
     "Tracker":"トラッカー",
+    "Workflow":"ワークフロー",
     "Member":"メンバー",
     "Admin":"管理",
     "Administrator":"管理者",

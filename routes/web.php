@@ -11,6 +11,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrackerController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkflowController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -141,5 +142,10 @@ Route::group(['middleware' => ['auth', 'usercheck', 'can:admin']], function(){
         Route::put('/{tracker}/edit', 'update')->name('update');
         Route::delete('/{tracker}', 'destroy')->name('destroy');
         Route::put('/move', 'move')->name('move');
+    });
+
+    Route::controller(WorkflowController::class)->prefix('workflows')->name('workflows.')->group(function(){
+        Route::get('/edit', 'edit')->name('edit');
+        Route::put('/edit', 'update')->name('update');
     });
 });

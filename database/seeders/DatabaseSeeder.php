@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Workflow;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,5 +28,5 @@ class DatabaseSeeder extends Seeder
         $this->call(IssueStatusSeeder::class);
         $this->call(TrackerSeeder::class);
         $this->call(EnumerationSeeder::class);
-    }
+        $this->call(WorkflowSeeder::class);
 }
