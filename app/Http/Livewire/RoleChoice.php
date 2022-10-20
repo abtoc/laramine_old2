@@ -4,16 +4,15 @@ namespace App\Http\Livewire;
 
 use App\Models\Role;
 use App\UseCases\Role\AttachAction;
-use Exception;
+use App\UseCases\RoleChoice\RenderAction;
 use Livewire\Component;
 
 class RoleChoice extends Component
 {
     public $project_id;
     public $user_id;
-    public $roles;
     public $isEdit = false;
-    public $checks;
+    public $checks = [];
     public $inherits = [];
     public $groups =[];
 
@@ -24,9 +23,6 @@ class RoleChoice extends Component
 
     public function mount($roles)
     {
-        $this->roles = (array)$roles;
-    
-        $this->checks = [];
         foreach($roles as $role){
             if($role->inherit){
                 $this->inherits[$role->id] = "1";
@@ -38,11 +34,20 @@ class RoleChoice extends Component
         }
     }
 
-    public function render()
+    public function render(RenderAction $action)
     {
-        $roles = (object)$this->roles;
+        list($roles, $all_roles) = $action($this->project_id, $this->user_id);
 
-        $all_roles = Role::query()->get();
+        $this->inherits = [];
+        $this->groups = [];
+        foreach($roles as $role){
+            if($role->inherit){
+                $this->inherits[$role->id] = "1";
+            } elseif($role->group){
+                $this->groups[$role->id] = "1";
+            }
+        }
+
         return view('livewire.role-choice', compact('roles', 'all_roles'));
     }
 

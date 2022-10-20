@@ -23,7 +23,9 @@
                         </td>
                         <td class="text-end">
                             <a href="#" class="link-dark text-decoration-none" wire:click.prevent="$emit('edit', {{ $project->id }},{{ $group->id }})"><i class="bi bi-pencil"></i> {{ __('Edit') }}</a>
-                            <a href="#" class="link-dark text-decoration-none" wire:click.prevent="destroy({{ $project->id }})"><i class="bi bi-trash"></i> {{ __('Delete') }}</a>
+                            @if($project->is_delete)
+                                <a href="#" class="link-dark text-decoration-none" wire:click.prevent="destroy({{ $project->id }})"><i class="bi bi-trash"></i> {{ __('Delete') }}</a>
+                            @endif
                         </td>
                     </tr>
                 @empty

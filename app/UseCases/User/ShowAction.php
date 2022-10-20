@@ -4,45 +4,9 @@ namespace App\UseCases\User;
 
 use App\Models\Member;
 use App\Models\Project;
-use Exception;
 
-class ShowAction {
-	/**
-	 * Get Sub Projects
-	 * 
-	 * @param  \App\Models\User $user
-	 * @param  object $project_obj
-	 * @param  \Illuminate\Support\Collection $projects
-	 * @return \Illuminate\Support\Collection
-	 */
-	private function getSubProjects($user, $project_obj, $projects)
-	{
-		$query = Project::query()
-					->whereParentId($project_obj->id)
-					->whereInheritMembers(true);
-		foreach($query->cursor() as $project){
-			$index_projects = $projects->search(fn($item, $key) => $item->id === $project->id);
-			if($index_projects === false){
-				$index_projects =$projects->push((object)[
-					'id' => $project->id,
-					'name' => $project->name,
-					'roles' => collect([]),
-					'created_at' => $project_obj->created_at,
-				])->count() -1;
-			}
-
-			$child = $projects[$index_projects];
-			foreach($project_obj->roles as $role){
-				$index_roles = $child->roles->search(fn($item, $key) => $item->id === $role->id);
-				if($index_roles === false) $child->roles->push($role);
-			}
-			$projects[$index_projects] = $child;
-
-			$projects = $this->getSubProjects($user, $child, $projects);
-		}		
-
-		return $projects;
-	}
+class ShowAction
+{
     /**
      * Show User Action
      * 
@@ -54,7 +18,7 @@ class ShowAction {
 		$projects = collect([]);
 
 		$query = Project::query()
-					->select(['projects.id', 'projects.name', 'member.user_id', 'member.id as member_id', 'member.created_at'])
+					->select(['projects.*', 'member.user_id', 'member.id as member_id', 'member.created_at'])
 					->join('member', 'projects.id', '=', 'member.project_id')
 					->where(function($q) use($user){
 						$q->where('member.user_id', $user->id)
@@ -63,7 +27,7 @@ class ShowAction {
 						  });
 					})
 					->activeOrClosed()
-					->orderBy('projects.name', 'asc');
+					->orderBy('projects._lft', 'asc');
 		foreach($query->cursor() as $project){
 			$index_projects = $projects->search(fn($item, $key) => $item->id === $project->id);
 			if($index_projects === false){
@@ -89,7 +53,23 @@ class ShowAction {
 				}
 			}
 			$projects[$index_projects] = $project_obj;
-			$projects = $this->getSubProjects($user, $project_obj, $projects);	
+
+            $query = Project::query()
+                        ->where('_lft', '>', $project->_lft)
+                        ->where('_rgt', '<', $project->_rgt)
+                        ->whereInheritMembers(true)
+                        ->orderBy('_lft', 'asc');
+			foreach($query->cursor() as $child){
+				$index_children = $projects->search(fn($item, $key) => $item === $child->id);
+				if($index_children === false){
+					$projects->push((object)[
+						'id' => $child->id,
+						'name' => $child->name,
+						'roles' => clone $project_obj->roles,
+						'created_at' => $project->created_at,
+					]);
+				}				
+			}
 		}
 
 		$projects = $projects->sortBy('name');
