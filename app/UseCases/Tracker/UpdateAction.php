@@ -24,7 +24,7 @@ class UpdateAction
             }
             $tracker->fields_bits = $fields_bits;
             $tracker->save();
-            if(in_array('projects', $attributes)){
+            if(array_key_exists('projects', $attributes)){
                 $tracker->projects()->sync($attributes['projects']);
             } else {
                 $tracker->projects()->sync([]);

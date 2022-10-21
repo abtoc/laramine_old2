@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('content-admin')
-<div class="container py-4">
+<div class="container-fluid py-4">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <nav>
@@ -20,7 +20,7 @@
                         @csrf
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
         
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-0">
+                                <div class="row mb-3">
                                     <div class="col-md-8 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
                                             {{ __('Register') }}
@@ -84,10 +84,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 overflow-auto" style="height: 360px;">
+                            <div class="col-lg-6 overflow-auto" style="height: 360px;">
                                 <div class="row">
-                                    <label for="projects" class="col-md-4 col-form-label text-md-end">{{ __('Project') }}</label>
-                                    <div class="col-md-8">
+                                    <label for="projects" class="col-md-4 col-lg-2 col-form-label text-md-end">{{ __('Project') }}</label>
+                                    <div class="col-md-8 col-lg-10">
                                         <ul class="projects root">
                                             @each('trackers.create-projects', $projects, 'project')
                                         </ul>

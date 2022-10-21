@@ -21,7 +21,7 @@
 <body>
     <div id="app" class="d-flex flex-column h-100">
         <header>
-            <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 d-none d-md-block">
+            <nav class="navbar navbar-dark bg-dark flex-lg-nowrap sticky-top p-0 d-none d-lg-block">
                 <div class="container-fluid">
                     <ul class="navbar-nav me-auto flex-row">
                         <li class="nav-item">
@@ -68,14 +68,14 @@
                     </ul>
                  </div>
             </nav>
-            <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark">
+            <nav class="navbar navbar-dark navbar-expand-lg sticky-top bg-dark">
                 <div class="container-fluid">
-                    <span class="navbar-brand d-none d-md-block">@yield('title', config('app.name', 'Laramine'))</span>
                     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <span class="navbar-brand d-none d-md-block">@yield('title', config('app.name', 'Laramine'))</span>
                     <div class="navbar-nav ms-auto flex-grow-xs-1">
-                        <form action="#" class="px-1 w-100 d-none d-md-block">
+                        <form action="#" class="px-1 w-100 d-none d-lg-block">
                             <input type="text" class="form-control form-control-dark" name="search" id="search" placeholder="{{ __('Search') }}...">
                         </form>
                         <div class="dropdown">
@@ -95,8 +95,8 @@
             @yield('navbar')
         </header>
         <div class="flex-grow-1 container-fluid">
-            <div class="row h-100">
-                <nav id="sidebar-menu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse d-md-none">
+            <div class="row">
+                <nav id="sidebar-menu" class="col-md-3 col-lg-2 bg-light sidebar collapse d-lg-none">
                     <form action="">
                         <input type="text" class="form-control" name="search">
                     </form>

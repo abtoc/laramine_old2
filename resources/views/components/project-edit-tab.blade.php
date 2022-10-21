@@ -9,4 +9,9 @@
             <x-nav-link href="{{ route_query('projects.edit.member', ['project' => $project]) }}" active="{{ is_route_named('projects.edit.member') }}">{{ __('Member') }}</x-nav-link>
         </li>
     @endcan
+    @can('update', $project)
+        <li class="nav-item">
+            <x-nav-link href="{{ route_query('projects.edit.issues', ['project' => $project]) }}" active="{{ is_route_named('projects.edit.issues') }}">{{ __('Ticket Tracking') }}</x-nav-link>
+        </li>
+    @endcan
 </ul>

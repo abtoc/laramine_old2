@@ -57,13 +57,12 @@ class ViewComposerServiceProvider extends ServiceProvider
             ]);
         });
         View::composer('trackers/*', function($view){
-            $view->with('issue_statuses', IssueStatus::query()->get());
             $view->with('projects', Project::query()
                                         ->activeOrClosed()
                                         ->withDepth()
                                         ->get()->toTree());
         });
-        View::composer('workflows/*', function($view){
+        View::composer('*', function($view){
             $view->with('trackers', Tracker::query()->get());
             $view->with('issue_statuses', IssueStatus::query()->get());
         });

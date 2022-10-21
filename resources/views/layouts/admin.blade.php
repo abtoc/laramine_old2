@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fuid d-flex align-items-stretch flex-nowrap w-100">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-white d-none d-md-block" style="width: 280px">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-white d-none d-lg-block" style="width: 300px">
         <ul class="nav nav-pills flex-column mb-auto">
             @can('admin-projects')
                 <li class="nav-item">

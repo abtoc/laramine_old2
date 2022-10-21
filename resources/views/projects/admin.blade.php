@@ -4,7 +4,7 @@
 
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">{{ __('Project') }}</div>
                 <div class="card-body">

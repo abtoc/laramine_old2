@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ProjectStatus;
 use App\Models\Project;
+use App\Models\Tracker;
 use App\Rules\ProjectPublicChildrenRule;
 use App\Rules\ProjectPublicParentRule;
 use App\UseCases\Project\ShowAction;
@@ -266,5 +267,36 @@ class ProjectController extends Controller
     {
         $this->authorize('member', $project);
         return view('projects.edit.member', compact('project'));
+    }
+
+    /**
+     * Ticket Tracking
+     * 
+     * @param  \App\Models\Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function issues(Project $project)
+    {
+        $this->authorize('update', $project);
+
+        $selected = $project->trackers->pluck('id')->toArray();
+
+        return view('projects.edit.issues', compact('project', 'selected'));
+    }
+
+    /**
+     * Ticket Tracking
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Project $project
+     * @return \Illuminate\Http\Response
+     */
+    public function issues_update(Request $request, Project $project)
+    {
+        $this->authorize('update', $project);
+
+        $project->trackers()->sync($request->post('trackers', []));
+
+        return to_route('projects.edit.issues', ['project' => $project]);
     }
 }

@@ -171,6 +171,9 @@ tr.unlock {
 
 .markdown-body {
     font-size: $font-size-base;
+    pre {
+        padding: 0px;
+    }
 }
 
 .flex-grow-xs-1 {
@@ -180,7 +183,7 @@ tr.unlock {
 }
 
 .floating {
-    width: 280px;
+    width: 320px;
 }
 
 .principals {

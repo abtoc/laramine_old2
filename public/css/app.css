@@ -12147,6 +12147,9 @@ main {
 .markdown-body {
   font-size: 0.9rem;
 }
+.markdown-body pre {
+  padding: 0px;
+}
 
 @media (max-width: 576px) {
   .flex-grow-xs-1 {
@@ -12155,7 +12158,7 @@ main {
 }
 
 .floating {
-  width: 280px;
+  width: 320px;
 }
 
 .principals {

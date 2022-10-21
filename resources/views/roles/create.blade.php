@@ -3,7 +3,7 @@
 @section('content-admin')
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <nav>
@@ -20,7 +20,7 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="name" class="col-md-2 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
+                            <label for="name" class="col-md-3 col-lg-2 col-form-label text-md-end">{{ __('Name') }}<small class="required">*</small></label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @invalid('name')" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -29,9 +29,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="permission-project" class="col-md-2 col-form-label text-md-end">{{ __('Project') }}</label>
+                            <label for="permission-project" class="col-md-3 col-lg-2 col-form-label text-md-end">{{ __('Project') }}</label>
 
-                            <div id="permission-project" class="col-md-10 d-flex flex-row flex-wrap">
+                            <div id="permission-project" class="col-md-9 col-lg-10 d-flex flex-row flex-wrap">
                                 @foreach($permissions_project as $permission)
                                     <div class="form-check floating">
                                         <input type="checkbox" class="form-check-input" name="permissions[]" value="{{ $permission->value }}" id="permissions-{{ $permission->value }}">
@@ -42,9 +42,9 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="permission-issue" class="col-md-2 col-form-label text-md-end">{{ __('Ticket Tracking') }}</label>
+                            <label for="permission-issue" class="col-md-3 col-lg-2 col-form-label text-md-end">{{ __('Ticket Tracking') }}</label>
 
-                            <div id="permission-issue" class="col-md-10 d-flex flex-row flex-wrap">
+                            <div id="permission-issue" class="col-md-9 col-lg-10 d-flex flex-row flex-wrap">
                                 @foreach($permissions_issue as $permission)
                                     <div class="form-check floating">
                                         <input type="checkbox" class="form-check-input" name="permissions[]" value="{{ $permission->value }}" id="permissions-{{ $permission->value }}">
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-6 offset-md-2">
+                            <div class="col-md-6 offset-md-3 offset-lg-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>

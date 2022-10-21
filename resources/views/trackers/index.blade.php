@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('content-admin')
-<div class="container py-4">
+<div class="container-fluid py-4">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">{{ __('Tracker') }}</div>
                 <div class="card-body">

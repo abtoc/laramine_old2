@@ -53,14 +53,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
             @unless(is_null($project->description))
                 <div class="markdown-body mb-3">
                     {{ markdown($project->description) }}
                 </div>
             @endunless
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-6">
             @if(count($users) > 0)
                 <div class="card mb-3">
                     <div class="card-header">{{ __('Member') }}</div>

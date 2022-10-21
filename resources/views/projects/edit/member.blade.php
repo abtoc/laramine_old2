@@ -5,7 +5,7 @@
 @section('content-project')
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
                     <nav>

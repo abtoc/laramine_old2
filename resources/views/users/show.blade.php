@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row-3">
-            <div class="col-md-6">
+            <div class="col-lg-6">
                 <div class="card mb-3">
                     <div class="card-header">{{ __('Information') }}</div>
                     <div class="card-body">
@@ -68,7 +68,7 @@
                     </div>
                 @endif
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6">
             </div>            
         </div>
     </div>
