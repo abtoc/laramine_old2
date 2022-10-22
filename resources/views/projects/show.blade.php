@@ -59,6 +59,43 @@
                     {{ markdown($project->description) }}
                 </div>
             @endunless
+            @if($project->issue_tracking->count() > 0)
+                <div class="card mb-3">
+                    <div class="card-header">{{ __('Ticket Tracking') }}</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th class="text-center">{{ __('Pending') }}</th>
+                                        <th class="text-center">{{ __('Completed') }}</th>
+                                        <th class="text-center">{{ __('Total') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($project->issue_tracking as $tracking)
+                                        <tr>
+                                            <td class="text-start">
+                                                {{ $tracking->tracker->name }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $tracking->pending }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $tracking->completed }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $tracking->total }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
         <div class="col-lg-6">
             @if(count($users) > 0)

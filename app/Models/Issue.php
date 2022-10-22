@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
@@ -111,4 +112,22 @@ class Issue extends Model
     public function status()  { return $this->belongsTo(IssueStatus::class, 'status_id'); }
     public function priority() { return $this->belongsTo(Enumeration::class, 'priority_id'); }
     public function author()  { return $this->belongsTo(User::class, 'author_id'); }
+
+    /**
+     * The "booting" method of the model
+     * 
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::saving(function($issue){
+            if($issue->status->is_closed){
+                $issue->closed_at = Carbon::now();
+            } else {
+                $issue->closed_at = null;
+            }
+        });
+    }
 }

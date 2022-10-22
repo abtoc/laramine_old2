@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ProjectStatus as Status;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,8 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property integer $parent_id
  * @property \App\Models\Project $parent
  * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at 
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Support\Collection $issue_tracking 
  * @property \Illuminate\Database\Eloquent\Collection<Member> $members 
  * @property \Illuminate\Database\Eloquent\Collection<Issue> $issues 
  * @property \Illuminate\Database\Eloquent\Collection<Member> $menbers
@@ -75,6 +77,30 @@ class Project extends Model
     public function members() { return $this->hasMany(Member::class); }
     public function trackers() { return $this->belongsToMany(Tracker::class, 'projects_trackers'); }
     public function users() { return $this->belongsToMany(User::class,  'member')->using(Member::class)->withPivot(['id']); }
+
+    /**
+     * issue tracking
+     */
+    protected function issueTracking(): Attribute
+    {
+        return Attribute::make(
+            get: function(){
+                $tracking = collect([]);
+                if($this->issues->count() > 0){
+                    $query = Tracker::query();
+                    foreach($query->cursor() as $tracker){
+                        $tracking->push((object)[
+                            'tracker' => $tracker,
+                            'pending' => Issue::query()->whereProjectId($this->id)->whereTrackerId($tracker->id)->whereNull('closed_at')->count(),
+                            'completed' => Issue::query()->whereProjectId($this->id)->whereTrackerId($tracker->id)->whereNotNull('closed_at')->count(),
+                            'total' => Issue::query()->whereProjectId($this->id)->whereTrackerId($tracker->id)->count(),
+                        ]);
+                    }
+                }
+                return $tracking;
+            }
+        )->shouldCache();
+    }
 
     /**
      * @return bool
