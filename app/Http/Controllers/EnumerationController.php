@@ -47,6 +47,13 @@ class EnumerationController extends Controller
             'active' => $request->has('active') ? 1 : 0,
             'is_default' => $request->has('is_default') ? 1 : 0,
         ]);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'active' => ['boolean'],
+            'is_default' => ['boolean'],
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string'],
@@ -96,6 +103,13 @@ class EnumerationController extends Controller
             'active' => $request->has('active') ? 1 : 0,
             'is_default' => $request->has('is_default') ? 1 : 0,
         ]);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'active' => ['boolean'],
+            'is_default' => ['boolean'],
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'active' => ['boolean'],

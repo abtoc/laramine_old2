@@ -21,6 +21,19 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index(['tracker_id', 'old_status_id']);
+
+            $table->foreign('tracker_id')
+                ->on('trackers')
+                ->references('id')
+                ->cascadeOnDelete();
+            $table->foreign('old_status_id')
+                ->on('issue_statuses')
+                ->references('id')
+                ->cascadeOnDelete();
+            $table->foreign('new_status_id')
+                ->on('issue_statuses')
+                ->references('id')
+                ->cascadeOnDelete();
         });
     }
 

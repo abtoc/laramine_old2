@@ -77,6 +77,19 @@
                                 </div>
 
                                 <div class="row mb-3">
+                                    <label for="from-tracker-id" class="col-md-4 col-form-label text-md-end">{{ __('Copy workflow from here') }}</label>
+
+                                    <div class="col-md-8">
+                                        <select name="from_tracker_id" id="from-tracker-id" class="form-select">
+                                            <option selected value="0"></option>
+                                            @foreach($trackers as $tracker)
+                                                <option value="{{ $tracker->id }}">{{ $tracker->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
                                     <div class="col-md-8 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
                                             {{ __('Register') }}

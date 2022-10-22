@@ -46,6 +46,11 @@ class IssueStatusController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'is_closed' => ['boolean'],
+        ]);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
         $issue_status = new IssueStatus();
@@ -88,6 +93,11 @@ class IssueStatusController extends Controller
     {
         $request->merge([
             'is_closed' => $request->has('is_closed') ? 1 : 0,
+        ]);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'is_closed' => ['boolean'],
         ]);
 
         $request->validate([

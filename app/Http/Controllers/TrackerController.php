@@ -41,6 +41,11 @@ class TrackerController extends Controller
      */
     public function store(Request $request, UpdateAction $action)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'issue_status_id' => ['required', 'integer', 'exists:issue_statuses,id'],
+        ]);
+
         $action(new Tracker(), $request->all());
         return to_route('trackers.index');
     }
@@ -83,6 +88,12 @@ class TrackerController extends Controller
      */
     public function update(Request $request, Tracker $tracker, UpdateAction $action)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'issue_status_id' => ['required', 'integer', 'exists:issue_statuses,id'],
+        ]);
+
+
         $action($tracker, $request->all());
         return to_route('trackers.index');
     }

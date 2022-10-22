@@ -23,6 +23,9 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at 
  * @property \Illuminate\Database\Eloquent\Collection<Member> $members 
+ * @property \Illuminate\Database\Eloquent\Collection<Issue> $issues 
+ * @property \Illuminate\Database\Eloquent\Collection<Member> $menbers
+ * @property \Illuminate\Database\Eloquent\Collection<Tracker> $trackers
  * @property \Illuminate\Database\Eloquent\Collection<User> $users
  */
 
@@ -68,6 +71,7 @@ class Project extends Model
      */
 
     public function groups() { return $this->belongsToMany(Group::class,  'member', 'project_id', 'user_id')->using(Member::class)->withPivot(['id']); }
+    public function issues() { return $this->hasMany(Issue::class); }
     public function members() { return $this->hasMany(Member::class); }
     public function trackers() { return $this->belongsToMany(Tracker::class, 'projects_trackers'); }
     public function users() { return $this->belongsToMany(User::class,  'member')->using(Member::class)->withPivot(['id']); }

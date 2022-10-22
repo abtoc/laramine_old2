@@ -2,6 +2,7 @@
 
 namespace App\UseCases\Tracker;
 
+use App\Models\Workflow;
 use Illuminate\Support\Facades\DB;
 
 class UpdateAction
@@ -28,6 +29,19 @@ class UpdateAction
                 $tracker->projects()->sync($attributes['projects']);
             } else {
                 $tracker->projects()->sync([]);
+            }
+
+            if(array_key_exists('from_tracker_id', $attributes)){
+                if($attributes['from_tracker_id'] != 0){
+                    $workflows = Workflow::query()
+                                    ->whereTrackerId($attributes['from_tracker_id'])
+                                    ->get();
+                    foreach($workflows as $workflow){
+                        $new_workflow = $workflow->replicate();
+                        $new_workflow->tracker_id = $tracker->id;
+                        $new_workflow->save();
+                    }
+                }
             }
         });
     }

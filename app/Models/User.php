@@ -33,6 +33,8 @@ use Kyslik\ColumnSortable\Sortable;
  * @property \Carbon\Carbon $password_change_at
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<Issue> $authors
+ * @property \Illuminate\Database\Eloquent\Collection<Issue> $assignments
  * @property \Illuminate\Database\Eloquent\Collection<Group> $groups
  * @property \Illuminate\Database\Eloquent\Collection<Project> $projects
  * @property \Illuminate\Database\Eloquent\Collection<Member> $members 
@@ -110,6 +112,8 @@ class User extends Authenticatable
      * relations
      */
 
+    public function authors()  { return $this->hasMany(Issue::class, 'author_id'); }
+    public function assignments() { return $this->hasMany(Issue::class, 'assigned_to_id'); }
     public function groups() { return $this->belongsToMany(Group::class, 'groups_users'); }
     public function members() { return $this->hasMany(Member::class); }
     public function projects() { return $this->belongsToMany(User::class,  'member')->using(Member::class)->withPivot(['id']); }
