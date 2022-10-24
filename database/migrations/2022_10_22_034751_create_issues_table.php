@@ -36,7 +36,7 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable()->index();
             $table->unsignedBigInteger('_lft')->nullable();
             $table->unsignedBigInteger('_rgt')->nullable();
-            $table->dateTime('closed_at');
+            $table->dateTime('closed_at')->nullable();
             $table->timestamps();
 
             $table->index('created_at');

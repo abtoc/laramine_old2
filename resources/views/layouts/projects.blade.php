@@ -13,6 +13,11 @@
                 {{ __('Project') }}
             </x-nav-link>
         </li>
+        <li class="nav-item">
+            <x-nav-link href="{{ route('issues.index') }}" active="{{ is_route_named('issues.*') }}">
+                {{ __('Issue') }}
+            </x-nav-link>
+        </li>
     </ul>
 </nav>
 @endsection
@@ -21,5 +26,6 @@
 <h6 class="sidebar-heading justify-content-between align-items-center px-3 mt-3 mb-1 text-muted">{{ __('Project') }}</h6>
 <ul class="navbar-nav d-flex">
     <li class="nav-item mx-3 text-muted"><a href="{{ route('projects.index') }}" class="nav-link text-secondary p-1">{{ __('Project') }}</a></li>
+    <li class="nav-item mx-3 text-muted"><a href="{{ route('issues.index') }}" class="nav-link text-secondary p-1">{{ __('Issue') }}</a></li>
 </ul>
 @endsection

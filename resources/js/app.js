@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', function(){
     if(editor_wrap){
         window.editor = new Editor(document.querySelector('#markdown-editor'));
     }
+    Livewire.on('refreshEditor', function(){
+        let editor_wrap = document.querySelector('#editor-wrap');
+        if(editor_wrap){
+            window.editor = new Editor(document.querySelector('#markdown-editor'));
+        }
+    });
+
 
     reloadHighlight(document);
 

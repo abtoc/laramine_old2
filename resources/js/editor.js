@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { EditorState } from '@codemirror/state';
-import { EditorView, keymap } from '@codemirror/view';
+import { EditorView, keymap, ViewUpdate } from '@codemirror/view';
 import { defaultKeymap } from '@codemirror/commands';
 import { indentWithTab } from '@codemirror/commands';
 import { markdown } from '@codemirror/lang-markdown';
@@ -27,9 +27,18 @@ export function Editor(el) {
     this.codemirror = new EditorView({
         state: EditorState.create({
             doc: textarea.value,
+            autofocus: false,
             extensions: [
                 keymap.of([defaultKeymap, indentWithTab]),
-                markdown()
+                markdown(),
+                EditorState.tabSize.of(4),
+                EditorView.updateListener.of((viewUpdate) => {
+                    if(viewUpdate.focusChanged){
+                        if(!viewUpdate.view.hasFocus){
+                            textarea.value = this.codemirror.state.doc.toString();
+                        }
+                    }
+                })
             ],
         }),
         parent: this.target.querySelector('#editor-edit')
@@ -37,6 +46,7 @@ export function Editor(el) {
     if(textarea.form){
         textarea.form.addEventListener('submit', (e) => { textarea.value = this.codemirror.state.doc.toString()});
     }
+    this.codemirror.focus();
 }
 
 Editor.prototype._changeCharacters = function(cm, s, e){

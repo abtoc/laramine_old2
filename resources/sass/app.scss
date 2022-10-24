@@ -200,6 +200,12 @@ tr.unlock {
     }
 }
 
+.watchers {
+    -webkit-column-count: auto;
+    -webkit-column-width: 200px;
+    -webkit-column-gap: 0.5em;
+}
+
 input[type='radio'],input[type='checkbox']{
     position: relative;
 }

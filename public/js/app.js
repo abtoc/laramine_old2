@@ -5918,6 +5918,13 @@ document.addEventListener('DOMContentLoaded', function () {
     window.editor = new _editor__WEBPACK_IMPORTED_MODULE_2__.Editor(document.querySelector('#markdown-editor'));
   }
 
+  Livewire.on('refreshEditor', function () {
+    var editor_wrap = document.querySelector('#editor-wrap');
+
+    if (editor_wrap) {
+      window.editor = new _editor__WEBPACK_IMPORTED_MODULE_2__.Editor(document.querySelector('#markdown-editor'));
+    }
+  });
   (0,_highlight__WEBPACK_IMPORTED_MODULE_1__.reloadHighlight)(document);
   mermaid__WEBPACK_IMPORTED_MODULE_6__["default"].initialize({
     startOnLoad: false
@@ -6099,7 +6106,14 @@ function Editor(el) {
   this.codemirror = new _codemirror_view__WEBPACK_IMPORTED_MODULE_5__.EditorView({
     state: _codemirror_state__WEBPACK_IMPORTED_MODULE_6__.EditorState.create({
       doc: textarea.value,
-      extensions: [_codemirror_view__WEBPACK_IMPORTED_MODULE_5__.keymap.of([_codemirror_commands__WEBPACK_IMPORTED_MODULE_7__.defaultKeymap, _codemirror_commands__WEBPACK_IMPORTED_MODULE_7__.indentWithTab]), (0,_codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_8__.markdown)()]
+      autofocus: false,
+      extensions: [_codemirror_view__WEBPACK_IMPORTED_MODULE_5__.keymap.of([_codemirror_commands__WEBPACK_IMPORTED_MODULE_7__.defaultKeymap, _codemirror_commands__WEBPACK_IMPORTED_MODULE_7__.indentWithTab]), (0,_codemirror_lang_markdown__WEBPACK_IMPORTED_MODULE_8__.markdown)(), _codemirror_state__WEBPACK_IMPORTED_MODULE_6__.EditorState.tabSize.of(4), _codemirror_view__WEBPACK_IMPORTED_MODULE_5__.EditorView.updateListener.of(function (viewUpdate) {
+        if (viewUpdate.focusChanged) {
+          if (!viewUpdate.view.hasFocus) {
+            textarea.value = _this.codemirror.state.doc.toString();
+          }
+        }
+      })]
     }),
     parent: this.target.querySelector('#editor-edit')
   });
@@ -6109,6 +6123,8 @@ function Editor(el) {
       textarea.value = _this.codemirror.state.doc.toString();
     });
   }
+
+  this.codemirror.focus();
 }
 
 Editor.prototype._changeCharacters = function (cm, s, e) {

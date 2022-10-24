@@ -20,7 +20,6 @@ enum Permissions : string
     case SET_ISSUES_PRIVATE = 'set_issues_private';
     case SET_OWN_ISSUES_PRIVATE = 'set_own_issues_private';
 
-
     public function string(): string
     {
         return match($this){
@@ -30,16 +29,15 @@ enum Permissions : string
             Permissions::MANAGE_MEMBERS => __('Manage Members'),
             Permissions::ADD_SUBPROJECTS => __('Add Subprojects'),
 
-            Permissions::VIEW_ISSUE => __('View Ticket'),
-            Permissions::ADD_ISSUE => __('Add Ticket'),
-            Permissions::EDIT_ISSUE => __('Edit Ticket'),
-            Permissions::EDIT_OWN_ISSUE => __('Edit Own Ticket'),
-            Permissions::COPY_ISSUE => __('Copy Ticket'),
-            Permissions::MANAGE_ISSUE_RELATIONS => __('Manage Ticket Reloations'),
-            Permissions::MANAGE_SUBTASKS => __('Manage Sub Ticket'),
-            Permissions::SET_ISSUES_PRIVATE => __('Set Ticket Private'),
-            Permissions::SET_OWN_ISSUES_PRIVATE => __('Set Own Ticket Private'),
-
+            Permissions::VIEW_ISSUE => __('View Issue'),
+            Permissions::ADD_ISSUE => __('Add Issue'),
+            Permissions::EDIT_ISSUE => __('Edit Issue'),
+            Permissions::EDIT_OWN_ISSUE => __('Edit Own Issue'),
+            Permissions::COPY_ISSUE => __('Copy Issue'),
+            Permissions::MANAGE_ISSUE_RELATIONS => __('Manage Issue Reloations'),
+            Permissions::MANAGE_SUBTASKS => __('Manage Sub Issue'),
+            Permissions::SET_ISSUES_PRIVATE => __('Set Issue Private'),
+            Permissions::SET_OWN_ISSUES_PRIVATE => __('Set Own Issue Private'),
         };
     }
 

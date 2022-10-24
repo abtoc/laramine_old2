@@ -79,6 +79,22 @@ class Project extends Model
     public function users() { return $this->belongsToMany(User::class,  'member')->using(Member::class)->withPivot(['id']); }
 
     /**
+     * root project
+     */
+    protected function root(): Attribute
+    {
+        return Attribute::make(
+            get: function(){
+                $root = $this;
+                while($root->parent){
+                    $root = $root->parent;
+                }
+                return $root;
+            }
+        )->shouldCache();
+    }
+    
+     /**
      * issue tracking
      */
     protected function issueTracking(): Attribute
@@ -86,18 +102,75 @@ class Project extends Model
         return Attribute::make(
             get: function(){
                 $tracking = collect([]);
-                if($this->issues->count() > 0){
-                    $query = Tracker::query();
-                    foreach($query->cursor() as $tracker){
-                        $tracking->push((object)[
-                            'tracker' => $tracker,
-                            'pending' => Issue::query()->whereProjectId($this->id)->whereTrackerId($tracker->id)->whereNull('closed_at')->count(),
-                            'completed' => Issue::query()->whereProjectId($this->id)->whereTrackerId($tracker->id)->whereNotNull('closed_at')->count(),
-                            'total' => Issue::query()->whereProjectId($this->id)->whereTrackerId($tracker->id)->count(),
-                        ]);
-                    }
+                $ids = Project::select('id')
+                    ->where('_lft', '>=', $this->_lft)
+                    ->where('_rgt', '<=', $this->_rgt)
+                    ->get()
+                    ->pluck('id')
+                    ->toArray();
+                $query = Tracker::query();
+                foreach($query->cursor() as $tracker){
+                    $tracking->push((object)[
+                        'tracker' => $tracker,
+                        'pending' => Issue::query()
+                                        ->whereIn('project_id', $ids)
+                                        ->whereTrackerId($tracker->id)
+                                        ->whereNull('closed_at')
+                                        ->count(),
+                        'completed' => Issue::query()
+                                        ->whereIn('project_id', $ids)
+                                        ->whereTrackerId($tracker->id)
+                                        ->whereNotNull('closed_at')
+                                        ->count(),
+                        'total' => Issue::query()
+                                        ->whereIn('project_id', $ids)
+                                        ->whereTrackerId($tracker->id)
+                                        ->count(),
+                    ]);
                 }
                 return $tracking;
+            }
+        )->shouldCache();
+    }
+
+    /**
+     * assignings
+     */
+    protected function assignings(): Attribute
+    {
+        return Attribute::make(
+            get: function(){
+                $users = collect([Auth::user()]);
+                $project = $this;
+                while($project){
+                    $users = $users->concat($project->users)->unique('id');
+                    foreach($project->groups as $group){
+                        $users = $users->concat($group->users)->unique('id');
+                    }
+                    if(!$project->inherit_members) break;
+                    $project = $project->parent;
+                }
+                return $users->sortBy('name');
+            }
+        )->shouldCache();
+    }
+
+    /**
+     * watchers
+     */
+    protected function watchers(): Attribute
+    {
+        return Attribute::make(
+            get: function(){
+                $users = collect([]);
+                $project = $this;
+                while($project){
+                    $users = $users->concat($project->users)->unique('id');
+                    $users = $users->concat($project->groups)->unique('id');
+                    if(!$project->inherit_members) break;
+                    $project = $project->parent;
+                }
+                return $users->sortBy('name');
             }
         )->shouldCache();
     }

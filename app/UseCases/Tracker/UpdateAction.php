@@ -18,10 +18,11 @@ class UpdateAction
     {
         DB::transaction(function() use($tracker, $attributes){
             $tracker->fill($attributes);
-
-            $fields_bits = 1 + 8 + 16 + 32 + 256;
-            foreach($attributes['fields_bits'] as $field_bit){
-                $fields_bits = $fields_bits & ~(int)$field_bit;
+            $fields_bits = 1 + 8 + 16 + 32 + 128 + 256;
+            if(array_key_exists('fields_bits', $attributes)){
+                foreach($attributes['fields_bits'] as $field_bit){
+                    $fields_bits = $fields_bits & ~(int)$field_bit;
+                }
             }
             $tracker->fields_bits = $fields_bits;
             $tracker->save();

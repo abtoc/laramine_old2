@@ -46,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('issue_status', '[0-9]+');
         Route::pattern('enumeration', '[0-9]+');
         Route::pattern('tracker', '[0-9]+');
+        Route::pattern('issue', '[0-9]+');
     }
 
     /**

@@ -35,6 +35,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                                     ->whereStatus(ProjectStatus::ACTIVE)
                                     ->withDepth()
                                     ->get()->toFlatTree());
+            $view->with('trackers', Tracker::query()->get());
         });
         View::composer('roles/*', function($view){
             $view->with('permissions_project', [
@@ -61,8 +62,10 @@ class ViewComposerServiceProvider extends ServiceProvider
                                         ->activeOrClosed()
                                         ->withDepth()
                                         ->get()->toTree());
+            $view->with('trackers', Tracker::query()->get());
+            $view->with('issue_statuses', IssueStatus::query()->get());
         });
-        View::composer('*', function($view){
+        View::composer('workflows/*', function($view){
             $view->with('trackers', Tracker::query()->get());
             $view->with('issue_statuses', IssueStatus::query()->get());
         });

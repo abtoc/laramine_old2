@@ -10,7 +10,7 @@
                         <div class="flex-grow-1">
                             <nav>
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="{{ route_query('issue_statuses.index') }}">{{ __('Ticket Status') }}</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ route_query('issue_statuses.index') }}">{{ __('Issue Status') }}</a></li>
                                     <li class="breadcrumb-item active">{{ $issue_status->name }}</li>
                                 </ol>
                             </nav>
@@ -38,7 +38,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <input type="checkbox" class="form-check-input @invalid('is_closed')" id="is-closed" name="is_closed" value="1" @checked(old('is_closed', $issue_status->is_closed))>
-                                <label for="is-closed" class="form-check-label">{{ __('Ended Tickets') }}</label>
+                                <label for="is-closed" class="form-check-label">{{ __('Ended Issue') }}</label>
                                 <x-invalid-feedback name="must_change_password"/>
                             </div>
                         </div>

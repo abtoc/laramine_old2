@@ -44,7 +44,9 @@
                                 <select name="parent_id" id="parent-id" class="form-select @invalid('parent_id')">
                                     <option value="" @selected(is_null(old('parent_id', request()->query('parent_id', null))))></option>
                                     @foreach($parents as $parent)
-                                        <option value="{{ $parent->id }}" @selected(old('parent_id', request()->query('parent_id', null)) == $parent->id)>{!! str_repeat('&nbsp;&nbsp;', $parent->depth).$parent->name !!}</option>
+                                        <option value="{{ $parent->id }}" @selected(old('parent_id', request()->query('parent_id', null)) == $parent->id)>
+                                            {!!str_repeat('&nbsp;&nbsp;', $parent->depth)!!}{{$parent->name}}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <x-invalid-feedback name="parent_id"/>

@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <nav>
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item active">{{ __('Ticket Tracking') }}</li>
+                            <li class="breadcrumb-item active">{{ __('Issue Tracking') }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <x-alert/>
                     <x-project-edit-tab :project="$project"/>
-                    <form method="POST" action="{{ route("projects.edit.issues.update", ['project' => $project]) }}">
+                    <form method="POST" action="{{ route("projects.update.issues", ['project' => $project]) }}">
                         @csrf
                         @method('PUT')
 

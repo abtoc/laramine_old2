@@ -40,6 +40,7 @@ class Tracker extends Model
      */
     public function issue_status() { return $this->belongsTo(IssueStatus::class); }
     public function projects() { return $this->belongsToMany(Project::class, 'projects_trackers'); }
+    public function statuses() { return $this->belongsToMany(IssueStatus::class,'workflows', 'tracker_id', 'tracker_id'); }
 
     /**
      * The "booting" method of the model

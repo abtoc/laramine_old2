@@ -59,7 +59,7 @@
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" name="fields_bits[]" value="8" id="fields-bits-008" @checked(in_array(8, old('fields_bits', [8])))>
-                                            <label for="fields-bits-001" class="form-check-label">{{ __('Parent Ticket') }}</label>
+                                            <label for="fields-bits-001" class="form-check-label">{{ __('Parent Issue') }}</label>
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" name="fields_bits[]" value="16" id="fields-bits-010" @checked(in_array(16, old('fields_bits', [16])))>
@@ -68,6 +68,10 @@
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" name="fields_bits[]" value="32" id="fields-bits-020" @checked(in_array(32, old('fields_bits', [32])))>
                                             <label for="fields-bits-020" class="form-check-label">{{ __('Due Date') }}</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="fields_bits[]" value="128" id="fields-bits-080" @checked(in_array(128, old('fields_bits', [128])))>
+                                            <label for="fields-bits-080" class="form-check-label">{{ __('Done Raito') }}</label>
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" name="fields_bits[]" value="256" id="fields-bits-100" @checked(in_array(256, old('fields_bits', [256])))>

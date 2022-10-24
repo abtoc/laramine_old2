@@ -59,10 +59,10 @@
                     {{ markdown($project->description) }}
                 </div>
             @endunless
-            @if($project->issue_tracking->count() > 0)
-                <div class="card mb-3">
-                    <div class="card-header">{{ __('Ticket Tracking') }}</div>
-                    <div class="card-body">
+            <div class="card mb-3">
+                <div class="card-header">{{ __('Issue Tracking') }}</div>
+                <div class="card-body">
+                    @if($project->issue_tracking->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-hover table-sm text-nowrap">
                                 <thead>
@@ -93,9 +93,9 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    @endif
                 </div>
-            @endif
+            </div>
         </div>
         <div class="col-lg-6">
             @if(count($users) > 0)

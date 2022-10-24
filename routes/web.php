@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\InfoController;
 use App\Http\Controllers\EnumerationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\IssueController;
 use App\Http\Controllers\IssueStatusController;
 use App\Http\Controllers\My\SettingController;
 use App\Http\Controllers\My\ResetPasswordController;
@@ -86,6 +87,8 @@ Route::group([], function(){
     });
 });
 
+
+
 Route::group(['middleware' => ['auth', 'usercheck']], function(){
     Route::controller(ProjectController::class)->prefix('projects')->name('projects.')->group(function(){
         Route::get('/admin', 'admin')->name('admin');
@@ -95,11 +98,36 @@ Route::group(['middleware' => ['auth', 'usercheck']], function(){
         Route::put('/{project}/edit/setting', 'update')->name('update.setting');
         Route::get('/{project}/edit/member', 'member')->name('edit.member');
         Route::get('/{project}/edit/issues', 'issues')->name('edit.issues');
-        Route::put('/{project}/edit/issues', 'issues_update')->name('edit.issues.update');
+        Route::put('/{project}/edit/issues', 'issues_update')->name('update.issues');
         Route::delete('{project}', 'destroy')->name('destroy');
         Route::put('/{project}/open', 'open')->name('open');
         Route::put('/{project}/close', 'close')->name('close');
         Route::put('/{project}/archive', 'archive')->name('archive');
+    });
+});
+
+Route::group([], function(){
+    Route::controller(IssueController::class)->prefix('issues')->name('issues.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/{project}', 'show')->name('show');
+    });
+});
+
+Route::group(['middleware' => ['auth', 'usercheck']], function(){
+    Route::controller(IssueController::class)->prefix('projects')->name('issues.')->group(function(){
+        Route::get('/{project}/issues', 'index_project')->name('index_project');
+        Route::get('/{project}/issues/create', 'create_project')->name('create_project');
+        Route::post('/{project}/issues', 'store_project')->name('store_project');
+    });
+});
+
+Route::group(['middleware' => ['auth', 'usercheck']], function(){
+    Route::controller(IssueController::class)->prefix('issues')->name('issues.')->group(function(){
+        Route::get('/create', 'create')->name('create');
+        Route::post('/create', 'store')->name('store');
+        Route::get('/{issue}/edit', 'edit')->name('edit');
+        Route::put('/{issue}/edit', 'update')->name('update');
+        Route::delete('{issue}', 'destroy')->name('destroy');
     });
 });
 

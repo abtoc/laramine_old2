@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->tinyInteger('position');
-            $table->tinyInteger('fields_bits')->default(0);
+            $table->integer('fields_bits')->default(0);
             $table->foreignIdFor(App\Models\IssueStatus::class);
             $table->timestamps();
         });

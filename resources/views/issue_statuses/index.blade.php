@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card">
-                <div class="card-header">{{ __('Ticket Status')}}</div>
+                <div class="card-header">{{ __('Issue Status')}}</div>
                 <div class="card-body">
                     <x-alert/>
                     <div class="row mb-3">
@@ -13,7 +13,7 @@
                             <table class="table table-hover table-sm text-nowrap">
                                 <thead>
                                     <th class="text-center">{{ __('Status') }}</th>
-                                    <th class="text-center">{{ __('Ended Tickets') }}</th>
+                                    <th class="text-center">{{ __('Ended Issue') }}</th>
                                     <th class="text-end">
                                         <a href="{{ route('issue_statuses.create') }}" class="link-dark text-decoration-none"><i class="bi bi-plus-circle"></i> {{ __('New Status') }}</a>
                                     </th>
