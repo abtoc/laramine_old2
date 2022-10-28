@@ -23,7 +23,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $due_date
  * @property boolean $is_private
- * @property integer $done_rate
+ * @property integer $done_raito
  * @property integer $root_id
  * @property integer $parent_id
  * @property integer $_lft
@@ -101,6 +101,8 @@ class Issue extends Model
         'assigned_to_id',
         'start_date',
         'due_date',
+        'is_private',
+        'done_raito',
         'closed_at',
         'created_at',
         'updated_at',
@@ -114,6 +116,7 @@ class Issue extends Model
     public function status()  { return $this->belongsTo(IssueStatus::class, 'status_id'); }
     public function priority() { return $this->belongsTo(Enumeration::class, 'priority_id'); }
     public function author()  { return $this->belongsTo(User::class, 'author_id'); }
+    public function assigned_to()  { return $this->belongsTo(User::class, 'assigned_to_id'); }
 
     /**
      * The "booting" method of the model

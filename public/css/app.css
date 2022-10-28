@@ -12179,6 +12179,25 @@ main {
   -webkit-column-gap: 0.5em;
 }
 
+.query-columns > span {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.query-columns label {
+  display: block;
+}
+.query-columns select {
+  min-width: 150px;
+}
+.query-columns .buttons button[type=button] {
+  display: block;
+}
+
+#query-content {
+  font-size: 90%;
+}
+
 input[type=radio], input[type=checkbox] {
   position: relative;
 }

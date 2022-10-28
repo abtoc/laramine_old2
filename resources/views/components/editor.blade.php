@@ -1,4 +1,4 @@
-<div id="markdown-editor">
+<div id="markdown-editor" wire:ignore>
     <nav class="d-flex flex-wrap">
         <nav class="nav nav-tabs" id="editor-tab" role="tablist">
             <button id="editor-tab-edit" class="nav-link py-1 active" data-bs-toggle="tab" data-bs-target="#editor-edit" type="button" role="tab" aria-controls="editor-edit" aria-selected="true">

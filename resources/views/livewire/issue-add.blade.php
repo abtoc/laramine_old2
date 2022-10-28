@@ -98,7 +98,7 @@
                     <label for="parent-id" class="col-md-2 col-lg-4 col-form-label text-md-end">{{ __('Parent Issue')}}</label>
                     <div class="col-md-5 col-lg-5">
                         <div class="input-group">
-                            <input id="parent-id" type="text" name="parent_id" class="form-control @invalid('parent_id')" value="{{ $parent_id }}">                    
+                            <input id="parent-id" type="text" name="parent_id" class="form-control @invalid('parent_id')" wire:model="parent_id">                  
                             <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                         </div>
                         <x-invalid-feedback name="parent_id"/>

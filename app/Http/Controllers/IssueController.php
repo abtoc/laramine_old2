@@ -12,24 +12,66 @@ class IssueController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Issue::class);
-        return view('issues.index');
+
+        if(!request()->has('f')){
+            $request->merge([
+                'f' => [
+                    'status',
+                ],
+            ]);
+        }
+
+        if(!$request->has('q')){
+            $request->merge([
+                'q' => [
+                    'project',
+                    'tracker',
+                    'status',
+                    'priority',
+                    'subject',
+                    'assigned_to',
+                    'updated_at',
+                ],
+            ]);
+        }
+
+        $query = Issue::query();
+        $issues = $query->sortable(['id', 'desc'])->paginate(config('laramine.per_page'));
+        return view('issues.index', compact('issues'));
     }
 
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Project $project
      * @return \Illuminate\Http\Response
      */
-    public function index_project(Project $project)
+    public function index_project(Request $request, Project $project)
     {
         $this->authorize('viewAny', Issue::class);
-        return view('issues.index-project', compact('project'));
+
+        if(!$request->has('q')){
+            $request->merge([
+                'q' => [
+                    'tracker',
+                    'status',
+                    'priority',
+                    'subject',
+                    'assigned_to',
+                    'updated_at',
+                ],
+            ]);
+        }
+        $query = Issue::query();
+        $issues = $query->sortable(['id', 'desc'])->paginate(config('laramine.per_page'));
+        return view('issues.index-project', compact('project', 'issues'));
     }
 
     /**

@@ -123,7 +123,6 @@ class IssueAdd extends Component
 
     public function render()
     {
-        $this->emit('refreshEditor');
         return view('livewire.issue-add');
     }
 }

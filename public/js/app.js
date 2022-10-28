@@ -5918,13 +5918,6 @@ document.addEventListener('DOMContentLoaded', function () {
     window.editor = new _editor__WEBPACK_IMPORTED_MODULE_2__.Editor(document.querySelector('#markdown-editor'));
   }
 
-  Livewire.on('refreshEditor', function () {
-    var editor_wrap = document.querySelector('#editor-wrap');
-
-    if (editor_wrap) {
-      window.editor = new _editor__WEBPACK_IMPORTED_MODULE_2__.Editor(document.querySelector('#markdown-editor'));
-    }
-  });
   (0,_highlight__WEBPACK_IMPORTED_MODULE_1__.reloadHighlight)(document);
   mermaid__WEBPACK_IMPORTED_MODULE_6__["default"].initialize({
     startOnLoad: false
